@@ -20,17 +20,19 @@
       margin-bottom: 40px;
     }
 
-    #user-info {
-      margin-top: 30px;
-      font-size: 1.2rem;
-      color: #ff6b6b;
+    nav {
+      margin-bottom: 30px;
     }
 
-    #user-avatar {
-      border-radius: 50%;
-      margin-top: 20px;
-      width: 100px;
-      height: 100px;
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 15px;
+      font-size: 1.1rem;
+    }
+
+    nav a:hover {
+      color: #ff3b3b;
     }
 
     button {
@@ -52,107 +54,127 @@
     .hidden {
       display: none;
     }
+
+    .avatar {
+      border-radius: 50%;
+      margin-top: 20px;
+      width: 100px;
+      height: 100px;
+    }
+
+    .dashboard-content {
+      margin-top: 30px;
+      padding: 20px;
+      background: #1a0000;
+      border-radius: 15px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 0 20px #ff3b3b44;
+    }
+
+    .dashboard-content h2 {
+      color: #ff4c4c;
+      margin-bottom: 10px;
+    }
   </style>
 </head>
 <body>
 
-  <div class="logo">Hell Host 🔥 Dashboard</div>
+  <div class="logo">🔥 Hell Host Dashboard 🔥</div>
 
-  <!-- Login button -->
+  <!-- Navigation -->
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="contact.html">Contact</a>
+    <a href="dashboard.html">Dashboard</a>
+  </nav>
+
+  <!-- Login Section -->
   <button id="login-btn">Login with Discord</button>
 
-  <!-- User info shown after login -->
-  <div id="user-info" class="hidden">
+  <!-- Dashboard Section (Hidden until logged in) -->
+  <div id="dashboard" class="hidden">
     <p>Welcome, <span id="username"></span>!</p>
-    <img id="user-avatar" src="" alt="User Avatar" />
-    <br/>
+    <img id="avatar" class="avatar" />
+    <br />
     <button id="logout-btn">Logout</button>
+
+    <div class="dashboard-content">
+      <h2>🔥 Dashboard Access</h2>
+      <p>Server is running fine. All systems operational ✅</p>
+      <p>Contact messages are sent to your Discord via webhook.</p>
+    </div>
   </div>
 
   <script>
-    const clientId = "YOUR_DISCORD_CLIENT_ID"; // Replace with your Discord app Client ID
-    const redirectUri = window.location.origin + window.location.pathname; // Current page
+    const clientId = "1384756715760652360"; // ✅ Your Discord App Client ID
+    const redirectUri = "https://indianboomi.github.io/Hell_Host/dashboard.html"; // ✅ Your hosted page
     const scope = "identify";
+    const tokenKey = "MTM4NDc1NjcxNTc2MDY1MjM2MA.GknEAt.Uur9d0bi4NTlRhXIWpItZ2EQ3QhhRW5Ygn6qWY";
 
-    const loginBtn = document.getElementById('login-btn');
-    const logoutBtn = document.getElementById('logout-btn');
-    const userInfoDiv = document.getElementById('user-info');
-    const usernameSpan = document.getElementById('username');
-    const userAvatarImg = document.getElementById('user-avatar');
+    const loginBtn = document.getElementById("login-btn");
+    const logoutBtn = document.getElementById("logout-btn");
+    const dashboard = document.getElementById("dashboard");
+    const usernameEl = document.getElementById("username");
+    const avatarEl = document.getElementById("avatar");
 
-    // Parse the access token from URL hash after redirect
     function getTokenFromUrl() {
       const hash = window.location.hash.substring(1);
       const params = new URLSearchParams(hash);
-      return params.get('access_token');
+      return params.get("access_token");
     }
 
-    // Fetch user data from Discord API
-    async function fetchUser(token) {
-      const res = await fetch('https://discord.com/api/users/@me', {
+    async function fetchDiscordUser(token) {
+      const res = await fetch("https://discord.com/api/users/@me", {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
-      if (!res.ok) {
-        logout();
-        return;
-      }
-      const data = await res.json();
-      return data;
+      if (!res.ok) return null;
+      return await res.json();
     }
 
-    function showUser(user) {
-      usernameSpan.textContent = user.username + "#" + user.discriminator;
-      const avatarHash = user.avatar;
-      if (avatarHash) {
-        userAvatarImg.src = `https://cdn.discordapp.com/avatars/${user.id}/${avatarHash}.png`;
-      } else {
-        userAvatarImg.src = '';
-      }
-      userInfoDiv.classList.remove('hidden');
-      loginBtn.classList.add('hidden');
+    function login() {
+      const oauthUrl =
+        `https://discord.com/oauth2/authorize?client_id=${clientId}` +
+        `&redirect_uri=${encodeURIComponent(redirectUri)}` +
+        `&response_type=token&scope=${encodeURIComponent(scope)}`;
+      window.location.href = oauthUrl;
     }
 
     function logout() {
-      localStorage.removeItem('discord_token');
-      userInfoDiv.classList.add('hidden');
-      loginBtn.classList.remove('hidden');
-      window.history.pushState({}, document.title, redirectUri); // Remove token from URL
+      localStorage.removeItem(tokenKey);
+      location.reload();
     }
 
-    async function main() {
-      let token = localStorage.getItem('discord_token');
+    async function init() {
+      let token = localStorage.getItem(tokenKey);
       if (!token) {
         token = getTokenFromUrl();
         if (token) {
-          localStorage.setItem('discord_token', token);
-          window.history.pushState({}, document.title, redirectUri); // Remove token from URL
+          localStorage.setItem(tokenKey, token);
+          window.history.replaceState({}, document.title, redirectUri);
         }
       }
 
       if (token) {
-        const user = await fetchUser(token);
+        const user = await fetchDiscordUser(token);
         if (user) {
-          showUser(user);
+          loginBtn.classList.add("hidden");
+          dashboard.classList.remove("hidden");
+          usernameEl.textContent = `${user.username}#${user.discriminator}`;
+          avatarEl.src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
         } else {
-          logout();
+          logout(); // Invalid token
         }
       }
     }
 
-    loginBtn.onclick = () => {
-      const oauthUrl = `https://discord.com/oauth2/authorize?client_id=1384756715760652360&response_type=code&redirect_uri=https%3A%2F%2Findianboomi.github.io%2FHell_Host%2Flogin.html&scope=identify}`;
-      window.location.href = oauthUrl;
-    };
+    loginBtn.onclick = login;
+    logoutBtn.onclick = logout;
 
-    logoutBtn.onclick = () => {
-      logout();
-    };
-
-    main();
+    init();
   </script>
-</body>
-</html>
 </body>
 </html>
