@@ -3,43 +3,77 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Hell Host</title>
+  <title>Hell Host - Home</title>
   <style>
+    /* Full-screen background with a dark fiery vibe */
     body {
-      background-color: #1a1a1a;
-      color: #ff3b3b;
-      font-family: 'Arial', sans-serif;
+      margin: 0;
+      height: 100vh;
+      background: linear-gradient(135deg, #1a0000, #660000);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #ff4c4c;
       text-align: center;
-      margin-top: 100px;
+      overflow: hidden;
     }
+
+    .container {
+      max-width: 600px;
+      padding: 2rem;
+      background: rgba(30, 0, 0, 0.8);
+      border-radius: 15px;
+      box-shadow: 0 0 20px #ff3b3b;
+      animation: glow 2s ease-in-out infinite alternate;
+    }
+
     h1 {
-      font-size: 4em;
-      margin-bottom: 0.2em;
+      font-size: 4rem;
+      margin-bottom: 0.5rem;
+      letter-spacing: 0.1em;
+      text-shadow: 0 0 15px #ff3b3b;
     }
+
     p {
-      font-size: 1.5em;
-      color: #fff;
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
+      color: #ff9999;
     }
-    a {
-      color: #ff3b3b;
+
+    a.btn {
       text-decoration: none;
       font-weight: bold;
-      border: 2px solid #ff3b3b;
-      padding: 10px 20px;
-      border-radius: 5px;
+      font-size: 1.2rem;
+      color: #fff;
+      background: #ff3b3b;
+      padding: 12px 30px;
+      border-radius: 40px;
+      box-shadow: 0 5px 15px #ff3b3baa;
+      transition: background 0.3s ease;
       display: inline-block;
-      margin-top: 30px;
-      transition: background-color 0.3s ease;
     }
-    a:hover {
-      background-color: #ff3b3b;
-      color: #1a1a1a;
+
+    a.btn:hover {
+      background: #cc2a2a;
+      box-shadow: 0 7px 20px #cc2a2aee;
+    }
+
+    @keyframes glow {
+      from {
+        box-shadow: 0 0 20px #ff3b3b;
+      }
+      to {
+        box-shadow: 0 0 40px #ff6b6b;
+      }
     }
   </style>
 </head>
 <body>
-  <h1>Hell Host</h1>
-  <p>Your fiery hosting solution awaits!</p>
-  <a href="https://github.com/yourusername/hell-host" target="_blank">View on GitHub</a>
+  <div class="container">
+    <h1>Hell Host</h1>
+    <p>Welcome to your fiery hosting solution — blazing fast and unstoppable.</p>
+    <a href="https://github.com/yourusername/hell-host" target="_blank" class="btn">Explore on GitHub</a>
+  </div>
 </body>
 </html>
