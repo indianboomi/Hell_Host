@@ -85,6 +85,12 @@
     button:hover {
       background: #cc2a2a;
     }
+
+    .success {
+      color: #33ff99;
+      font-size: 1.1rem;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
@@ -93,21 +99,58 @@
     <div class="logo">Hell Host🔥</div>
     <nav>
       <a href="index.html">Home</a>
-      <a href="#">Dashboard</a>
+      <a href="#">About</a>
+      <a href="#">Services</a>
       <a href="contact.html">Contact</a>
-      <a href="#">Login</a>
     </nav>
   </header>
 
   <!-- Contact Form Section -->
   <section class="contact">
     <h2>Contact Us</h2>
-    <form action="https://formsubmit.co/your-email@example.com" method="POST">
-      <input type="text" name="name" placeholder="Your Name" required />
-      <input type="email" name="email" placeholder="Your Email" required />
-      <textarea name="message" placeholder="Your Message" required></textarea>
+    <form id="contactForm">
+      <input type="text" id="name" placeholder="Your Name" required />
+      <input type="email" id="email" placeholder="Your Email" required />
+      <textarea id="message" placeholder="Your Message" required></textarea>
       <button type="submit">Send Message</button>
+      <div class="success" id="successMessage"></div>
     </form>
   </section>
+
+  <script>
+    const form = document.getElementById('contactForm');
+    const successMsg = document.getElementById('successMessage');
+
+    form.addEventListener('submit', async function (e) {
+      e.preventDefault();
+
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const message = document.getElementById('message').value;
+
+      // Your Discord Webhook URL (replace with your actual one!)
+      const webhookURL = "https://discord.com/api/webhooks/1393926492265775175/8ZVhfRp_OPAYEVrS2MOpORJx0iNjNIKb5lbFOq33UhLQeT6_TcnWqEJ9sgGCAJnXNjuq"; // <-- replace this
+
+      const payload = {
+        content: `🔥 **New Hell Host Message** 🔥\n**Name:** ${name}\n**Email:** ${email}\n**Message:** ${message}`
+      };
+
+      try {
+        await fetch(webhookURL, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+
+        successMsg.innerText = "✅ Message sent to Hell Host Discord!";
+        form.reset();
+      } catch (error) {
+        successMsg.innerText = "❌ Failed to send message.";
+        console.error("Error sending to Discord:", error);
+      }
+    });
+  </script>
 </body>
 </html>
