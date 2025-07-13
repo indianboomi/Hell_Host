@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Hell Host - Home</title>
   <style>
-    /* Full-screen background with a dark fiery vibe */
     body {
       margin: 0;
       height: 100vh;
-      background: linear-gradient(135deg, #1a0000, #660000);
+      background: url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1470&q=80') no-repeat center center fixed;
+      background-size: cover;
       display: flex;
       justify-content: center;
       align-items: center;
@@ -17,15 +17,27 @@
       color: #ff4c4c;
       text-align: center;
       overflow: hidden;
+      position: relative;
+    }
+
+    /* Add an overlay to darken the background for better text visibility */
+    body::before {
+      content: "";
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: rgba(26, 0, 0, 0.7);
+      z-index: 0;
     }
 
     .container {
       max-width: 600px;
       padding: 2rem;
-      background: rgba(30, 0, 0, 0.8);
+      background: rgba(30, 0, 0, 0.85);
       border-radius: 15px;
       box-shadow: 0 0 20px #ff3b3b;
       animation: glow 2s ease-in-out infinite alternate;
+      position: relative;
+      z-index: 1;
     }
 
     h1 {
