@@ -10,112 +10,149 @@
       background: #0f0000;
       color: #ffbbbb;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    header {
-      background-color: #0d0000;
-      padding: 20px 40px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      box-shadow: 0 3px 10px #ff3b3b33;
+      text-align: center;
+      padding: 40px 20px;
     }
 
     .logo {
-      font-size: 1.8rem;
-      font-weight: bold;
+      font-size: 2rem;
       color: #ff3b3b;
-      text-shadow: 0 0 5px #ff3b3b;
-    }
-
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      margin-left: 25px;
-      font-size: 1.1rem;
-      transition: color 0.3s;
-    }
-
-    nav a:hover {
-      color: #ff3b3b;
-    }
-
-    .dashboard {
-      padding: 60px 20px;
-      max-width: 900px;
-      margin: auto;
-    }
-
-    .dashboard h1 {
-      color: #ff3b3b;
-      font-size: 2.5rem;
-      text-align: center;
       margin-bottom: 40px;
     }
 
-    .card {
-      background: #1a0000;
-      border-radius: 12px;
-      box-shadow: 0 0 10px #ff3b3b44;
-      padding: 25px;
-      margin-bottom: 30px;
+    #user-info {
+      margin-top: 30px;
+      font-size: 1.2rem;
+      color: #ff6b6b;
     }
 
-    .card h3 {
-      color: #ff4c4c;
-      margin-bottom: 10px;
+    #user-avatar {
+      border-radius: 50%;
+      margin-top: 20px;
+      width: 100px;
+      height: 100px;
     }
 
-    .card p {
-      font-size: 1.1rem;
-      color: #ddd;
+    button {
+      background: #ff3b3b;
+      border: none;
+      padding: 15px 40px;
+      font-size: 1.2rem;
+      color: white;
+      border-radius: 10px;
+      cursor: pointer;
+      margin-top: 20px;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: #cc2a2a;
+    }
+
+    .hidden {
+      display: none;
     }
   </style>
 </head>
 <body>
+
+  <div class="logo">Hell Host 🔥 Dashboard</div>
+
+  <!-- Login button -->
+  <button id="login-btn">Login with Discord</button>
+
+  <!-- User info shown after login -->
+  <div id="user-info" class="hidden">
+    <p>Welcome, <span id="username"></span>!</p>
+    <img id="user-avatar" src="" alt="User Avatar" />
+    <br/>
+    <button id="logout-btn">Logout</button>
+  </div>
+
   <script>
-    // Simple check to allow access only if coming from login.html
-    const allowed = document.referrer.includes("login.html");
-    if (!allowed) {
-      window.location.href = "login.html"; // redirect to login if not allowed
+    const clientId = "YOUR_DISCORD_CLIENT_ID"; // Replace with your Discord app Client ID
+    const redirectUri = window.location.origin + window.location.pathname; // Current page
+    const scope = "identify";
+
+    const loginBtn = document.getElementById('login-btn');
+    const logoutBtn = document.getElementById('logout-btn');
+    const userInfoDiv = document.getElementById('user-info');
+    const usernameSpan = document.getElementById('username');
+    const userAvatarImg = document.getElementById('user-avatar');
+
+    // Parse the access token from URL hash after redirect
+    function getTokenFromUrl() {
+      const hash = window.location.hash.substring(1);
+      const params = new URLSearchParams(hash);
+      return params.get('access_token');
     }
+
+    // Fetch user data from Discord API
+    async function fetchUser(token) {
+      const res = await fetch('https://discord.com/api/users/@me', {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      if (!res.ok) {
+        logout();
+        return;
+      }
+      const data = await res.json();
+      return data;
+    }
+
+    function showUser(user) {
+      usernameSpan.textContent = user.username + "#" + user.discriminator;
+      const avatarHash = user.avatar;
+      if (avatarHash) {
+        userAvatarImg.src = `https://cdn.discordapp.com/avatars/${user.id}/${avatarHash}.png`;
+      } else {
+        userAvatarImg.src = '';
+      }
+      userInfoDiv.classList.remove('hidden');
+      loginBtn.classList.add('hidden');
+    }
+
+    function logout() {
+      localStorage.removeItem('discord_token');
+      userInfoDiv.classList.add('hidden');
+      loginBtn.classList.remove('hidden');
+      window.history.pushState({}, document.title, redirectUri); // Remove token from URL
+    }
+
+    async function main() {
+      let token = localStorage.getItem('discord_token');
+      if (!token) {
+        token = getTokenFromUrl();
+        if (token) {
+          localStorage.setItem('discord_token', token);
+          window.history.pushState({}, document.title, redirectUri); // Remove token from URL
+        }
+      }
+
+      if (token) {
+        const user = await fetchUser(token);
+        if (user) {
+          showUser(user);
+        } else {
+          logout();
+        }
+      }
+    }
+
+    loginBtn.onclick = () => {
+      const oauthUrl = `https://discord.com/oauth2/authorize?client_id=1384756715760652360&response_type=code&redirect_uri=https%3A%2F%2Findianboomi.github.io%2FHell_Host%2Flogin.html&scope=identify}`;
+      window.location.href = oauthUrl;
+    };
+
+    logoutBtn.onclick = () => {
+      logout();
+    };
+
+    main();
   </script>
-
-  <!-- Your existing dashboard content below -->
-  <header>...</header>
-  <section class="dashboard">...</section>
 </body>
-
-  <!-- Header -->
-  <header>
-    <div class="logo">Hell Host🔥</div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="dashboard.html">Dashboard</a>
-      <a href="contract.html">Contract</a>
-      <a href="login.html">login</a>
-    </nav>
-  </header>
-
-  <!-- Dashboard Content -->
-  <section class="dashboard">
-    <h1>🔥 Hell Host Dashboard</h1>
-
-    <div class="card">
-      <h3>Server Status</h3>
-      <p>All systems operational. 99.9% Uptime 🔥</p>
-    </div>
-
-    <div class="card">
-      <h3>Connected Users</h3>
-      <p>3 users currently accessing hosting dashboard.</p>
-    </div>
-
-    <div class="card">
-      <h3>Last Contact Message</h3>
-      <p>You can pull the latest contact form message from Discord using the webhook log or bot integration.</p>
-    </div>
-  </section>
-
+</html>
 </body>
 </html>
