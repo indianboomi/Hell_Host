@@ -73,6 +73,18 @@
   </style>
 </head>
 <body>
+  <script>
+    // Simple check to allow access only if coming from login.html
+    const allowed = document.referrer.includes("login.html");
+    if (!allowed) {
+      window.location.href = "login.html"; // redirect to login if not allowed
+    }
+  </script>
+
+  <!-- Your existing dashboard content below -->
+  <header>...</header>
+  <section class="dashboard">...</section>
+</body>
 
   <!-- Header -->
   <header>
