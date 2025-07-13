@@ -1,3 +1,5 @@
+  init();
+  </s
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,7 +19,7 @@
     .logo {
       font-size: 2rem;
       color: #ff3b3b;
-      margin-bottom: 40px;
+      margin-bottom: 20px;
     }
 
     nav {
@@ -33,6 +35,32 @@
 
     nav a:hover {
       color: #ff3b3b;
+    }
+
+    .avatar {
+      border-radius: 50%;
+      border: 2px solid #ff3b3b;
+      width: 50px;
+      height: 50px;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    .dashboard-content {
+      margin-top: 30px;
+      padding: 20px;
+      background: #1a0000;
+      border-radius: 15px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: 0 0 20px #ff3b3b44;
+    }
+
+    .dashboard-content h2 {
+      color: #ff4c4c;
+      margin-bottom: 10px;
     }
 
     button {
@@ -54,32 +82,12 @@
     .hidden {
       display: none;
     }
-
-    .avatar {
-      border-radius: 50%;
-      margin-top: 20px;
-      width: 100px;
-      height: 100px;
-    }
-
-    .dashboard-content {
-      margin-top: 30px;
-      padding: 20px;
-      background: #1a0000;
-      border-radius: 15px;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-      box-shadow: 0 0 20px #ff3b3b44;
-    }
-
-    .dashboard-content h2 {
-      color: #ff4c4c;
-      margin-bottom: 10px;
-    }
   </style>
 </head>
 <body>
+
+  <!-- Discord Avatar (if logged in) -->
+  <div id="discord-user"></div>
 
   <div class="logo">🔥 Hell Host Dashboard 🔥</div>
 
@@ -90,10 +98,10 @@
     <a href="dashboard.html">Dashboard</a>
   </nav>
 
-  <!-- Login Section -->
+  <!-- Login Button -->
   <button id="login-btn">Login with Discord</button>
 
-  <!-- Dashboard Section (Hidden until logged in) -->
+  <!-- Dashboard Content -->
   <div id="dashboard" class="hidden">
     <p>Welcome, <span id="username"></span>!</p>
     <img id="avatar" class="avatar" />
@@ -103,15 +111,15 @@
     <div class="dashboard-content">
       <h2>🔥 Dashboard Access</h2>
       <p>Server is running fine. All systems operational ✅</p>
-      <p>Contact messages are sent to your Discord via webhook.</p>
     </div>
   </div>
 
   <script>
-    const clientId = "1384756715760652360"; // ✅ Your Discord App Client ID
-    const redirectUri = "https://indianboomi.github.io/Hell_Host/dashboard.html"; // ✅ Your hosted page
+    const clientId = "1384756715760652360";
+    const redirectUri = "https://indianboomi.github.io/Hell_Host/dashboard.html";
     const scope = "identify";
     const tokenKey = "MTM4NDc1NjcxNTc2MDY1MjM2MA.GknEAt.Uur9d0bi4NTlRhXIWpItZ2EQ3QhhRW5Ygn6qWY";
+    const userKey = "discord_user";
 
     const loginBtn = document.getElementById("login-btn");
     const logoutBtn = document.getElementById("logout-btn");
@@ -135,21 +143,22 @@
       return await res.json();
     }
 
-    function login() {
-      const oauthUrl =
-        `https://discord.com/oauth2/authorize?client_id=${clientId}` +
-        `&redirect_uri=${encodeURIComponent(redirectUri)}` +
-        `&response_type=token&scope=${encodeURIComponent(scope)}`;
-      window.location.href = oauthUrl;
+    function showAvatar(user) {
+      const avatarURL = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+      document.getElementById("discord-user").innerHTML = `
+        <img src="${avatarURL}" title="${user.username}#${user.discriminator}" class="avatar" />
+      `;
     }
 
     function logout() {
       localStorage.removeItem(tokenKey);
+      localStorage.removeItem(userKey);
       location.reload();
     }
 
     async function init() {
       let token = localStorage.getItem(tokenKey);
+
       if (!token) {
         token = getTokenFromUrl();
         if (token) {
@@ -159,19 +168,32 @@
       }
 
       if (token) {
-        const user = await fetchDiscordUser(token);
+        let user = JSON.parse(localStorage.getItem(userKey));
+        if (!user) {
+          user = await fetchDiscordUser(token);
+          if (user) localStorage.setItem(userKey, JSON.stringify(user));
+        }
+
         if (user) {
           loginBtn.classList.add("hidden");
           dashboard.classList.remove("hidden");
           usernameEl.textContent = `${user.username}#${user.discriminator}`;
           avatarEl.src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+          showAvatar(user);
         } else {
-          logout(); // Invalid token
+          logout(); // token invalid
         }
       }
     }
 
-    loginBtn.onclick = login;
+    loginBtn.onclick = () => {
+      const oauthUrl =
+        `https://discord.com/oauth2/authorize?client_id=${clientId}` +
+        `&redirect_uri=${encodeURIComponent(redirectUri)}` +
+        `&response_type=token&scope=${encodeURIComponent(scope)}`;
+      window.location.href = oauthUrl;
+    };
+
     logoutBtn.onclick = logout;
 
     init();
