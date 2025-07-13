@@ -7,50 +7,63 @@
   <style>
     body {
       margin: 0;
-      height: 100vh;
-      background: url('https://cdn.discordapp.com/attachments/1390732165184229537/1393886635283841224/file_00000000df5861f7a5cf5b113e307058.png?ex=6874cd97&is=68737c17&hm=a2f4f13259351795a2a52da61f7806eb26176d3757b78b226e045c5ec95d277d&') no-repeat center center fixed;
-      background-size: cover;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      background: linear-gradient(135deg, #1a0000, #660000);
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: #ff4c4c;
+    }
+
+    header {
+      background-color: #0d0000;
+      padding: 20px 40px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 3px 10px #ff3b3b33;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      color: #ff3b3b;
+      text-shadow: 0 0 5px #ff3b3b;
+    }
+
+    nav a {
+      color: #fff;
+      text-decoration: none;
+      margin-left: 25px;
+      font-size: 1.1rem;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: #ff3b3b;
+    }
+
+    .hero {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       text-align: center;
-      overflow: hidden;
-      position: relative;
-    }
-
-    /* Add an overlay to darken the background for better text visibility */
-    body::before {
-      content: "";
-      position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background-color: rgba(26, 0, 0, 0.7);
-      z-index: 0;
-    }
-
-    .container {
-      max-width: 600px;
-      padding: 2rem;
-      background: rgba(30, 0, 0, 0.85);
-      border-radius: 15px;
-      box-shadow: 0 0 20px #ff3b3b;
-      animation: glow 2s ease-in-out infinite alternate;
-      position: relative;
-      z-index: 1;
+      padding: 0 20px;
+      background: rgba(0, 0, 0, 0.6);
     }
 
     h1 {
       font-size: 4rem;
       margin-bottom: 0.5rem;
-      letter-spacing: 0.1em;
       text-shadow: 0 0 15px #ff3b3b;
     }
 
     p {
       font-size: 1.5rem;
       margin-bottom: 2rem;
-      color: #ff9999;
+      color: #ffbbbb;
     }
 
     a.btn {
@@ -63,29 +76,31 @@
       border-radius: 40px;
       box-shadow: 0 5px 15px #ff3b3baa;
       transition: background 0.3s ease;
-      display: inline-block;
     }
 
     a.btn:hover {
       background: #cc2a2a;
       box-shadow: 0 7px 20px #cc2a2aee;
     }
-
-    @keyframes glow {
-      from {
-        box-shadow: 0 0 20px #ff3b3b;
-      }
-      to {
-        box-shadow: 0 0 40px #ff6b6b;
-      }
-    }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>Hell Host</h1>
-    <p>Welcome to Hell Host — blazing fast and unstoppable.</p>
-    <a href="https://hell-host.cloud.ig" target="_blank" class="btn">Explore on GitHub</a>
-  </div>
+  <!-- Navigation Menu -->
+  <header>
+    <div class="logo">Hell Host🔥</div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">About</a>
+      <a href="#">Services</a>
+      <a href="#">Contact</a>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Welcome to Hell Host</h1>
+    <p>Your fiery hosting solution — blazing fast and unstoppable.</p>
+    <a href="https://github.com/yourusername/hell-host" target="_blank" class="btn">Explore on GitHub</a>
+  </section>
 </body>
 </html>
