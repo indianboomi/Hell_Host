@@ -34,7 +34,6 @@
       user-select: none;
     }
 
-    /* Right Sidebar */
     .sidebar {
       position: fixed;
       top: 0;
@@ -130,23 +129,23 @@
   <!-- Right Sidebar -->
   <div class="sidebar" id="sidebar">
     <a href="index.html">🏠 Home</a>
-    <a href="contact.html">✉️ Contact</a>
     <a href="dashboard.html">⚙️ Dashboard</a>
+    <a href="contact.html">✉️ Contact</a>
   </div>
 
   <!-- Main Contact Content -->
   <div class="main">
     <h1>📬 Contact Us</h1>
     <div class="contact-box">
-      <form onsubmit="submitForm(event)">
+      <form onsubmit="sendToDiscord(event)">
         <label>Your Name</label>
-        <input type="text" required placeholder="Enter your name" />
+        <input type="text" id="name" required placeholder="Enter your name" />
 
         <label>Your Email</label>
-        <input type="email" required placeholder="Enter your email" />
+        <input type="email" id="email" required placeholder="Enter your email" />
 
         <label>Your Message</label>
-        <textarea rows="5" required placeholder="What's your message?"></textarea>
+        <textarea id="message" rows="5" required placeholder="What's your message?"></textarea>
 
         <button type="submit">Send Message</button>
       </form>
@@ -155,7 +154,7 @@
 
   <!-- JavaScript -->
   <script>
-    // Load Discord avatar
+    // Load avatar from localStorage
     const user = JSON.parse(localStorage.getItem("discord_user"));
     if (user) {
       const avatarURL = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
@@ -164,18 +163,40 @@
       `;
     }
 
-    // Sidebar toggle
+    // Toggle Sidebar
     const sidebar = document.getElementById("sidebar");
     const menuBtn = document.getElementById("menu-btn");
     menuBtn.addEventListener("click", () => {
       sidebar.classList.toggle("open");
     });
 
-    // Contact form submit handler
-    function submitForm(e) {
+    // Send form data to Discord webhook
+    function sendToDiscord(e) {
       e.preventDefault();
-      alert("✅ Message sent! (but not really — you can connect to Discord bot next)");
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const message = document.getElementById("message").value.trim();
+
+      const content = `📩 **New Contact Message**
+**Name:** ${name}
+**Email:** ${email}
+**Message:** ${message}`;
+
+      fetch("https://discord.com/api/webhooks/1393926492265775175/8ZVhfRp_OPAYEVrS2MOpORJx0iNjNIKb5lbFOq33UhLQeT6_TcnWqEJ9sgGCAJnXNjuq", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content })
+      })
+      .then(res => {
+        if (res.ok) {
+          alert("✅ Message sent to Discord!");
+        } else {
+          alert("❌ Failed to send. Check webhook URL.");
+        }
+      })
+      .catch(() => alert("❌ Error sending message."));
     }
   </script>
 </body>
-          </html>
+</html>
