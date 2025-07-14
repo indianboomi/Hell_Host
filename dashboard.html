@@ -31,7 +31,6 @@
       font-size: 30px;
       color: #fff;
       cursor: pointer;
-      user-select: none;
     }
 
     .sidebar {
@@ -136,9 +135,24 @@
       <h2>Welcome, <span id="username"></span>!</h2>
       <p style="color:#ff3b3b; font-weight:bold;">👑 Owner Access</p>
 
+      <!-- Owner Dashboard Panel -->
       <div class="dashboard-content">
-        <h3>Server Control Panel</h3>
-        <p>You're logged in as the Hell Host owner.</p>
+        <h3>📊 Owner Dashboard</h3>
+        <p>You are the boss of Hell Host 😈</p>
+      </div>
+
+      <!-- 🔧 Bot Control Panel -->
+      <div class="dashboard-content" id="control-panel">
+        <h3>🔧 Bot Control Panel</h3>
+        <p><strong>Status:</strong> <span id="bot-status">🟢 Online</span></p>
+        <p><strong>Uptime:</strong> <span id="uptime">0m</span></p>
+        <p><strong>Ping:</strong> <span id="ping">34ms</span></p>
+
+        <div style="margin-top: 20px;">
+          <button onclick="startBot()">▶️ Start</button>
+          <button onclick="stopBot()">⏹️ Stop</button>
+          <button onclick="restartBot()">🔄 Restart</button>
+        </div>
       </div>
 
       <button id="logout-btn">Logout</button>
@@ -152,7 +166,7 @@
     const scope = "identify";
     const tokenKey = "MTM4NDc1NjcxNTc2MDY1MjM2MA.GknEAt.Uur9d0bi4NTlRhXIWpItZ2EQ3QhhRW5Ygn6qWY";
     const userKey = "discord_user";
-    const ownerId = "886868526734905354"; // 🔐 Replace with your actual Discord ID
+    const ownerId = "886868526734905354"; // ← Replace this with your real Discord user ID
 
     const loginBtn = document.getElementById("login-btn");
     const logoutBtn = document.getElementById("logout-btn");
@@ -220,7 +234,6 @@
       }
     }
 
-    // Sidebar toggle
     document.getElementById("menu-btn").onclick = () => {
       document.getElementById("sidebar").classList.toggle("open");
     };
@@ -240,6 +253,46 @@
     };
 
     init();
+
+    // 🧠 Bot Control Logic
+    let uptimeMinutes = 0;
+    let status = "online";
+    let ping = 34;
+
+    function updateUptime() {
+      if (status === "online") {
+        uptimeMinutes++;
+        document.getElementById("uptime").textContent = uptimeMinutes + "m";
+        document.getElementById("ping").textContent = ping + "ms";
+      }
+    }
+    setInterval(updateUptime, 60000); // Every minute
+
+    function updateStatusUI() {
+      const statusSpan = document.getElementById("bot-status");
+      statusSpan.innerHTML = status === "online" ? "🟢 Online" : "🔴 Offline";
+    }
+
+    function startBot() {
+      status = "online";
+      ping = Math.floor(Math.random() * 30) + 20;
+      updateStatusUI();
+      alert("✅ Bot started!");
+    }
+
+    function stopBot() {
+      status = "offline";
+      updateStatusUI();
+      alert("⛔ Bot stopped!");
+    }
+
+    function restartBot() {
+      status = "online";
+      uptimeMinutes = 0;
+      ping = Math.floor(Math.random() * 40) + 10;
+      updateStatusUI();
+      alert("🔁 Bot restarted!");
+    }
   </script>
 </body>
 </html>
