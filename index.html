@@ -5,21 +5,55 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Hell Host - Home</title>
   <link rel="stylesheet" href="style.css" />
+  <style>
+    .main {
+      padding: 40px;
+      max-width: 700px;
+      margin: auto;
+      text-align: center;
+    }
+    .menu-icon {
+      font-size: 30px;
+      color: #fff;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-  <header style="padding:20px; text-align:center;">
-    <h1>🔥 Hell Host</h1>
-    <nav>
-      <a href="home.html">Home</a> |
-      <a href="contact.html">Contact</a> |
-      <a href="dashboard.html">Dashboard</a>
-    </nav>
-  </header>
 
-  <main style="padding: 40px; max-width: 700px; margin: auto; text-align:center;">
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="logo">🔥 Hell Host</div>
+    <div style="display: flex; align-items: center; gap: 15px;">
+      <div id="discord-user"></div>
+      <div class="menu-icon" id="menu-btn">☰</div>
+    </div>
+  </div>
+
+  <!-- Right Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <a href="home.html">🏠 Home</a>
+    <a href="contact.html">✉️ Contact</a>
+    <a href="dashboard.html">⚙️ Dashboard</a>
+    <a href="#" onclick="logout()">🚪 Logout</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main">
     <h2>Welcome to Hell Host</h2>
     <p>Your ultimate dark hosting solution.</p>
     <button onclick="location.href='dashboard.html'">Go to Dashboard</button>
-  </main>
+  </div>
+
+  <script>
+    document.getElementById("menu-btn").onclick = () => {
+      document.getElementById("sidebar").classList.toggle("open");
+    };
+
+    function logout() {
+      localStorage.clear();
+      location.href = "home.html";
+    }
+  </script>
 </body>
 </html>
