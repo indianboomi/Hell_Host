@@ -4,11 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hell Host - Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
   <style>
     body {
       margin: 0;
-      background: url('https://cdn.discordapp.com/attachments/1390732132271259648/1394248819440488448/images.jpg?ex=68761ee6&is=6874cd66&hm=1827bea4d17c5579cf8ed1caec5f912c27ca85e1d9fa1eee2520902c72b8ab72&') no-repeat center center fixed;
+      background: url('https://cdn.discordapp.com/attachments/1390732132271259648/1394248819440488448/images.jpg?ex=68761ee6&is=6874cd66&hm=1827bea4d17c55') no-repeat center center fixed;
       background-size: cover;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: #fff;
@@ -31,30 +30,35 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
     }
 
     .menu-btn {
       font-size: 1.5rem;
       cursor: pointer;
+      user-select: none;
     }
 
     .sidebar {
       position: fixed;
-      right: 0;
       top: 55px;
-      background-color: #1a0000ee;
-      width: 200px;
-      height: 100%;
-      padding: 20px;
+      right: 0;
+      width: 220px;
+      height: calc(100% - 55px);
+      background: rgba(10, 0, 0, 0.95);
       display: none;
       flex-direction: column;
-      z-index: 10;
+      padding: 20px;
+      z-index: 999;
+      transition: all 0.3s ease-in-out;
     }
 
     .sidebar a {
       color: #fff;
       text-decoration: none;
-      margin: 10px 0;
+      margin: 15px 0;
       font-size: 1rem;
     }
 
@@ -124,7 +128,7 @@
       font-size: 0.9rem;
     }
 
-    input[type=\"text\"] {
+    input[type="text"] {
       width: 100%;
       margin-top: 8px;
       padding: 8px;
@@ -146,7 +150,6 @@
     <a href="contact.html">✉️ Contact</a>
     <a href="#" id="logout-link">🚪 Logout</a>
   </div>
-  
   <div class="container">
     <h2>Good morning! <span id="discord-user">Discord User</span> 👋</h2>
     <p>Welcome back to Hell Host!</p>
@@ -259,22 +262,31 @@
 
   <script>
     function toggleMenu() {
-      const sidebar = document.getElementById(\"sidebar\");
-      sidebar.style.display = sidebar.style.display === \"flex\" ? \"none\" : \"flex\";
+      const sidebar = document.getElementById("sidebar");
+      sidebar.style.display = sidebar.style.display === "flex" ? "none" : "flex";
     }
 
+    document.addEventListener("click", function (e) {
+      const sidebar = document.getElementById("sidebar");
+      const menuBtn = document.querySelector(".menu-btn");
+      if (!sidebar.contains(e.target) && !menuBtn.contains(e.target)) {
+        sidebar.style.display = "none";
+      }
+    });
+
     async function loadDiscordUser() {
-      const token = localStorage.getItem(\"discord_token\");
+      const token = localStorage.getItem("discord_token");
       if (!token) return;
-      const res = await fetch(\"https://discord.com/api/users/@me\", {
+      const res = await fetch("https://discord.com/api/users/@me", {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (res.ok) {
         const data = await res.json();
-        document.getElementById(\"discord-user\").textContent = `${data.username}#${data.discriminator}`;
+        document.getElementById("discord-user").textContent = `${data.username}#${data.discriminator}`;
       }
     }
+
     loadDiscordUser();
   </script>
 </body>
-        </html>
+</html>
