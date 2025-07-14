@@ -2,26 +2,33 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hell Host - Home</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <div class="logo" style="color:#ff3b3b; font-weight:bold; font-size:1.5rem;">🔥 Hell Host</div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="dashboard.html">Dashboard</a>
-      <a href="contact.html">Contact</a>
-    </nav>
+    🔥 Hell Host
+    <div class="menu-btn" onclick="toggleMenu()">☰</div>
   </header>
 
-  <div class="container">
-    <h1>Welcome to Hell Host</h1>
-    <p style="font-size: 1.2rem;">
-      Your ultimate hosting solution — secure, blazing fast, and hellishly reliable.
-    </p>
-    <p>Use the navigation menu above to explore the site.</p>
+  <div class="sidebar" id="sidebar">
+    <a href="index.html">🏠 Home</a>
+    <a href="dashboard.html">⚙️ Dashboard</a>
+    <a href="contact.html">✉️ Contact</a>
   </div>
+
+  <div class="container">
+    <h1>Welcome to Hell Host 🔥</h1>
+    <p>Your ultimate hosting service — secure, blazing fast, and powerful.</p>
+    <button onclick="location.href='dashboard.html'">Go to Dashboard</button>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      const sidebar = document.getElementById("sidebar");
+      sidebar.style.display = sidebar.style.display === "flex" ? "none" : "flex";
+    }
+  </script>
 </body>
 </html>
