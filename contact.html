@@ -7,76 +7,105 @@
   <style>
     body {
       margin: 0;
-      background: #140000;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #0f0000;
       color: #ffbbbb;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    header {
-      background-color: #0d0000;
-      padding: 20px 40px;
+    .top-bar {
+      height: 60px;
+      background: #1a0000;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      box-shadow: 0 3px 10px #ff3b3b33;
+      padding: 0 20px;
+      box-shadow: 0 2px 10px #ff3b3b22;
     }
 
     .logo {
-      font-size: 1.8rem;
-      font-weight: bold;
+      font-size: 1.5rem;
       color: #ff3b3b;
-      text-shadow: 0 0 5px #ff3b3b;
     }
 
-    nav a {
+    .menu-icon {
+      font-size: 30px;
       color: #fff;
-      text-decoration: none;
-      margin-left: 25px;
-      font-size: 1.1rem;
-      transition: color 0.3s;
+      cursor: pointer;
+      user-select: none;
     }
 
-    nav a:hover {
-      color: #ff3b3b;
-    }
-
-    .contact {
-      padding: 80px 20px;
-      max-width: 600px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .contact h2 {
-      font-size: 2.5rem;
-      color: #ff3b3b;
-      margin-bottom: 1rem;
-    }
-
-    form {
+    /* Right Sidebar */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      right: -260px;
+      height: 100%;
+      width: 260px;
+      background: #1a0000;
+      box-shadow: -4px 0 10px #ff3b3b33;
       display: flex;
       flex-direction: column;
-      gap: 15px;
+      padding-top: 80px;
+      transition: right 0.3s ease;
+      z-index: 1000;
+    }
+
+    .sidebar.open {
+      right: 0;
+    }
+
+    .sidebar a {
+      color: #fff;
+      text-decoration: none;
+      padding: 20px;
+      text-align: left;
+      font-size: 1.2rem;
+      transition: background 0.2s;
+    }
+
+    .sidebar a:hover {
+      background: #ff3b3b;
+    }
+
+    #discord-user img {
+      border-radius: 50%;
+      border: 2px solid #ff3b3b;
+      width: 45px;
+      height: 45px;
+    }
+
+    .main {
+      padding: 30px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .contact-box {
+      background: #1a0000;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px #ff3b3b33;
+      margin-top: 30px;
     }
 
     input, textarea {
+      width: 100%;
       padding: 12px;
-      border: none;
+      margin-top: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ff3b3b55;
       border-radius: 8px;
+      background: #2a0000;
+      color: #fff;
       font-size: 1rem;
-    }
-
-    textarea {
-      resize: vertical;
-      min-height: 100px;
     }
 
     button {
       background: #ff3b3b;
-      color: white;
-      font-size: 1rem;
-      padding: 12px;
       border: none;
+      padding: 12px 30px;
+      font-size: 1rem;
+      color: white;
       border-radius: 8px;
       cursor: pointer;
       transition: background 0.3s;
@@ -85,72 +114,68 @@
     button:hover {
       background: #cc2a2a;
     }
-
-    .success {
-      color: #33ff99;
-      font-size: 1.1rem;
-      margin-top: 10px;
-    }
   </style>
 </head>
 <body>
-  <!-- Navigation Menu -->
-  <header>
-    <div class="logo">Hell Host🔥</div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="dashboard.html">Dashboard</a>
-      <a href="contact.html">Contact</a>
-      <a href="login.html">Login</a>
-    </nav>
-  </header>
 
-  <!-- Contact Form Section -->
-  <section class="contact">
-    <h2>Contact Us</h2>
-    <form id="contactForm">
-      <input type="text" id="name" placeholder="Your Name" required />
-      <input type="email" id="email" placeholder="Your Email" required />
-      <textarea id="message" placeholder="Your Message" required></textarea>
-      <button type="submit">Send Message</button>
-      <div class="success" id="successMessage"></div>
-    </form>
-  </section>
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="logo">🔥 Hell Host</div>
+    <div style="display: flex; align-items: center; gap: 15px;">
+      <div id="discord-user"></div>
+      <div class="menu-icon" id="menu-btn">☰</div>
+    </div>
+  </div>
 
+  <!-- Right Sidebar -->
+  <div class="sidebar" id="sidebar">
+    <a href="index.html">🏠 Home</a>
+    <a href="contact.html">✉️ Contact</a>
+    <a href="dashboard.html">⚙️ Dashboard</a>
+  </div>
+
+  <!-- Main Contact Content -->
+  <div class="main">
+    <h1>📬 Contact Us</h1>
+    <div class="contact-box">
+      <form onsubmit="submitForm(event)">
+        <label>Your Name</label>
+        <input type="text" required placeholder="Enter your name" />
+
+        <label>Your Email</label>
+        <input type="email" required placeholder="Enter your email" />
+
+        <label>Your Message</label>
+        <textarea rows="5" required placeholder="What's your message?"></textarea>
+
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
   <script>
-    const form = document.getElementById('contactForm');
-    const successMsg = document.getElementById('successMessage');
+    // Load Discord avatar
+    const user = JSON.parse(localStorage.getItem("discord_user"));
+    if (user) {
+      const avatarURL = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+      document.getElementById("discord-user").innerHTML = `
+        <img src="${avatarURL}" title="${user.username}#${user.discriminator}" />
+      `;
+    }
 
-    form.addEventListener('submit', async function (e) {
-      e.preventDefault();
-
-      const name = document.getElementById('name').value;
-      const email = document.getElementById('email').value;
-      const message = document.getElementById('message').value;
-
-      // Your Discord Webhook URL (replace with your actual one!)
-      const webhookURL = "https://discord.com/api/webhooks/1393926492265775175/8ZVhfRp_OPAYEVrS2MOpORJx0iNjNIKb5lbFOq33UhLQeT6_TcnWqEJ9sgGCAJnXNjuq"; // <-- replace this
-
-      const payload = {
-        content: `🔥 **New Hell Host Message** 🔥\n**Name:** ${name}\n**Email:** ${email}\n**Message:** ${message}`
-      };
-
-      try {
-        await fetch(webhookURL, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(payload)
-        });
-
-        successMsg.innerText = "✅ Message sent to Hell Host Discord!";
-        form.reset();
-      } catch (error) {
-        successMsg.innerText = "❌ Failed to send message.";
-        console.error("Error sending to Discord:", error);
-      }
+    // Sidebar toggle
+    const sidebar = document.getElementById("sidebar");
+    const menuBtn = document.getElementById("menu-btn");
+    menuBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("open");
     });
+
+    // Contact form submit handler
+    function submitForm(e) {
+      e.preventDefault();
+      alert("✅ Message sent! (but not really — you can connect to Discord bot next)");
+    }
   </script>
 </body>
-</html>
+          </html>
