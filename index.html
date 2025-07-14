@@ -7,97 +7,108 @@
   <style>
     body {
       margin: 0;
-      background: linear-gradient(135deg, #1a0000, #660000);
+      display: flex;
+      background: #0f0000;
+      color: #ffbbbb;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: #ff4c4c;
+      height: 100vh;
+      overflow: hidden;
     }
 
-    header {
-      background-color: #0d0000;
-      padding: 20px 40px;
+    .sidebar {
+      width: 220px;
+      background: #1a0000;
+      padding-top: 40px;
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
       align-items: center;
-      box-shadow: 0 3px 10px #ff3b3b33;
-      position: sticky;
+      box-shadow: 2px 0 10px #ff3b3b22;
+      position: fixed;
       top: 0;
-      z-index: 1000;
+      bottom: 0;
+      left: 0;
+    }
+
+    .sidebar a {
+      color: #fff;
+      text-decoration: none;
+      padding: 15px 20px;
+      width: 100%;
+      text-align: center;
+      font-size: 1.1rem;
+      transition: background 0.3s;
+    }
+
+    .sidebar a:hover {
+      background: #ff3b3b;
+    }
+
+    #discord-user img {
+      border-radius: 50%;
+      border: 2px solid #ff3b3b;
+      width: 50px;
+      height: 50px;
+      position: absolute;
+      top: 20px;
+      right: 20px;
+    }
+
+    .main {
+      flex: 1;
+      padding: 40px;
+      margin-left: 220px;
+      position: relative;
+      width: 100%;
     }
 
     .logo {
-      font-size: 1.8rem;
-      font-weight: bold;
+      font-size: 2rem;
       color: #ff3b3b;
-      text-shadow: 0 0 5px #ff3b3b;
+      margin-bottom: 30px;
     }
 
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      margin-left: 25px;
-      font-size: 1.1rem;
-      transition: color 0.3s;
-    }
-
-    nav a:hover {
-      color: #ff3b3b;
-    }
-
-    .hero {
-      height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      padding: 0 20px;
-      background: rgba(0, 0, 0, 0.6);
-    }
-
-    h1 {
-      font-size: 4rem;
-      margin-bottom: 0.5rem;
-      text-shadow: 0 0 15px #ff3b3b;
-    }
-
-    p {
-      font-size: 1.5rem;
-      margin-bottom: 2rem;
-      color: #ffbbbb;
-    }
-
-    a.btn {
-      text-decoration: none;
-      font-weight: bold;
-      font-size: 1.2rem;
-      color: #fff;
-      background: #ff3b3b;
-      padding: 12px 30px;
-      border-radius: 40px;
-      box-shadow: 0 5px 15px #ff3b3baa;
-      transition: background 0.3s ease;
-    }
-
-    a.btn:hover {
-      background: #cc2a2a;
-      box-shadow: 0 7px 20px #cc2a2aee;
+    .content-box {
+      background: #1a0000;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px #ff3b3b33;
+      max-width: 600px;
+      margin: auto;
     }
   </style>
 </head>
 <body>
-  <!-- Navigation Menu -->
-  <header>
-    <div class="logo">Hell Host🔥</div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="dashboard.html">Dashboard</a>
-      <a href="contact.html">Contact</a> <!-- This goes to separate contact page -->
-      <a href="login.html">Login</a>
-    </nav>
-  </header>
 
-  <!-- Hero Section -->
-  <section class="hero">
-    <h1>Welcome to Hell Host</h1>
-    <p>Your fiery hosting solution — blazing fast and unstoppable.</p>
-    <a href="https://Hell_Host.cloud
+  <!-- Sidebar Menu -->
+  <div class="sidebar">
+    <a href="index.html">🏠 Home</a>
+    <a href="dashboard.html">⚙️ Dashboard</a>
+    <a href="contact.html">✉️ Contact</a>
+  </div>
+
+  <!-- Main Page Content -->
+  <div class="main">
+    <!-- Discord avatar (top-right) -->
+    <div id="discord-user"></div>
+
+    <div class="logo">🔥 Welcome to Hell Host 🔥</div>
+
+    <div class="content-box">
+      <h2>👋 Hello!</h2>
+      <p>This is the home of your hosting service.</p>
+      <p>Visit the Dashboard to manage your system or Contact for support.</p>
+    </div>
+  </div>
+
+  <!-- Discord Avatar Script -->
+  <script>
+    const user = JSON.parse(localStorage.getItem("discord_user"));
+    if (user) {
+      const avatarURL = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+      document.getElementById("discord-user").innerHTML = `
+        <img src="${avatarURL}" title="${user.username}#${user.discriminator}" />
+      `;
+    }
+  </script>
+</body>
+</html>
