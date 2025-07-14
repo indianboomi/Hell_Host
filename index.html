@@ -95,3 +95,53 @@
 <body>
 
   <!-- Top Navigation Bar -->
+  <div class="top-bar">
+    <div class="logo">🔥 Hell Host</div>
+    <div style="display: flex; align-items: center; gap: 15px;">
+      <div id="discord-user"></div>
+      <div class="menu-icon" id="menu-btn">☰</div>
+    </div>
+  </div>
+
+  <!-- Right Sidebar Menu -->
+  <div class="sidebar" id="sidebar">
+    <a href="index.html">🏠 Home</a>
+    <a href="dashboard.html">⚙️ Dashboard</a>
+    <a href="contact.html">✉️ Contact</a>
+  </div>
+
+  <!-- Main Page Content -->
+  <div class="main">
+    <h1>Welcome to Hell Host 👹</h1>
+    <div class="content-box">
+      <p>This is your hosting home screen.</p>
+      <p>Use the menu ☰ to access Contact and Dashboard.</p>
+    </div>
+  </div>
+
+  <!-- JavaScript -->
+  <script>
+    // Discord avatar loader
+    const user = JSON.parse(localStorage.getItem("discord_user"));
+    if (user) {
+      const avatarURL = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+      document.getElementById("discord-user").innerHTML = `
+        <img src="${avatarURL}" title="${user.username}#${user.discriminator}" />
+      `;
+    }
+
+    // Sidebar toggle
+    const sidebar = document.getElementById("sidebar");
+    const menuBtn = document.getElementById("menu-btn");
+
+    menuBtn.addEventListener("click", () => {
+      sidebar.classList.toggle("open");
+    });
+
+    // Optional: close sidebar when link clicked
+    document.querySelectorAll(".sidebar a").forEach(link => {
+      link.addEventListener("click", () => sidebar.classList.remove("open"));
+    });
+  </script>
+</body>
+</html>
