@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Hell Host - Dashboard</title>
+  <title>Hell Host - Owner Dashboard</title>
   <style>
     body {
       margin: 0;
@@ -20,7 +20,6 @@
       align-items: center;
       padding: 0 20px;
       box-shadow: 0 2px 10px #ff3b3b22;
-      position: relative;
     }
 
     .logo {
@@ -35,7 +34,6 @@
       user-select: none;
     }
 
-    /* Right Sidebar */
     .sidebar {
       position: fixed;
       top: 0;
@@ -113,7 +111,7 @@
 </head>
 <body>
 
-  <!-- Top Navigation Bar -->
+  <!-- Top Bar -->
   <div class="top-bar">
     <div class="logo">🔥 Hell Host</div>
     <div style="display: flex; align-items: center; gap: 15px;">
@@ -122,7 +120,7 @@
     </div>
   </div>
 
-  <!-- Right Sidebar Menu -->
+  <!-- Right Sidebar -->
   <div class="sidebar" id="sidebar">
     <a href="index.html">🏠 Home</a>
     <a href="contact.html">✉️ Contact</a>
@@ -130,29 +128,31 @@
     <a href="#" id="logout-link">🚪 Logout</a>
   </div>
 
-  <!-- Main Dashboard Area -->
+  <!-- Main Dashboard -->
   <div class="main">
-    <!-- Login Button -->
     <button id="login-btn">Login with Discord</button>
 
-    <!-- Dashboard Section (hidden until logged in) -->
     <div id="dashboard" class="hidden">
       <h2>Welcome, <span id="username"></span>!</h2>
+      <p style="color:#ff3b3b; font-weight:bold;">👑 Owner Access</p>
+
       <div class="dashboard-content">
-        <h3>🔥 Dashboard Access</h3>
-        <p>Server is running fine. All systems operational ✅</p>
+        <h3>Server Control Panel</h3>
+        <p>You're logged in as the Hell Host owner.</p>
       </div>
+
       <button id="logout-btn">Logout</button>
     </div>
   </div>
 
-  <!-- JavaScript -->
+  <!-- Script -->
   <script>
-    const clientId = "1384756715760652360";
+    const clientId = "1384756715760652360"; // Your Discord App Client ID
     const redirectUri = "https://indianboomi.github.io/Hell_Host/dashboard.html";
     const scope = "identify";
     const tokenKey = "MTM4NDc1NjcxNTc2MDY1MjM2MA.GknEAt.Uur9d0bi4NTlRhXIWpItZ2EQ3QhhRW5Ygn6qWY";
     const userKey = "discord_user";
+    const ownerId = "886868526734905354"; // 🔐 Replace with your actual Discord ID
 
     const loginBtn = document.getElementById("login-btn");
     const logoutBtn = document.getElementById("logout-btn");
@@ -177,9 +177,7 @@
 
     function showAvatar(user) {
       const avatarURL = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
-      avatarContainer.innerHTML = `
-        <img src="${avatarURL}" title="${user.username}#${user.discriminator}" />
-      `;
+      avatarContainer.innerHTML = `<img src="${avatarURL}" title="${user.username}#${user.discriminator}" />`;
     }
 
     function logout() {
@@ -207,6 +205,11 @@
         }
 
         if (user) {
+          if (user.id !== ownerId) {
+            alert("❌ Access denied. You are not the owner.");
+            return;
+          }
+
           loginBtn.classList.add("hidden");
           dashboard.classList.remove("hidden");
           usernameEl.textContent = `${user.username}#${user.discriminator}`;
@@ -217,12 +220,10 @@
       }
     }
 
-    // Menu toggle
-    const sidebar = document.getElementById("sidebar");
-    const menuBtn = document.getElementById("menu-btn");
-    menuBtn.addEventListener("click", () => {
-      sidebar.classList.toggle("open");
-    });
+    // Sidebar toggle
+    document.getElementById("menu-btn").onclick = () => {
+      document.getElementById("sidebar").classList.toggle("open");
+    };
 
     logoutBtn.onclick = logout;
     logoutLink.onclick = (e) => {
