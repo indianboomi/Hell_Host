@@ -1,47 +1,135 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Hell Host - Dashboard</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css" />
   <style>
+    body {
+      margin: 0;
+      background: url('https://i.imgur.com/5OeWXWa.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: #fff;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: -1;
+    }
+
+    header {
+      background: rgba(20, 0, 0, 0.7);
+      padding: 15px 20px;
+      font-size: 1.4rem;
+      color: #ff3b3b;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .menu-btn {
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .sidebar {
+      position: fixed;
+      right: 0;
+      top: 55px;
+      background-color: #1a0000ee;
+      width: 200px;
+      height: 100%;
+      padding: 20px;
+      display: none;
+      flex-direction: column;
+      z-index: 10;
+    }
+
+    .sidebar a {
+      color: #fff;
+      text-decoration: none;
+      margin: 10px 0;
+      font-size: 1rem;
+    }
+
+    .sidebar a:hover {
+      color: #ff3b3b;
+    }
+
+    .container {
+      padding: 20px;
+      max-width: 1100px;
+      margin: auto;
+    }
+
     .section {
       background: rgba(0, 0, 0, 0.5);
       padding: 20px;
-      margin: 20px;
+      margin: 20px 0;
       border-radius: 12px;
-      color: #fff;
     }
+
     .section h2, .section h3, .section h4 {
       color: #ff6b6b;
     }
+
     .stats {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
       gap: 10px;
-      margin: 10px 0;
     }
+
     .stat-box {
       background: #220000cc;
       padding: 10px;
       border-radius: 8px;
       text-align: center;
     }
+
     .quick-actions, .announcements, .system-status {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
     }
+
     .card {
-      flex: 1 1 200px;
+      flex: 1 1 240px;
       background: #330000cc;
       padding: 15px;
       border-radius: 10px;
     }
-    button.small {
-      font-size: 0.9rem;
-      padding: 6px 12px;
+
+    button, input {
+      background: #ff3b3b;
+      border: none;
+      padding: 10px 20px;
+      color: white;
+      border-radius: 6px;
+      cursor: pointer;
       margin-top: 10px;
+    }
+
+    button:hover {
+      background: #cc2a2a;
+    }
+
+    button.small {
+      padding: 6px 14px;
+      font-size: 0.9rem;
+    }
+
+    input[type=\"text\"] {
+      width: 100%;
+      margin-top: 8px;
+      padding: 8px;
+      border-radius: 6px;
+      border: none;
     }
   </style>
 </head>
@@ -49,144 +137,144 @@
   <header>
     🔥 Hell Host
     <div class="menu-btn" onclick="toggleMenu()">☰</div>
-  </header>  <!-- Right Sidebar -->
+  </header>
+
+  <!-- Right Sidebar -->
   <div class="sidebar" id="sidebar">
     <a href="index.html">🏠 Home</a>
     <a href="dashboard.html">⚙️ Dashboard</a>
     <a href="contact.html">✉️ Contact</a>
     <a href="#" id="logout-link">🚪 Logout</a>
-  </div>  <div class="container">
-    <h2> Wow You Click Link<span id="discord-user">Discord User</span> 👋</h2>
-    <p>Welcome back to Hell Host!</p><div class="section">
-  <h3>Welcome to Your Dashboard</h3>
-  <p>Manage your Minecraft servers and monitor your resources.</p>
-
-  <h4>Create Your First Server</h4>
-  <p>Get started with your own free Minecraft server today.</p>
-  <button>Create New Server</button>
-</div>
-
-<div class="section">
-  <h3>Resource Allocation</h3>
-  <div class="stats">
-    <div class="stat-box">Memory<br>0.50 GiB</div>
-    <div class="stat-box">CPU<br>0.50 core(s)</div>
-    <div class="stat-box">Storage<br>1.00 GiB</div>
-    <div class="stat-box">Server Slots<br>1</div>
   </div>
-</div>
+  
+  <div class="container">
+    <h2>Good morning! <span id="discord-user">Discord User</span> 👋</h2>
+    <p>Welcome back to Hell Host!</p>
 
-<div class="section">
-  <h3>Dashboard Overview</h3>
-
-  <div class="card">
-    <h4>Real-time Server Status</h4>
-    <p>Client API Unavailable</p>
-    <p><strong>Enable Real-time Status Updates</strong></p>
-    <input type="text" placeholder="Client API Key">
-    <button class="small">Save</button>
-  </div>
-
-  <div class="card">
-    <h4>Connection Diagnostics</h4>
-    <button class="small">Run Tests</button>
-    <button class="small">Quick Test</button>
-  </div>
-
-  <div class="card">
-    <h4>Server Status</h4>
-    <p>Running: 0 | Stopped: 0 | Starting: 0 | Total: 0</p>
-    <button class="small">Start</button>
-    <button class="small">Stop</button>
-    <button class="small">Restart</button>
-  </div>
-
-  <div class="card">
-    <h4>Resource Usage</h4>
-    <p>Memory: 0 MB / 0 MB<br>CPU: 0.0%<br>Storage: 0 GB / 0 GB</p>
-    <p>Network RX: 0 B | TX: 0 B</p>
-  </div>
-
-  <div class="card">
-    <h4>Recent Activity</h4>
-    <p>No recent activity</p>
-    <a href="#">View All</a>
-  </div>
-
-  <div class="card">
-    <h4>Account Summary</h4>
-    <p>Balance: 0 PAC<br>Package: Default<br>Servers: 0 / 1</p>
-  </div>
-</div>
-
-<div class="section">
-  <h3>Announcements</h3>
-  <div class="announcements">
-    <div class="card">
-      <h4>Welcome to Hell Host!</h4>
-      <p>Your Minecraft server hosting dashboard is ready. Create your first server to get started!</p>
+    <div class="section">
+      <h3>Welcome to Your Dashboard</h3>
+      <p>Manage your Minecraft servers and monitor your resources.</p>
+      <h4>Create Your First Server</h4>
+      <button>Create New Server</button>
     </div>
-    <div class="card">
-      <h4>New Dashboard Features</h4>
-      <p>Real-time monitoring, usage tracking, and quick actions.</p>
+
+    <div class="section">
+      <h3>Resource Allocation</h3>
+      <div class="stats">
+        <div class="stat-box">Memory<br>0.50 GiB</div>
+        <div class="stat-box">CPU<br>0.50 core(s)</div>
+        <div class="stat-box">Storage<br>1.00 GiB</div>
+        <div class="stat-box">Server Slots<br>1</div>
+      </div>
     </div>
-    <div class="card">
-      <h4>Scheduled Maintenance</h4>
-      <p>Minimal downtime expected this weekend.</p>
+
+    <div class="section">
+      <h3>Dashboard Overview</h3>
+
+      <div class="card">
+        <h4>Real-time Server Status</h4>
+        <p>Client API Unavailable</p>
+        <input type="text" placeholder="Client API Key">
+        <button class="small">Save</button>
+      </div>
+
+      <div class="card">
+        <h4>Connection Diagnostics</h4>
+        <button class="small">Run Tests</button>
+        <button class="small">Quick Test</button>
+      </div>
+
+      <div class="card">
+        <h4>Server Status</h4>
+        <p>Running: 0 | Stopped: 0 | Starting: 0 | Total: 0</p>
+        <button class="small">Start</button>
+        <button class="small">Stop</button>
+        <button class="small">Restart</button>
+      </div>
+
+      <div class="card">
+        <h4>Resource Usage</h4>
+        <p>Memory: 0 MB / 0 MB<br>CPU: 0.0%<br>Storage: 0 GB / 0 GB</p>
+        <p>Network RX: 0 B | TX: 0 B</p>
+      </div>
+
+      <div class="card">
+        <h4>Recent Activity</h4>
+        <p>No recent activity</p>
+        <a href="#">View All</a>
+      </div>
+
+      <div class="card">
+        <h4>Account Summary</h4>
+        <p>Balance: 0 PAC<br>Package: Default<br>Servers: 0 / 1</p>
+      </div>
     </div>
-    <div class="card">
-      <h4>Pro Tip</h4>
-      <p>Use quick action buttons to manage servers fast!</p>
+
+    <div class="section">
+      <h3>Announcements</h3>
+      <div class="announcements">
+        <div class="card">
+          <h4>🔥 Welcome to Hell Host!</h4>
+          <p>Your dashboard is ready. Create your first server to get started!</p>
+        </div>
+        <div class="card">
+          <h4>🚀 New Dashboard Features</h4>
+          <p>Real-time server monitoring and quick actions.</p>
+        </div>
+        <div class="card">
+          <h4>🔧 Maintenance</h4>
+          <p>Downtime expected this weekend.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Quick Actions</h3>
+      <div class="quick-actions">
+        <button>Earn</button>
+        <button>Store</button>
+        <button>Servers</button>
+        <button>Account</button>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>System Status</h3>
+      <div class="system-status">
+        <div class="card">
+          <p>Platform: Online<br>Updated: Just now<br>Version: v2.1.0</p>
+        </div>
+        <div class="card">
+          <p>Response Time: 45ms<br>Uptime: 99.9%<br>Load: Low</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <h3>Your Servers</h3>
+      <p>No servers yet</p>
+      <button>Create Server</button>
     </div>
   </div>
-</div>
 
-<div class="section">
-  <h3>Quick Actions</h3>
-  <div class="quick-actions">
-    <button>Earn</button>
-    <button>Store</button>
-    <button>Servers</button>
-    <button>Account</button>
-  </div>
-</div>
-
-<div class="section">
-  <h3>System Status</h3>
-  <div class="system-status">
-    <div class="card">
-      <p>Platform: Online<br>Updated: Just now<br>Version: v2.1.0</p>
-    </div>
-    <div class="card">
-      <p>Response Time: 45ms<br>Uptime: 99.9%<br>Load: Low</p>
-    </div>
-  </div>
-</div>
-
-<div class="section">
-  <h3>Your Servers</h3>
-  <p>No servers yet</p>
-  <button>Create Server</button>
-</div>
-
-  </div>  <script>
+  <script>
     function toggleMenu() {
-      const sidebar = document.getElementById("sidebar");
-      sidebar.style.display = sidebar.style.display === "flex" ? "none" : "flex";
+      const sidebar = document.getElementById(\"sidebar\");
+      sidebar.style.display = sidebar.style.display === \"flex\" ? \"none\" : \"flex\";
     }
 
-    // Discord Login Fetch
     async function loadDiscordUser() {
-      const token = localStorage.getItem("discord_token");
+      const token = localStorage.getItem(\"discord_token\");
       if (!token) return;
-      const res = await fetch("https://discord.com/api/users/@me", {
+      const res = await fetch(\"https://discord.com/api/users/@me\", {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (res.ok) {
         const data = await res.json();
-        document.getElementById("discord-user").textContent = `${data.username}#${data.discriminator}`;
+        document.getElementById(\"discord-user\").textContent = `${data.username}#${data.discriminator}`;
       }
     }
     loadDiscordUser();
-  </script></body>
-</html>
+  </script>
+</body>
+        </html>
