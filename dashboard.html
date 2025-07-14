@@ -1,300 +1,176 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Hell Host - Owner Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
-  <!-- ... your existing styles or script ... -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hell Host - Dashboard</title>
+  <link rel="stylesheet" href="style.css">
   <style>
-    body {
-      margin: 0;
-      background: #0f0000;
-      color: #ffbbbb;
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    }
-
-    .top-bar {
-      height: 60px;
-      background: #1a0000;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 20px;
-      box-shadow: 0 2px 10px #ff3b3b22;
-    }
-
-    .logo {
-      font-size: 1.5rem;
-      color: #ff3b3b;
-    }
-
-    .menu-icon {
-      font-size: 30px;
-      color: #fff;
-      cursor: pointer;
-    }
-
-    .sidebar {
-      position: fixed;
-      top: 0;
-      right: -260px;
-      height: 100%;
-      width: 260px;
-      background: #1a0000;
-      box-shadow: -4px 0 10px #ff3b3b33;
-      display: flex;
-      flex-direction: column;
-      padding-top: 80px;
-      transition: right 0.3s ease;
-      z-index: 1000;
-    }
-
-    .sidebar.open {
-      right: 0;
-    }
-
-    .sidebar a {
-      color: #fff;
-      text-decoration: none;
+    .section {
+      background: rgba(0, 0, 0, 0.5);
       padding: 20px;
-      text-align: left;
-      font-size: 1.2rem;
-      transition: background 0.2s;
+      margin: 20px;
+      border-radius: 12px;
+      color: #fff;
     }
-
-    .sidebar a:hover {
-      background: #ff3b3b;
+    .section h2, .section h3, .section h4 {
+      color: #ff6b6b;
     }
-
-    #discord-user img {
-      border-radius: 50%;
-      border: 2px solid #ff3b3b;
-      width: 45px;
-      height: 45px;
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 10px;
+      margin: 10px 0;
     }
-
-    .main {
-      padding: 30px;
-      max-width: 800px;
-      margin: 0 auto;
+    .stat-box {
+      background: #220000cc;
+      padding: 10px;
+      border-radius: 8px;
       text-align: center;
     }
-
-    .dashboard-content {
-      background: #1a0000;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 20px #ff3b3b33;
-      margin-top: 30px;
+    .quick-actions, .announcements, .system-status {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
     }
-
-    button {
-      background: #ff3b3b;
-      border: none;
-      padding: 12px 30px;
-      font-size: 1rem;
-      color: white;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 15px;
-      transition: background 0.3s;
+    .card {
+      flex: 1 1 200px;
+      background: #330000cc;
+      padding: 15px;
+      border-radius: 10px;
     }
-
-    button:hover {
-      background: #cc2a2a;
-    }
-
-    .hidden {
-      display: none;
+    button.small {
+      font-size: 0.9rem;
+      padding: 6px 12px;
+      margin-top: 10px;
     }
   </style>
 </head>
 <body>
-
-  <!-- Top Bar -->
-  <div class="top-bar">
-    <div class="logo">🔥 Hell Host</div>
-    <div style="display: flex; align-items: center; gap: 15px;">
-      <div id="discord-user"></div>
-      <div class="menu-icon" id="menu-btn">☰</div>
-    </div>
-  </div>
-
-  <!-- Right Sidebar -->
-  <div class="sidebar" id="sidebar">
+  <header>
+    🔥 Hell Host
+    <div class="menu-btn" onclick="toggleMenu()">☰</div>
+  </header>  <div class="sidebar" id="sidebar">
     <a href="index.html">🏠 Home</a>
+    <a href="contact.html">📬 Contact</a>
     <a href="dashboard.html">⚙️ Dashboard</a>
-    <a href="contact.html">✉️ Contact</a>
-    <a href="#" id="logout-link">🚪 Logout</a>
+  </div>  <div class="container">
+    <h2>Good morning! <span id="discord-user">Discord User</span> 👋</h2>
+    <p>Welcome back to Hell Host!</p><div class="section">
+  <h3>Welcome to Your Dashboard</h3>
+  <p>Manage your Minecraft servers and monitor your resources.</p>
+
+  <h4>Create Your First Server</h4>
+  <p>Get started with your own free Minecraft server today.</p>
+  <button>Create New Server</button>
+</div>
+
+<div class="section">
+  <h3>Resource Allocation</h3>
+  <div class="stats">
+    <div class="stat-box">Memory<br>0.50 GiB</div>
+    <div class="stat-box">CPU<br>0.50 core(s)</div>
+    <div class="stat-box">Storage<br>1.00 GiB</div>
+    <div class="stat-box">Server Slots<br>1</div>
+  </div>
+</div>
+
+<div class="section">
+  <h3>Dashboard Overview</h3>
+
+  <div class="card">
+    <h4>Real-time Server Status</h4>
+    <p>Client API Unavailable</p>
+    <p><strong>Enable Real-time Status Updates</strong></p>
+    <input type="text" placeholder="Client API Key">
+    <button class="small">Save</button>
   </div>
 
-  <!-- Main Dashboard -->
-  <div class="main">
-    <button id="login-btn">Login with Discord</button>
+  <div class="card">
+    <h4>Connection Diagnostics</h4>
+    <button class="small">Run Tests</button>
+    <button class="small">Quick Test</button>
+  </div>
 
-    <div id="dashboard" class="hidden">
-      <h2>Welcome, <span id="username"></span>!</h2>
-      <p style="color:#ff3b3b; font-weight:bold;">👑 Owner Access</p>
+  <div class="card">
+    <h4>Server Status</h4>
+    <p>Running: 0 | Stopped: 0 | Starting: 0 | Total: 0</p>
+    <button class="small">Start</button>
+    <button class="small">Stop</button>
+    <button class="small">Restart</button>
+  </div>
 
-      <!-- Owner Dashboard Panel -->
-      <div class="dashboard-content">
-        <h3>📊 Owner Dashboard</h3>
-        <p>You are the boss of Hell Host 😈</p>
-      </div>
+  <div class="card">
+    <h4>Resource Usage</h4>
+    <p>Memory: 0 MB / 0 MB<br>CPU: 0.0%<br>Storage: 0 GB / 0 GB</p>
+    <p>Network RX: 0 B | TX: 0 B</p>
+  </div>
 
-      <!-- 🔧 Bot Control Panel -->
-      <div class="dashboard-content" id="control-panel">
-        <h3>🔧 Bot Control Panel</h3>
-        <p><strong>Status:</strong> <span id="bot-status">🟢 Online</span></p>
-        <p><strong>Uptime:</strong> <span id="uptime">0m</span></p>
-        <p><strong>Ping:</strong> <span id="ping">34ms</span></p>
+  <div class="card">
+    <h4>Recent Activity</h4>
+    <p>No recent activity</p>
+    <a href="#">View All</a>
+  </div>
 
-        <div style="margin-top: 20px;">
-          <button onclick="startBot()">▶️ Start</button>
-          <button onclick="stopBot()">⏹️ Stop</button>
-          <button onclick="restartBot()">🔄 Restart</button>
-        </div>
-      </div>
+  <div class="card">
+    <h4>Account Summary</h4>
+    <p>Balance: 0 PAC<br>Package: Default<br>Servers: 0 / 1</p>
+  </div>
+</div>
 
-      <button id="logout-btn">Logout</button>
+<div class="section">
+  <h3>Announcements</h3>
+  <div class="announcements">
+    <div class="card">
+      <h4>Welcome to Hell Host!</h4>
+      <p>Your Minecraft server hosting dashboard is ready. Create your first server to get started!</p>
+    </div>
+    <div class="card">
+      <h4>New Dashboard Features</h4>
+      <p>Real-time monitoring, usage tracking, and quick actions.</p>
+    </div>
+    <div class="card">
+      <h4>Scheduled Maintenance</h4>
+      <p>Minimal downtime expected this weekend.</p>
+    </div>
+    <div class="card">
+      <h4>Pro Tip</h4>
+      <p>Use quick action buttons to manage servers fast!</p>
     </div>
   </div>
+</div>
 
-  <!-- Script -->
-  <script>
-    const clientId = "1384756715760652360"; // Your Discord App Client ID
-    const redirectUri = "https://indianboomi.github.io/Hell_Host/dashboard.html";
-    const scope = "identify";
-    const tokenKey = "MTM4NDc1NjcxNTc2MDY1MjM2MA.GknEAt.Uur9d0bi4NTlRhXIWpItZ2EQ3QhhRW5Ygn6qWY";
-    const userKey = "discord_user";
-    const ownerId = "886868526734905354"; // ← Replace this with your real Discord user ID
+<div class="section">
+  <h3>Quick Actions</h3>
+  <div class="quick-actions">
+    <button>Earn</button>
+    <button>Store</button>
+    <button>Servers</button>
+    <button>Account</button>
+  </div>
+</div>
 
-    const loginBtn = document.getElementById("login-btn");
-    const logoutBtn = document.getElementById("logout-btn");
-    const logoutLink = document.getElementById("logout-link");
-    const dashboard = document.getElementById("dashboard");
-    const usernameEl = document.getElementById("username");
-    const avatarContainer = document.getElementById("discord-user");
+<div class="section">
+  <h3>System Status</h3>
+  <div class="system-status">
+    <div class="card">
+      <p>Platform: Online<br>Updated: Just now<br>Version: v2.1.0</p>
+    </div>
+    <div class="card">
+      <p>Response Time: 45ms<br>Uptime: 99.9%<br>Load: Low</p>
+    </div>
+  </div>
+</div>
 
-    function getTokenFromUrl() {
-      const hash = window.location.hash.substring(1);
-      const params = new URLSearchParams(hash);
-      return params.get("access_token");
+<div class="section">
+  <h3>Your Servers</h3>
+  <p>No servers yet</p>
+  <button>Create Server</button>
+</div>
+
+  </div>  <script>
+    function toggleMenu() {
+      const sidebar = document.getElementById("sidebar");
+      sidebar.style.display = sidebar.style.display === "flex" ? "none" : "flex";
     }
-
-    async function fetchDiscordUser(token) {
-      const res = await fetch("https://discord.com/api/users/@me", {
-        headers: { Authorization: `Bearer ${token}` }
-      });
-      if (!res.ok) return null;
-      return await res.json();
-    }
-
-    function showAvatar(user) {
-      const avatarURL = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
-      avatarContainer.innerHTML = `<img src="${avatarURL}" title="${user.username}#${user.discriminator}" />`;
-    }
-
-    function logout() {
-      localStorage.removeItem(tokenKey);
-      localStorage.removeItem(userKey);
-      location.reload();
-    }
-
-    async function init() {
-      let token = localStorage.getItem(tokenKey);
-
-      if (!token) {
-        token = getTokenFromUrl();
-        if (token) {
-          localStorage.setItem(tokenKey, token);
-          window.history.replaceState({}, document.title, redirectUri);
-        }
-      }
-
-      if (token) {
-        let user = JSON.parse(localStorage.getItem(userKey));
-        if (!user) {
-          user = await fetchDiscordUser(token);
-          if (user) localStorage.setItem(userKey, JSON.stringify(user));
-        }
-
-        if (user) {
-          if (user.id !== ownerId) {
-            alert("❌ Access denied. You are not the owner.");
-            return;
-          }
-
-          loginBtn.classList.add("hidden");
-          dashboard.classList.remove("hidden");
-          usernameEl.textContent = `${user.username}#${user.discriminator}`;
-          showAvatar(user);
-        } else {
-          logout(); // token invalid
-        }
-      }
-    }
-
-    document.getElementById("menu-btn").onclick = () => {
-      document.getElementById("sidebar").classList.toggle("open");
-    };
-
-    logoutBtn.onclick = logout;
-    logoutLink.onclick = (e) => {
-      e.preventDefault();
-      logout();
-    };
-
-    loginBtn.onclick = () => {
-      const oauthUrl =
-        `https://discord.com/oauth2/authorize?client_id=${clientId}` +
-        `&redirect_uri=${encodeURIComponent(redirectUri)}` +
-        `&response_type=token&scope=${encodeURIComponent(scope)}`;
-      window.location.href = oauthUrl;
-    };
-
-    init();
-
-    // 🧠 Bot Control Logic
-    let uptimeMinutes = 0;
-    let status = "online";
-    let ping = 34;
-
-    function updateUptime() {
-      if (status === "online") {
-        uptimeMinutes++;
-        document.getElementById("uptime").textContent = uptimeMinutes + "m";
-        document.getElementById("ping").textContent = ping + "ms";
-      }
-    }
-    setInterval(updateUptime, 60000); // Every minute
-
-    function updateStatusUI() {
-      const statusSpan = document.getElementById("bot-status");
-      statusSpan.innerHTML = status === "online" ? "🟢 Online" : "🔴 Offline";
-    }
-
-    function startBot() {
-      status = "online";
-      ping = Math.floor(Math.random() * 30) + 20;
-      updateStatusUI();
-      alert("✅ Bot started!");
-    }
-
-    function stopBot() {
-      status = "offline";
-      updateStatusUI();
-      alert("⛔ Bot stopped!");
-    }
-
-    function restartBot() {
-      status = "online";
-      uptimeMinutes = 0;
-      ping = Math.floor(Math.random() * 40) + 10;
-      updateStatusUI();
-      alert("🔁 Bot restarted!");
-    }
-  </script>
-</body>
+  </script></body>
 </html>
