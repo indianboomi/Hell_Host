@@ -1,8 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>Hell Host - Contact</title>
   <link rel="stylesheet" href="style.css">
 </head>
@@ -21,12 +20,12 @@
   </div>
 
   <div class="container">
-    <h1>Contact Us</h1>
+    <h2>Contact Us</h2>
     <form id="contact-form">
-      <input type="text" id="name" placeholder="Your name" required />
-      <input type="email" id="email" placeholder="Your email" required />
-      <textarea id="message" placeholder="Your message..." required></textarea>
-      <button type="submit">Send Message</button>
+      <input type="text" id="name" placeholder="Your name" required><br>
+      <input type="email" id="email" placeholder="Your email" required><br>
+      <textarea id="message" placeholder="Your message" required></textarea><br>
+      <button type="submit">Send</button>
     </form>
     <p id="response-msg"></p>
   </div>
@@ -44,30 +43,16 @@
       const name = document.getElementById("name").value;
       const email = document.getElementById("email").value;
       const message = document.getElementById("message").value;
-      const responseMsg = document.getElementById("response-msg");
-
       const payload = {
-        content: `**New Contact Submission**\n**Name**: ${name}\n**Email**: ${email}\n**Message**:\n${message}`
+        content: `**Contact Form**\n**Name:** ${name}\n**Email:** ${email}\n**Message:**\n${message}`
       };
-
-      try {
-        const res = await fetch(webhookURL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        });
-
-        if (res.ok) {
-          responseMsg.style.color = "lightgreen";
-          responseMsg.textContent = "Message sent successfully!";
-          e.target.reset();
-        } else {
-          throw new Error("Failed to send.");
-        }
-      } catch {
-        responseMsg.style.color = "red";
-        responseMsg.textContent = "Error sending message.";
-      }
+      const res = await fetch(webhookURL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      document.getElementById("response-msg").textContent =
+        res.ok ? "✅ Message sent!" : "❌ Failed to send.";
     });
   </script>
 </body>
