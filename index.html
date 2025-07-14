@@ -12,6 +12,15 @@
       margin: auto;
       text-align: center;
     }
+
+    .dashboard-content {
+      background: #1a0000;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px #ff3b3b33;
+      margin-top: 30px;
+    }
+
     .menu-icon {
       font-size: 30px;
       color: #fff;
@@ -33,16 +42,19 @@
   <!-- Right Sidebar -->
   <div class="sidebar" id="sidebar">
     <a href="home.html">🏠 Home</a>
-    <a href="contact.html">✉️ Contact</a>
     <a href="dashboard.html">⚙️ Dashboard</a>
+    <a href="contact.html">✉️ Contact</a>
     <a href="#" onclick="logout()">🚪 Logout</a>
   </div>
 
   <!-- Main Content -->
   <div class="main">
-    <h2>Welcome to Hell Host</h2>
-    <p>Your ultimate dark hosting solution.</p>
-    <button onclick="location.href='dashboard.html'">Go to Dashboard</button>
+    <h2>🔥 Welcome to Hell Host</h2>
+    <div class="dashboard-content">
+      <p>Your dark, fast, and powerful hosting platform is here.</p>
+      <p>Manage bots, track logs, and stay in control with your Hell Dashboard.</p>
+      <button onclick="location.href='dashboard.html'">Go to Dashboard</button>
+    </div>
   </div>
 
   <script>
