@@ -2,55 +2,50 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hell Host - Contact</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <header>
-    <div class="logo" style="color:#ff3b3b; font-weight:bold; font-size:1.5rem;">🔥 Hell Host</div>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="contact.html">Contact</a>
-      <a href="dashboard.html">Dashboard</a>
-    </nav>
+    🔥 Hell Host
+    <div class="menu-btn" onclick="toggleMenu()">☰</div>
   </header>
+
+  <div class="sidebar" id="sidebar">
+    <a href="index.html">🏠 Home</a>
+    <a href="contact.html">✉️ Contact</a>
+    <a href="dashboard.html">⚙️ Dashboard</a>
+  </div>
 
   <div class="container">
     <h1>Contact Us</h1>
     <form id="contact-form">
-      <label for="name">Name</label>
-      <input type="text" id="name" required placeholder="Your name" />
-
-      <label for="email">Email</label>
-      <input type="email" id="email" required placeholder="Your email" />
-
-      <label for="message">Message</label>
-      <textarea id="message" required placeholder="Your message"></textarea>
-
+      <input type="text" id="name" placeholder="Your name" required />
+      <input type="email" id="email" placeholder="Your email" required />
+      <textarea id="message" placeholder="Your message..." required></textarea>
       <button type="submit">Send Message</button>
     </form>
-    <p id="response-msg" style="margin-top:15px;"></p>
+    <p id="response-msg"></p>
   </div>
 
   <script>
-    const webhookURL = "https://discord.com/api/webhooks/1393926492265775175/8ZVhfRp_OPAYEVrS2MOpORJx0iNjNIKb5lbFOq33UhLQeT6_TcnWqEJ9sgGCAJnXNjuq"; // Replace with your Discord webhook URL
+    function toggleMenu() {
+      const sidebar = document.getElementById("sidebar");
+      sidebar.style.display = sidebar.style.display === "flex" ? "none" : "flex";
+    }
+
+    const webhookURL = "https://discord.com/api/webhooks/1393926492265775175/8ZVhfRp_OPAYEVrS2MOpORJx0iNjNIKb5lbFOq33UhLQeT6_TcnWqEJ9sgGCAJnXNjuq"; // Replace this
 
     document.getElementById("contact-form").addEventListener("submit", async (e) => {
       e.preventDefault();
-
-      const name = document.getElementById("name").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const message = document.getElementById("message").value.trim();
+      const name = document.getElementById("name").value;
+      const email = document.getElementById("email").value;
+      const message = document.getElementById("message").value;
       const responseMsg = document.getElementById("response-msg");
 
-      if (!name || !email || !message) {
-        responseMsg.textContent = "Please fill all fields.";
-        return;
-      }
-
       const payload = {
-        content: `**New Contact Message**\n**Name:** ${name}\n**Email:** ${email}\n**Message:**\n${message}`
+        content: `**New Contact Submission**\n**Name**: ${name}\n**Email**: ${email}\n**Message**:\n${message}`
       };
 
       try {
@@ -65,10 +60,9 @@
           responseMsg.textContent = "Message sent successfully!";
           e.target.reset();
         } else {
-          responseMsg.style.color = "red";
-          responseMsg.textContent = "Failed to send message.";
+          throw new Error("Failed to send.");
         }
-      } catch (error) {
+      } catch {
         responseMsg.style.color = "red";
         responseMsg.textContent = "Error sending message.";
       }
