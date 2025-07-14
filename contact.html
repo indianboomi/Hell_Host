@@ -5,98 +5,73 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Hell Host - Contact</title>
   <link rel="stylesheet" href="style.css" />
-  <style>
-    .main {
-      padding: 40px;
-      max-width: 700px;
-      margin: auto;
-    }
-
-    .dashboard-content {
-      background: #1a0000;
-      padding: 30px;
-      border-radius: 15px;
-      box-shadow: 0 0 20px #ff3b3b33;
-      margin-top: 30px;
-    }
-
-    .menu-icon {
-      font-size: 30px;
-      color: #fff;
-      cursor: pointer;
-    }
-
-    input, textarea {
-      width: 100%;
-      padding: 12px;
-      border-radius: 8px;
-      border: none;
-      background: #2a0000;
-      color: #ffcccc;
-      font-size: 1rem;
-      margin-top: 10px;
-    }
-
-    input::placeholder, textarea::placeholder {
-      color: #ff9f9f;
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-  </style>
 </head>
 <body>
+  <header>
+    <div class="logo" style="color:#ff3b3b; font-weight:bold; font-size:1.5rem;">🔥 Hell Host</div>
+    <nav>
+      <a href="index.html">Home</a>
+      <a href="contact.html">Contact</a>
+      <a href="dashboard.html">Dashboard</a>
+    </nav>
+  </header>
 
-  <!-- Top Bar -->
-  <div class="top-bar">
-    <div class="logo">🔥 Hell Host</div>
-    <div style="display: flex; align-items: center; gap: 15px;">
-      <div id="discord-user"></div>
-      <div class="menu-icon" id="menu-btn">☰</div>
-    </div>
-  </div>
+  <div class="container">
+    <h1>Contact Us</h1>
+    <form id="contact-form">
+      <label for="name">Name</label>
+      <input type="text" id="name" required placeholder="Your name" />
 
-  <!-- Right Sidebar -->
-  <div class="sidebar" id="sidebar">
-    <a href="home.html">🏠 Home</a>
-    <a href="dashboard.html">⚙️ Dashboard</a>
-    <a href="contact.html">✉️ Contact</a>
-    <a href="#" onclick="logout()">🚪 Logout</a>
-  </div>
+      <label for="email">Email</label>
+      <input type="email" id="email" required placeholder="Your email" />
 
-  <!-- Main Content -->
-  <div class="main">
-    <h2>📩 Contact Us</h2>
-    <div class="dashboard-content">
-      <form id="contact-form">
-        <input type="text" name="name" placeholder="Your Name" required />
-        <input type="email" name="email" placeholder="Your Email" required />
-        <textarea name="message" placeholder="Your Message" rows="5" required></textarea>
-        <button type="submit">Send Message</button>
-      </form>
-    </div>
+      <label for="message">Message</label>
+      <textarea id="message" required placeholder="Your message"></textarea>
+
+      <button type="submit">Send Message</button>
+    </form>
+    <p id="response-msg" style="margin-top:15px;"></p>
   </div>
 
   <script>
-    // Sidebar toggle
-    document.getElementById("menu-btn").onclick = () => {
-      document.getElementById("sidebar").classList.toggle("open");
-    };
+    const webhookURL = "https://discord.com/api/webhooks/1393926492265775175/8ZVhfRp_OPAYEVrS2MOpORJx0iNjNIKb5lbFOq33UhLQeT6_TcnWqEJ9sgGCAJnXNjuq"; // Replace with your Discord webhook URL
 
-    // Logout clears session
-    function logout() {
-      localStorage.clear();
-      location.href = "home.html";
-    }
-
-    // Fake submit (you can link Discord webhook later)
-    document.getElementById("contact-form").addEventListener("submit", e => {
+    document.getElementById("contact-form").addEventListener("submit", async (e) => {
       e.preventDefault();
-      alert("✅ Message sent (you can hook this to Discord Webhook)");
-      e.target.reset();
+
+      const name = document.getElementById("name").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const message = document.getElementById("message").value.trim();
+      const responseMsg = document.getElementById("response-msg");
+
+      if (!name || !email || !message) {
+        responseMsg.textContent = "Please fill all fields.";
+        return;
+      }
+
+      const payload = {
+        content: `**New Contact Message**\n**Name:** ${name}\n**Email:** ${email}\n**Message:**\n${message}`
+      };
+
+      try {
+        const res = await fetch(webhookURL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+          responseMsg.style.color = "lightgreen";
+          responseMsg.textContent = "Message sent successfully!";
+          e.target.reset();
+        } else {
+          responseMsg.style.color = "red";
+          responseMsg.textContent = "Failed to send message.";
+        }
+      } catch (error) {
+        responseMsg.style.color = "red";
+        responseMsg.textContent = "Error sending message.";
+      }
     });
   </script>
 </body>
