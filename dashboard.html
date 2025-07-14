@@ -56,7 +56,7 @@
     <a href="contact.html">✉️ Contact</a>
     <a href="#" id="logout-link">🚪 Logout</a>
   </div>  <div class="container">
-    <h2>Good morning! <span id="discord-user">Discord User</span> 👋</h2>
+    <h2> Wow You Click Link<span id="discord-user">Discord User</span> 👋</h2>
     <p>Welcome back to Hell Host!</p><div class="section">
   <h3>Welcome to Your Dashboard</h3>
   <p>Manage your Minecraft servers and monitor your resources.</p>
@@ -174,5 +174,19 @@
       const sidebar = document.getElementById("sidebar");
       sidebar.style.display = sidebar.style.display === "flex" ? "none" : "flex";
     }
+
+    // Discord Login Fetch
+    async function loadDiscordUser() {
+      const token = localStorage.getItem("discord_token");
+      if (!token) return;
+      const res = await fetch("https://discord.com/api/users/@me", {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      if (res.ok) {
+        const data = await res.json();
+        document.getElementById("discord-user").textContent = `${data.username}#${data.discriminator}`;
+      }
+    }
+    loadDiscordUser();
   </script></body>
 </html>
