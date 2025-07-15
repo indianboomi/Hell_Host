@@ -5,11 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hell Host - Home</title>
   <style>
-    /* === Background and Body === */
     body {
       margin: 0;
       padding: 0;
-      background: url('https://cdn.discordapp.com/attachments/1390732132271259648/1394267972993814528/images.jpg?ex=687630bd&is=6874df3d&hm=80eeb65440a86f973624edb6cf363bc742ed2d8ebdece78cb326592bcc34c779&') no-repeat center center fixed;
+      background: url('https://cdn.discordapp.com/attachments/1390732132271259648/1394267972993814528/images.jpg?ex=687630bd&is=6874df3d&hm=80eeb65440a86f973624edb6cf') no-repeat center center fixed;
       background-size: cover;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: white;
@@ -26,125 +25,10 @@
       z-index: -1;
     }
 
-    /* === Header === */
     header {
       background: rgba(0, 0, 0, 0.6);
       padding: 15px 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size: 1.4rem;
-      color: #ff3b3b;
-      position: sticky;
-      top: 0;
-      z-index: 999;
-    }
-
-    .menu-btn {
-      font-size: 1.5rem;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    /* === Sidebar === */
-    .sidebar {
-      position: fixed;
-      top: 55px;
-      right: 0;
-      width: 200px;
-      height: calc(100% - 55px);
-      background: rgba(10, 0, 0, 0.95);
-      display: none;
-      flex-direction: column;
-      padding: 20px;
-      z-index: 1000;
-      transition: 0.3s;
-    }
-
-    .sidebar a {
-      color: white;
-      text-decoration: none;
-      margin: 12px 0;
-      font-size: 1rem;
-    }
-
-    .sidebar a:hover {
-      color: #ff3b3b;
-    }
-
-    /* === Main Content === */
-    .hero {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 30px;
-    }
-
-    .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 10px;
-      color: #ff6b6b;
-    }
-
-    .hero p {
-      font-size: 1.2rem;
-      max-width: 600px;
-      margin: 0 auto;
-    }
-
-    .btn {
-      background: #ff3b3b;
-      color: white;
-      padding: 12px 28px;
-      border: none;
-      border-radius: 6px;
-      font-size: 1rem;
-      margin-top: 20px;
-      cursor: pointer;
-    }
-
-    .btn:hover {
-      background: #cc2a2a;
-    }
-  </style>
-</head>
-<body>
-
-  <header>
-    🔥 Hell Host
-    <div class="menu-btn" onclick="toggleMenu()">☰</div>
-  </header>
-
-  <!-- Right Sidebar -->
-  <div class="sidebar" id="sidebar">
-    <a href="index.html">🏠 Home</a>
-    <a href="dashboard.html">⚙️ Dashboard</a>
-    <a href="contact.html">✉️ Contact</a>
-    <a href="#" id="logout-link">🚪 Logout</a>
-  </div>
-  <div class="hero">
-    <div>
-      <h1>Welcome to Hell Host</h1>
-      <p>Your powerful and blazing-fast hosting platform for Minecraft servers. Start building your server today with premium tools, speed, and control.</p>
-      <a href="dashboard.html"><button class="btn">Go to Dashboard</button></a>
-    </div>
-  </div>
-
-  <script>
-    function toggleMenu() {
-      const sidebar = document.getElementById("sidebar");
-      sidebar.style.display = sidebar.style.display === "flex" ? "none" : "flex";
-    }
-
-    document.addEventListener("click", function (e) {
-      const sidebar = document.getElementById("sidebar");
-      const menuBtn = document.querySelector(".menu-btn");
-      if (!sidebar.contains(e.target) && !menuBtn.contains(e.target)) {
-        sidebar.style.display = "none";
-      }
-    });
-  </script>
-</body>
-  </html>
+      font-size:
