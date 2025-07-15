@@ -8,13 +8,11 @@
     body {
       margin: 0;
       padding: 0;
-      background: url('https://cdn.discordapp.com/attachments/1390732132271259648/1394267972993814528/images.jpg?ex=687630bd&is=6874df3d&hm=80eeb65440a86f973624edb6cf') no-repeat center center fixed;
+      background: url('https://i.imgur.com/5OeWXWa.jpg') no-repeat center center fixed;
       background-size: cover;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: white;
       height: 100vh;
-      display: flex;
-      flex-direction: column;
     }
 
     body::before {
@@ -25,151 +23,132 @@
       z-index: -1;
     }
 
-    header {
-      background: rgba(0, 0, 0, 0.6);
-      padding: 15px 20px;
+    .content {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
-      font-size: 1.4rem;
-      color: #ff3b3b;
-      position: sticky;
-      top: 0;
-      z-index: 999;
-    }
-
-    .menu-btn {
-      font-size: 1.5rem;
-      cursor: pointer;
-      user-select: none;
-    }
-
-    .sidebar {
-      position: fixed;
-      top: 55px;
-      right: 0;
-      width: 200px;
-      height: calc(100% - 55px);
-      background: rgba(10, 0, 0, 0.95);
-      display: none;
+      height: 100%;
+      text-align: center;
       flex-direction: column;
       padding: 20px;
-      z-index: 1000;
     }
 
-    .sidebar a,
-    .sidebar button {
-      color: white;
-      text-decoration: none;
-      margin: 12px 0;
-      font-size: 1rem;
-      background: none;
-      border: none;
-      cursor: pointer;
-      text-align: left;
-    }
-
-    .sidebar a:hover,
-    .sidebar button:hover {
-      color: #ff3b3b;
-    }
-
-    .hero {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 30px;
-    }
-
-    .hero h1 {
+    h1 {
       font-size: 3rem;
-      margin-bottom: 10px;
       color: #ff6b6b;
     }
 
-    .hero p {
+    p {
       font-size: 1.2rem;
       max-width: 600px;
-      margin: 0 auto;
     }
 
     .btn {
       background: #ff3b3b;
       color: white;
-      padding: 12px 28px;
+      padding: 12px 25px;
       border: none;
       border-radius: 6px;
       font-size: 1rem;
-      margin-top: 20px;
       cursor: pointer;
+      margin-top: 20px;
     }
 
     .btn:hover {
+      background: #cc2a2a;
+    }
+
+    #user-info-bar {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 9999;
+      text-align: right;
+    }
+
+    #user-info-bar img {
+      border-radius: 50%;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+
+    #user-info-bar button {
+      background: #ff3b3b;
+      color: white;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #user-info-bar a {
+      background: #ff3b3b;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    #user-info-bar button:hover,
+    #user-info-bar a:hover {
       background: #cc2a2a;
     }
   </style>
 </head>
 <body>
 
-  <header>
-    🔥 Hell Host
-    <div class="menu-btn" onclick="toggleMenu()">☰</div>
-  </header>
+  <!-- 🔒 Discord Login/Logout Top-Right -->
+  <div id="user-info-bar"></div>
 
-  <!-- Right Sidebar -->
-  <div class="sidebar" id="sidebar">
-    <a href="index.html">🏠 Home</a>
-    <a href="dashboard.html">⚙️ Dashboard</a>
-    <a href="contact.html">✉️ Contact</a>
-    <a href="login.html">🚪 Login</a>
-  </div>    
-  <!-- login/logout button will appear here -->
-
-  <div class="hero">
-    <div>
-      <h1>Welcome to Hell Host</h1>
-      <p>Your powerful and blazing-fast hosting platform for Minecraft servers. Start building your server today with premium tools, speed, and control.</p>
-      <a href="dashboard.html"><button class="btn">Go to Dashboard</button></a>
-    </div>
+  <div class="content">
+    <h1>🔥 Welcome to Hell Host</h1>
+    <p>Manage your Minecraft servers with blazing speed and control. Get started now with powerful tools and features!</p>
+    <a href="dashboard.html"><button class="btn">Go to Dashboard</button></a>
   </div>
 
   <script>
-    function toggleMenu() {
-      const sidebar = document.getElementById("sidebar");
-      sidebar.style.display = sidebar.style.display === "flex" ? "none" : "flex";
-    }
+    async function showUserBar() {
+      const token = localStorage.getItem("discord_token");
+      const container = document.getElementById("user-info-bar");
 
-    document.addEventListener("click", function (e) {
-      const sidebar = document.getElementById("sidebar");
-      const menuBtn = document.querySelector(".menu-btn");
-      if (!sidebar.contains(e.target) && !menuBtn.contains(e.target)) {
-        sidebar.style.display = "none";
+      if (!token) {
+        container.innerHTML = `
+          <a href="login.html">🔐 Login with Discord</a>
+        `;
+        return;
       }
-    });
 
-    // 👇 Login/Logout Button Based on Discord Token
-    const authSection = document.getElementById("auth-section");
-    const token = localStorage.getItem("discord_token");
+      try {
+        const res = await fetch("https://discord.com/api/users/@me", {
+          headers: { Authorization: `Bearer ${token}` }
+        });
 
-    if (token) {
-      // ✅ Show Logout
-      const logoutBtn = document.createElement("button");
-      logoutBtn.textContent = "🚪 Logout";
-      logoutBtn.onclick = () => {
+        if (!res.ok) throw new Error("Invalid token");
+
+        const user = await res.json();
+        const avatarUrl = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+
+        container.innerHTML = `
+          <div style="background:rgba(0,0,0,0.8);padding:10px;border-radius:8px;">
+            <img src="${avatarUrl}" width="40" height="40" />
+            <strong>${user.username}#${user.discriminator}</strong>
+            <button onclick="logout()">Logout</button>
+          </div>
+        `;
+      } catch (err) {
         localStorage.removeItem("discord_token");
-        window.location.reload();
-      };
-      authSection.appendChild(logoutBtn);
-    } else {
-      // 🔐 Show Login
-      const loginBtn = document.createElement("a");
-      loginBtn.href = "login.html"; // change this to your actual login URL
-      loginBtn.textContent = "🔐 Login with Discord";
-      authSection.appendChild(loginBtn);
+        container.innerHTML = `<a href="login.html">🔐 Login with Discord</a>`;
+      }
     }
+
+    function logout() {
+      localStorage.removeItem("discord_token");
+      location.reload();
+    }
+
+    showUserBar();
   </script>
 
 </body>
-  </html>
+</html>
