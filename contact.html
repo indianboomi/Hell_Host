@@ -1,58 +1,226 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hell Host - Contact</title>
-  <link rel="stylesheet" href="style.css">
+  <style>
+    body {
+      margin: 0;
+      background: url('https://i.imgur.com/5OeWXWa.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+      height: 100vh;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: -1;
+    }
+
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.8);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .menu-icon {
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    .sidebar {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      top: 0;
+      right: 0;
+      background: #1a1a1a;
+      overflow-x: hidden;
+      transition: 0.3s;
+      padding-top: 60px;
+      z-index: 999;
+    }
+
+    .sidebar a {
+      padding: 15px 25px;
+      text-decoration: none;
+      font-size: 1.2rem;
+      color: #ffbbbb;
+      display: block;
+      transition: 0.2s;
+    }
+
+    .sidebar a:hover {
+      background: #ff3b3b;
+      color: white;
+    }
+
+    #user-info-bar {
+      text-align: right;
+    }
+
+    #user-info-bar img {
+      border-radius: 50%;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+
+    #user-info-bar button,
+    #user-info-bar a {
+      background: #ff3b3b;
+      color: white;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-left: 10px;
+    }
+
+    .form-container {
+      margin-top: 140px;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      padding: 30px;
+      background: rgba(0,0,0,0.8);
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    input, textarea {
+      width: 100%;
+      padding: 12px;
+      margin: 10px 0;
+      border: none;
+      border-radius: 6px;
+      background: #222;
+      color: white;
+      font-size: 1rem;
+    }
+
+    button {
+      background: #ff3b3b;
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #cc2a2a;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    🔥 Hell Host
-    <div class="menu-btn" onclick="toggleMenu()">☰</div>
-  </header>
 
-  <!-- Right Sidebar -->
-  <div class="sidebar" id="sidebar">
-    <a href="index.html">🏠 Home</a>
-    <a href="dashboard.html">⚙️ Dashboard</a>
-    <a href="contact.html">✉️ Contact</a>
-    <a href="#" id="logout-link">🚪 Logout</a>
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="menu-icon" onclick="toggleSidebar()">☰</div>
+    <div id="user-info-bar"></div>
   </div>
 
-  <div class="container">
-    <h2>Contact Us</h2>
+  <!-- Sidebar Menu -->
+  <div id="sidebar" class="sidebar">
+    <a href="index.html">🏠 Home</a>
+    <a href="dashboard.html">📊 Dashboard</a>
+    <a href="contact.html">📬 Contact</a>
+    <a href="login.html">🔐 Login Page</a>
+  </div>
+
+  <!-- Contact Form -->
+  <div class="form-container">
+    <h2>📬 Contact Us</h2>
     <form id="contact-form">
-      <input type="text" id="name" placeholder="Your name" required><br>
-      <input type="email" id="email" placeholder="Your email" required><br>
-      <textarea id="message" placeholder="Your message" required></textarea><br>
-      <button type="submit">Send</button>
+      <input type="text" id="name" placeholder="Your Name" required />
+      <input type="email" id="email" placeholder="Your Email" required />
+      <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+      <p id="status-msg"></p>
     </form>
-    <p id="response-msg"></p>
   </div>
 
   <script>
-    function toggleMenu() {
+    function toggleSidebar() {
       const sidebar = document.getElementById("sidebar");
-      sidebar.style.display = sidebar.style.display === "flex" ? "none" : "flex";
+      sidebar.style.width = sidebar.style.width === "250px" ? "0" : "250px";
     }
 
-    const webhookURL = "https://discord.com/api/webhooks/1393926492265775175/8ZVhfRp_OPAYEVrS2MOpORJx0iNjNIKb5lbFOq33UhLQeT6_TcnWqEJ9sgGCAJnXNjuq"; // Replace this
+    async function showUserBar() {
+      const token = localStorage.getItem("discord_token");
+      const container = document.getElementById("user-info-bar");
 
+      if (!token) {
+        container.innerHTML = `<a href="login.html">🔐 Login</a>`;
+        return;
+      }
+
+      try {
+        const res = await fetch("https://discord.com/api/users/@me", {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+        if (!res.ok) throw new Error("Invalid token");
+
+        const user = await res.json();
+        const avatarUrl = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+
+        container.innerHTML = `
+          <img src="${avatarUrl}" width="35" height="35" />
+          <strong>${user.username}#${user.discriminator}</strong>
+          <button onclick="logout()">Logout</button>
+        `;
+      } catch {
+        localStorage.removeItem("discord_token");
+        container.innerHTML = `<a href="login.html">🔐 Login</a>`;
+      }
+    }
+
+    function logout() {
+      localStorage.removeItem("discord_token");
+      location.reload();
+    }
+
+    showUserBar();
+
+    // Handle contact form submission
     document.getElementById("contact-form").addEventListener("submit", async (e) => {
       e.preventDefault();
       const name = document.getElementById("name").value;
       const email = document.getElementById("email").value;
       const message = document.getElementById("message").value;
-      const payload = {
-        content: `**Contact Form**\n**Name:** ${name}\n**Email:** ${email}\n**Message:**\n${message}`
-      };
-      const res = await fetch(webhookURL, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-      document.getElementById("response-msg").textContent =
-        res.ok ? "✅ Message sent!" : "❌ Failed to send.";
+      const status = document.getElementById("status-msg");
+
+      const content = `**New Contact Form Submission**\n**Name:** ${name}\n**Email:** ${email}\n**Message:** ${message}`;
+
+      try {
+        await fetch("https://discord.com/api/webhooks/1393926492265775175/8ZVhfRp_OPAYEVrS2MOpORJx0iNjNIKb5lbFOq33UhLQeT6_TcnWqEJ9sgGCAJnXNjuq", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ content }),
+        });
+
+        status.textContent = "✅ Message sent!";
+        status.style.color = "lightgreen";
+        e.target.reset();
+      } catch {
+        status.textContent = "❌ Failed to send.";
+        status.style.color = "red";
+      }
     });
   </script>
 </body>
