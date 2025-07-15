@@ -7,12 +7,12 @@
   <style>
     body {
       margin: 0;
-      padding: 0;
       background: url('https://i.imgur.com/5OeWXWa.jpg') no-repeat center center fixed;
       background-size: cover;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: white;
       height: 100vh;
+      overflow-x: hidden;
     }
 
     body::before {
@@ -24,13 +24,8 @@
     }
 
     .content {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100%;
       text-align: center;
-      flex-direction: column;
-      padding: 20px;
+      padding-top: 120px;
     }
 
     h1 {
@@ -41,6 +36,7 @@
     p {
       font-size: 1.2rem;
       max-width: 600px;
+      margin: 0 auto;
     }
 
     .btn {
@@ -58,11 +54,54 @@
       background: #cc2a2a;
     }
 
-    #user-info-bar {
+    /* Top bar */
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.8);
       position: fixed;
-      top: 10px;
-      right: 10px;
-      z-index: 9999;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .menu-icon {
+      font-size: 28px;
+      cursor: pointer;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      top: 0;
+      right: 0;
+      background: #1a1a1a;
+      overflow-x: hidden;
+      transition: 0.3s;
+      padding-top: 60px;
+      z-index: 999;
+    }
+
+    .sidebar a {
+      padding: 15px 25px;
+      text-decoration: none;
+      font-size: 1.2rem;
+      color: #ffbbbb;
+      display: block;
+      transition: 0.2s;
+    }
+
+    .sidebar a:hover {
+      background: #ff3b3b;
+      color: white;
+    }
+
+    /* User Info */
+    #user-info-bar {
       text-align: right;
     }
 
@@ -72,22 +111,16 @@
       margin-right: 10px;
     }
 
-    #user-info-bar button {
-      background: #ff3b3b;
-      color: white;
-      border: none;
-      padding: 6px 12px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-
+    #user-info-bar button,
     #user-info-bar a {
       background: #ff3b3b;
       color: white;
       padding: 6px 12px;
+      border: none;
       border-radius: 5px;
-      text-decoration: none;
+      cursor: pointer;
       font-weight: bold;
+      margin-left: 10px;
     }
 
     #user-info-bar button:hover,
@@ -98,24 +131,45 @@
 </head>
 <body>
 
-  <!-- 🔒 Discord Login/Logout Top-Right -->
-  <div id="user-info-bar"></div>
+  <!-- 🔝 Top Bar -->
+  <div class="top-bar">
+    <div class="menu-icon" onclick="toggleSidebar()">☰</div>
+    <div id="user-info-bar"></div>
+  </div>
 
+  <!-- 📋 Sidebar Menu -->
+  <div id="sidebar" class="sidebar">
+    <a href="index.html">🏠 Home</a>
+    <a href="dashboard.html">📊 Dashboard</a>
+    <a href="contact.html">📬 Contact</a>
+    <a href="login.html">🔐 Login Page</a>
+  </div>
+
+  <!-- 🧠 Page Content -->
   <div class="content">
     <h1>🔥 Welcome to Hell Host</h1>
-    <p>Manage your Minecraft servers with blazing speed and control. Get started now with powerful tools and features!</p>
+    <p>Manage your Minecraft servers with full control, power, and style. Host, monitor, and rule your world.</p>
     <a href="dashboard.html"><button class="btn">Go to Dashboard</button></a>
   </div>
 
   <script>
+    // Sidebar open/close
+    function toggleSidebar() {
+      const sidebar = document.getElementById("sidebar");
+      if (sidebar.style.width === "250px") {
+        sidebar.style.width = "0";
+      } else {
+        sidebar.style.width = "250px";
+      }
+    }
+
+    // Discord Login User Bar
     async function showUserBar() {
       const token = localStorage.getItem("discord_token");
       const container = document.getElementById("user-info-bar");
 
       if (!token) {
-        container.innerHTML = `
-          <a href="login.html">🔐 Login with Discord</a>
-        `;
+        container.innerHTML = `<a href="login.html">🔐 Login</a>`;
         return;
       }
 
@@ -130,15 +184,13 @@
         const avatarUrl = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
 
         container.innerHTML = `
-          <div style="background:rgba(0,0,0,0.8);padding:10px;border-radius:8px;">
-            <img src="${avatarUrl}" width="40" height="40" />
-            <strong>${user.username}#${user.discriminator}</strong>
-            <button onclick="logout()">Logout</button>
-          </div>
+          <img src="${avatarUrl}" width="35" height="35" />
+          <strong>${user.username}#${user.discriminator}</strong>
+          <button onclick="logout()">Logout</button>
         `;
       } catch (err) {
         localStorage.removeItem("discord_token");
-        container.innerHTML = `<a href="login.html">🔐 Login with Discord</a>`;
+        container.innerHTML = `<a href="login.html">🔐 Login</a>`;
       }
     }
 
@@ -149,6 +201,5 @@
 
     showUserBar();
   </script>
-
 </body>
 </html>
