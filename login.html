@@ -1,4 +1,3 @@
-<!-- login.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -129,11 +128,32 @@
   </div>
 
   <script>
+    // Sidebar toggle
     function toggleSidebar() {
       const sidebar = document.getElementById("sidebar");
       sidebar.style.width = sidebar.style.width === "250px" ? "0" : "250px";
     }
 
+    // Read token from URL
+    function getTokenFromUrl() {
+      const hash = window.location.hash.substring(1);
+      const params = new URLSearchParams(hash);
+      return params.get('access_token');
+    }
+
+    // Store token
+    function storeToken() {
+      const token = getTokenFromUrl();
+      if (token) {
+        localStorage.setItem("discord_token", token);
+        // Remove token from URL bar
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+    }
+
+    storeToken();
+
+    // Show user avatar and logout
     async function showUserBar() {
       const token = localStorage.getItem("discord_token");
       const container = document.getElementById("user-info-bar");
@@ -154,7 +174,7 @@
         const avatarUrl = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
 
         container.innerHTML = `
-          <img src="${avatarUrl}" width="35" height="35" />
+          <img src="${avatarUrl}" width="35" height="35">
           <strong>${user.username}#${user.discriminator}</strong>
           <button onclick="logout()">Logout</button>
         `;
@@ -169,15 +189,16 @@
       location.reload();
     }
 
-    // Discord login
+    // Handle login button
     document.getElementById("login-btn").onclick = () => {
-      const clientId = "1384756715760652360"; // Replace this
-      const redirectUri = encodeURIComponent("https://indianboomi.github.io/Hell_Host/login.html"); // Replace with your URL
+      const clientId = "1384756715760652360"; // Replace with your real client ID
+      const redirectUri = "https://indianboomi.github.io/Hell_Host/login.html"; // Make sure this matches your Discord app redirect
       const scope = "identify";
-      window.location.href = `https://discord.com/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=${scope}`;
+      const oauthUrl = `https://discord.com/oauth2/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=token&scope=${scope}`;
+      window.location.href = oauthUrl;
     };
 
-    showUserBar();
+    showUserBar(); // run on load
   </script>
 </body>
 </html>
