@@ -1,3 +1,4 @@
+<!-- login.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,28 +40,6 @@
       cursor: pointer;
     }
 
-    #user-info-bar {
-      text-align: right;
-    }
-
-    #user-info-bar img {
-      border-radius: 50%;
-      vertical-align: middle;
-      margin-right: 10px;
-    }
-
-    #user-info-bar button,
-    #user-info-bar a {
-      background: #ff3b3b;
-      color: white;
-      padding: 6px 12px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-      margin-left: 10px;
-    }
-
     .sidebar {
       height: 100%;
       width: 0;
@@ -86,6 +65,23 @@
     .sidebar a:hover {
       background: #ff3b3b;
       color: white;
+    }
+
+    #user-info-bar img {
+      border-radius: 50%;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
+
+    #user-info-bar button {
+      background: #ff3b3b;
+      color: white;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-left: 10px;
     }
 
     .center-box {
@@ -122,7 +118,8 @@
     <a href="index.html">🏠 Home</a>
     <a href="dashboard.html">📊 Dashboard</a>
     <a href="contact.html">📬 Contact</a>
-    <a href="login.html">🔐 Login Page</a>
+    <a href="login.html">🔐 Login</a>
+    <a href="owner.html">👑 Owner Panel</a>
   </div>
 
   <!-- Center Content -->
@@ -172,21 +169,15 @@
       location.reload();
     }
 
+    // Discord login
     document.getElementById("login-btn").onclick = () => {
-      const clientId = "1384756715760652360"; // Replace with your actual client ID
-      const redirectUri = encodeURIComponent("https://yourdomain.com/login.html"); // Replace with your real login URL
+      const clientId = "1384756715760652360"; // Replace this
+      const redirectUri = encodeURIComponent("https://indianboomi.github.io/Hell_Host/login.html"); // Replace with your URL
       const scope = "identify";
-
       window.location.href = `https://discord.com/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=${scope}`;
     };
 
     showUserBar();
   </script>
 </body>
-</html>t;
-
-    main();
-  </script>
-</body>
-</html></body>
 </html>
