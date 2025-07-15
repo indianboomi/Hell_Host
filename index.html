@@ -31,4 +31,145 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      font-size:
+      font-size: 1.4rem;
+      color: #ff3b3b;
+      position: sticky;
+      top: 0;
+      z-index: 999;
+    }
+
+    .menu-btn {
+      font-size: 1.5rem;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .sidebar {
+      position: fixed;
+      top: 55px;
+      right: 0;
+      width: 200px;
+      height: calc(100% - 55px);
+      background: rgba(10, 0, 0, 0.95);
+      display: none;
+      flex-direction: column;
+      padding: 20px;
+      z-index: 1000;
+    }
+
+    .sidebar a,
+    .sidebar button {
+      color: white;
+      text-decoration: none;
+      margin: 12px 0;
+      font-size: 1rem;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+    }
+
+    .sidebar a:hover,
+    .sidebar button:hover {
+      color: #ff3b3b;
+    }
+
+    .hero {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 30px;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      color: #ff6b6b;
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .btn {
+      background: #ff3b3b;
+      color: white;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      margin-top: 20px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: #cc2a2a;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    🔥 Hell Host
+    <div class="menu-btn" onclick="toggleMenu()">☰</div>
+  </header>
+
+  <div class="sidebar" id="sidebar">
+    <a href="index.html">🏠 Home</a>
+    <a href="contact.html">📬 Contact</a>
+    <a href="dashboard.html">⚙️ Dashboard</a>
+    <div id="auth-section">
+      <!-- login/logout button will appear here -->
+    </div>
+  </div>
+
+  <div class="hero">
+    <div>
+      <h1>Welcome to Hell Host</h1>
+      <p>Your powerful and blazing-fast hosting platform for Minecraft servers. Start building your server today with premium tools, speed, and control.</p>
+      <a href="dashboard.html"><button class="btn">Go to Dashboard</button></a>
+    </div>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      const sidebar = document.getElementById("sidebar");
+      sidebar.style.display = sidebar.style.display === "flex" ? "none" : "flex";
+    }
+
+    document.addEventListener("click", function (e) {
+      const sidebar = document.getElementById("sidebar");
+      const menuBtn = document.querySelector(".menu-btn");
+      if (!sidebar.contains(e.target) && !menuBtn.contains(e.target)) {
+        sidebar.style.display = "none";
+      }
+    });
+
+    // 👇 Login/Logout Button Based on Discord Token
+    const authSection = document.getElementById("auth-section");
+    const token = localStorage.getItem("discord_token");
+
+    if (token) {
+      // ✅ Show Logout
+      const logoutBtn = document.createElement("button");
+      logoutBtn.textContent = "🚪 Logout";
+      logoutBtn.onclick = () => {
+        localStorage.removeItem("discord_token");
+        window.location.reload();
+      };
+      authSection.appendChild(logoutBtn);
+    } else {
+      // 🔐 Show Login
+      const loginBtn = document.createElement("a");
+      loginBtn.href = "login.html"; // change this to your actual login URL
+      loginBtn.textContent = "🔐 Login with Discord";
+      authSection.appendChild(loginBtn);
+    }
+  </script>
+
+</body>
+  </html>
