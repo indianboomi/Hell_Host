@@ -93,6 +93,20 @@
       const params = new URLSearchParams(hash);
       return params.get("access_token");
     }
+    
+    <!-- 🔝 Top Bar -->
+  <div class="top-bar">
+    <div class="menu-icon" onclick="toggleSidebar()">☰</div>
+    <div id="user-info-bar"></div>
+  </div>
+
+  <!-- 📋 Sidebar Menu -->
+  <div id="sidebar" class="sidebar">
+    <a href="index.html">🏠 Home</a>
+    <a href="dashboard.html">📊 Dashboard</a>
+    <a href="contact.html">📬 Contact</a>
+    <a href="login.html">🔐 Login Page</a>
+  </div>
 
     // Logout
     function logout() {
