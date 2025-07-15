@@ -1,2 +1,149 @@
-<!-- Avatar area -->
-<div id="discord-user" style="position: absolute; top: 20px; right: 20px;"></div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login with Discord - Hell Host</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: url('https://i.imgur.com/5OeWXWa.jpg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: -1;
+    }
+
+    .card {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+    }
+
+    .btn {
+      background: #ff3b3b;
+      color: white;
+      padding: 12px 25px;
+      border: none;
+      border-radius: 6px;
+      font-size: 1rem;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .btn:hover {
+      background: #cc2a2a;
+    }
+
+    #user-info img {
+      border-radius: 50%;
+      margin-top: 15px;
+    }
+
+    .hidden {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h2>🔐 Login with Discord</h2>
+    
+    <!-- Login Button -->
+    <button id="login-btn" class="btn">Login with Discord</button>
+
+    <!-- User Info (After Login) -->
+    <div id="user-info" class="hidden">
+      <p>Welcome, <span id="username">User</span>!</p>
+      <img id="avatar" src="" width="100" height="100" alt="Avatar" />
+      <br />
+      <button id="logout-btn" class="btn">Logout</button>
+    </div>
+  </div>
+
+  <script>
+    const clientId = "1384756715760652360"; // Replace with your Discord client ID
+    const redirectUri = window.location.origin + window.location.pathname; // e.g., https://your-site/login.html
+    const scope = "identify";
+
+    const loginBtn = document.getElementById("login-btn");
+    const logoutBtn = document.getElementById("logout-btn");
+    const userInfo = document.getElementById("user-info");
+    const username = document.getElementById("username");
+    const avatar = document.getElementById("avatar");
+
+    function getTokenFromUrl() {
+      const hash = window.location.hash.substring(1);
+      const params = new URLSearchParams(hash);
+      return params.get("access_token");
+    }
+
+    function logout() {
+      localStorage.removeItem("MTM4NDc1NjcxNTc2MDY1MjM2MA.GADFDO.uwizVLh4wxVK-FeXc95yFa3dka5f-F-VvnABY8");
+      location.reload();
+    }
+
+    async function fetchUser(token) {
+      const res = await fetch("https://discord.com/api/users/@me", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      if (!res.ok) {
+        logout();
+        return;
+      }
+      const data = await res.json();
+      return data;
+    }
+
+    async function main() {
+      let token = localStorage.getItem("MTM4NDc1NjcxNTc2MDY1MjM2MA.GADFDO.uwizVLh4wxVK-FeXc95yFa3dka5f-F-VvnABY8");
+
+      if (!token) {
+        const urlToken = getTokenFromUrl();
+        if (urlToken) {
+          token = urlToken;
+          localStorage.setItem("discord_token", token);
+          window.history.pushState({}, document.title, redirectUri); // clean URL
+        }
+      }
+
+      if (token) {
+        const user = await fetchUser(token);
+        if (user) {
+          loginBtn.classList.add("hidden");
+          userInfo.classList.remove("hidden");
+          username.textContent = `${user.username}#${user.discriminator}`;
+          avatar.src = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+        } else {
+          logout();
+        }
+      }
+    }
+
+    loginBtn.onclick = () => {
+      const oauthUrl = `https://discord.com/oauth2/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=token&scope=${scope}`;
+      window.location.href = oauthUrl;
+    };
+
+    logoutBtn.onclick = logout;
+
+    main();
+  </script>
+</body>
+</html>
