@@ -1,0 +1,155 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🛠️ Admin Panel - Hell Host</title>
+  <style>
+    body {
+      margin: 0;
+      background: linear-gradient(to right, #0f0f0f, #1f1f1f);
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+    }.top-bar {
+  background: #111;
+  color: #fff;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sidebar {
+  width: 220px;
+  background: #1a1a1a;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  padding-top: 60px;
+}
+
+.sidebar a {
+  display: block;
+  padding: 15px 20px;
+  color: #ccc;
+  text-decoration: none;
+  border-bottom: 1px solid #333;
+}
+
+.sidebar a:hover {
+  background: #333;
+  color: #fff;
+}
+
+.main {
+  margin-left: 220px;
+  padding: 20px;
+}
+
+.card {
+  background: #222;
+  padding: 20px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
+}
+
+button {
+  background: #ff3b3b;
+  border: none;
+  padding: 10px 20px;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.hidden { display: none; }
+.error { color: red; font-weight: bold; padding: 40px; }
+
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div>🛠️ Admin Panel</div>
+    <div id="admin-user">Checking login...</div>
+  </div>  <div class="sidebar">
+    <a href="index.html">🏠 Home</a>
+    <a href="dashboard.html">📊 Dashboard</a>
+    <a href="contact.html">📬 Contact</a>
+    <a href="owner.html">👑 Owner Panel</a>
+    <a href="admin.html">🛠️ Admin Panel</a>
+  </div>  <div class="main">
+    <div id="admin-panel" class="hidden">
+      <div class="card">
+        <h2>📢 Site Settings</h2>
+        <p>Update site announcement or maintenance mode.</p>
+        <textarea id="site-msg" rows="4" style="width: 100%;"></textarea>
+        <br/><br/>
+        <button onclick="sendSiteMessage()">Update Message</button>
+      </div><div class="card">
+    <h2>🧾 Contact Messages</h2>
+    <div id="contact-logs">Loading...</div>
+  </div>
+
+  <div class="card">
+    <h2>⚙️ Bot Commands</h2>
+    <button onclick="sendBotCommand('start')">Start</button>
+    <button onclick="sendBotCommand('stop')">Stop</button>
+    <button onclick="sendBotCommand('restart')">Restart</button>
+  </div>
+</div>
+
+<div id="not-logged-in" class="error hidden">
+  <h3>🚫 Access Denied</h3>
+  <p>Please log in to access the admin panel.</p>
+</div>
+
+  </div>  <script>
+    const webhookUrl = "YOUR_DISCORD_WEBHOOK_URL";
+
+    async function sendBotCommand(cmd) {
+      await fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content: `!${cmd}` })
+      });
+      alert(`Command '${cmd}' sent!`);
+    }
+
+    async function sendSiteMessage() {
+      const msg = document.getElementById("site-msg").value;
+      await fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content: `📢 Site Update: ${msg}` })
+      });
+      alert("Message sent to Discord!");
+    }
+
+    async function loadContactMessages() {
+      try {
+        const res = await fetch("contact_messages.json");
+        const data = await res.json();
+        document.getElementById("contact-logs").innerHTML = data.map(d => `<p><strong>${d.name}</strong>: ${d.message}</p>`).join('');
+      } catch {
+        document.getElementById("contact-logs").textContent = "⚠️ Failed to load messages.";
+      }
+    }
+
+    function checkLogin() {
+      const token = localStorage.getItem("discord_token");
+      const statusBar = document.getElementById("admin-user");
+
+      if (token) {
+        statusBar.textContent = "Authenticated Admin";
+        document.getElementById("admin-panel").classList.remove("hidden");
+        loadContactMessages();
+      } else {
+        statusBar.textContent = "Not Logged In";
+        document.getElementById("not-logged-in").classList.remove("hidden");
+      }
+    }
+
+    checkLogin();
+  </script></body>
+            </html>
