@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -11,132 +10,123 @@
       background-size: cover;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: white;
-    }
+    }body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: -1;
+}
 
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.85);
-      z-index: -1;
-    }
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.9);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+}
 
-    .top-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px;
-      background: rgba(0, 0, 0, 0.9);
-      position: fixed;
-      width: 100%;
-      top: 0;
-      z-index: 1000;
-    }
+.menu-icon {
+  font-size: 28px;
+  cursor: pointer;
+}
 
-    .menu-icon {
-      font-size: 28px;
-      cursor: pointer;
-    }
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background: #1a1a1a;
+  overflow-x: hidden;
+  transition: 0.3s;
+  padding-top: 60px;
+  z-index: 999;
+}
 
-    .sidebar {
-      height: 100%;
-      width: 0;
-      position: fixed;
-      top: 0;
-      right: 0;
-      background: #1a1a1a;
-      overflow-x: hidden;
-      transition: 0.3s;
-      padding-top: 60px;
-      z-index: 999;
-    }
+.sidebar a {
+  padding: 15px 25px;
+  text-decoration: none;
+  font-size: 1.2rem;
+  color: #ffbbbb;
+  display: block;
+  transition: 0.2s;
+}
 
-    .sidebar a {
-      padding: 15px 25px;
-      text-decoration: none;
-      font-size: 1.2rem;
-      color: #ffbbbb;
-      display: block;
-      transition: 0.2s;
-    }
+.sidebar a:hover {
+  background: #ff3b3b;
+  color: white;
+}
 
-    .sidebar a:hover {
-      background: #ff3b3b;
-      color: white;
-    }
+#user-info-bar img {
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 10px;
+}
 
-    #user-info-bar img {
-      border-radius: 50%;
-      vertical-align: middle;
-      margin-right: 10px;
-    }
+#user-info-bar button {
+  background: #ff3b3b;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: 10px;
+}
 
-    #user-info-bar button {
-      background: #ff3b3b;
-      color: white;
-      padding: 6px 12px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-      margin-left: 10px;
-    }
+.main-content {
+  padding-top: 120px;
+  text-align: center;
+}
 
-    .main-content {
-      padding-top: 120px;
-      text-align: center;
-    }
+.hidden {
+  display: none;
+}
 
-    .hidden {
-      display: none;
-    }
+.card {
+  background: #2a0000;
+  padding: 30px;
+  margin: 30px auto;
+  max-width: 600px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px red;
+}
 
-    .card {
-      background: #2a0000;
-      padding: 30px;
-      margin: 30px auto;
-      max-width: 600px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px red;
-    }
+.error {
+  color: red;
+  font-weight: bold;
+}
 
-    .error {
-      color: red;
-      font-weight: bold;
-    }
   </style>
 </head>
-<body>
-
-  <!-- Top Bar -->
-  <div class="top-bar">
+<body>  <!-- Top Bar -->  <div class="top-bar">
     <div class="menu-icon" onclick="toggleSidebar()">☰</div>
     <div id="user-info-bar"></div>
-  </div>
-
-  <!-- Sidebar -->
-  <div id="sidebar" class="sidebar">
+  </div>  <!-- Sidebar -->  <div id="sidebar" class="sidebar">
     <a href="index.html">🏠 Home</a>
     <a href="dashboard.html">📊 Dashboard</a>
     <a href="contact.html">📬 Contact</a>
     <a href="login.html">🔐 Login</a>
     <a href="owner.html">👑 Owner Panel</a>
-  </div>
-
-  <!-- Main Content -->
-  <div class="main-content">
+  </div>  <!-- Main Content -->  <div class="main-content">
     <div id="owner-panel" class="card hidden">
       <h2>👑 Welcome, Owner!</h2>
-      <p>This is your protected admin panel. Only you can see this.</p>
-      <p>Here you can manage your servers, view logs, and more.</p>
-    </div>
-    <div id="not-owner" class="error hidden">
-      <h3>🚫 Access Denied</h3>
-      <p>You are not authorized to view this page.</p>
-    </div>
-  </div>
+      <p>This is your protected admin panel. Only you can see this.</p><h3>📢 Send Announcement</h3>
+  <textarea id="announceText" rows="4" cols="40" placeholder="Enter message..."></textarea><br>
+  <button onclick="sendAnnouncement()">Send to Discord</button>
+</div>
 
-  <script>
+<div id="not-owner" class="error hidden">
+  <h3>🚫 Access Denied</h3>
+  <p>You are not authorized to view this page.</p>
+</div>
+
+  </div>  <script>
     function toggleSidebar() {
       const sidebar = document.getElementById("sidebar");
       sidebar.style.width = sidebar.style.width === "250px" ? "0" : "250px";
@@ -177,13 +167,11 @@
           <button onclick="logout()">Logout</button>
         `;
 
-        // Check owner
         if (user.id === "886868526734905354") {
           document.getElementById("owner-panel").classList.remove("hidden");
         } else {
           document.getElementById("not-owner").classList.remove("hidden");
         }
-
       } catch {
         localStorage.removeItem("discord_token");
         container.innerHTML = `<a href="login.html">🔐 Login</a>`;
@@ -195,8 +183,23 @@
       location.reload();
     }
 
+    async function sendAnnouncement() {
+      const text = document.getElementById("announceText").value;
+      const webhookUrl = "YOUR_DISCORD_WEBHOOK_URL"; // Replace with actual webhook URL
+
+      if (!text.trim()) return alert("Enter a message.");
+
+      await fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content: text })
+      });
+
+      alert("Message sent!");
+      document.getElementById("announceText").value = "";
+    }
+
     getToken();
     showUserBar();
-  </script>
-</body>
+  </script></body>
 </html>
