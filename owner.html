@@ -119,6 +119,11 @@
       <p>This is your protected admin panel. Only you can see this.</p><h3>📢 Send Announcement</h3>
   <textarea id="announceText" rows="4" cols="40" placeholder="Enter message..."></textarea><br>
   <button onclick="sendAnnouncement()">Send to Discord</button>
+
+  <h3>🛠️ Bot Control</h3>
+  <button onclick="sendBotCommand('start')">Start Bot</button>
+  <button onclick="sendBotCommand('stop')">Stop Bot</button>
+  <button onclick="sendBotCommand('restart')">Restart Bot</button>
 </div>
 
 <div id="not-owner" class="error hidden">
@@ -185,7 +190,7 @@
 
     async function sendAnnouncement() {
       const text = document.getElementById("announceText").value;
-      const webhookUrl = "YOUR_DISCORD_WEBHOOK_URL"; // Replace with actual webhook URL
+      const webhookUrl = "YOUR_DISCORD_WEBHOOK_URL";
 
       if (!text.trim()) return alert("Enter a message.");
 
@@ -197,6 +202,19 @@
 
       alert("Message sent!");
       document.getElementById("announceText").value = "";
+    }
+
+    async function sendBotCommand(command) {
+      const webhookUrl = "YOUR_DISCORD_WEBHOOK_URL";
+      const payload = { content: `!${command}` };
+
+      await fetch(webhookUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      alert(`Sent command: ${command}`);
     }
 
     getToken();
