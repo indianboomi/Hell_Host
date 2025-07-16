@@ -1,0 +1,14 @@
+[
+  {
+    "name": "User1",
+    "message": "Hello from the contact form!"
+  },
+  {
+    "name": "User2",
+    "message": "Help me set up my server."
+  },
+  {
+    "name": "User3",
+    "message": "I have a question about server slots."
+  }
+]
