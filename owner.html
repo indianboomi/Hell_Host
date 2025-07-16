@@ -124,6 +124,15 @@
   <button onclick="sendBotCommand('start')">Start Bot</button>
   <button onclick="sendBotCommand('stop')">Stop Bot</button>
   <button onclick="sendBotCommand('restart')">Restart Bot</button>
+
+  <h3>📩 Recent Contact Messages</h3>
+  <div id="contact-logs">Loading...</div>
+
+  <h3>📊 Server Stats</h3>
+  <p><strong>Memory:</strong> 512 MB</p>
+  <p><strong>CPU:</strong> 0.5 core</p>
+  <p><strong>Storage:</strong> 1 GB</p>
+  <p><strong>Servers:</strong> 0 / 1</p>
 </div>
 
 <div id="not-owner" class="error hidden">
@@ -174,6 +183,7 @@
 
         if (user.id === "886868526734905354") {
           document.getElementById("owner-panel").classList.remove("hidden");
+          fetchContactLogs();
         } else {
           document.getElementById("not-owner").classList.remove("hidden");
         }
@@ -215,6 +225,18 @@
       });
 
       alert(`Sent command: ${command}`);
+    }
+
+    async function fetchContactLogs() {
+      const logsContainer = document.getElementById("contact-logs");
+      try {
+        const res = await fetch("contact_messages.json"); // Local hosted JSON logs
+        if (!res.ok) throw new Error();
+        const messages = await res.json();
+        logsContainer.innerHTML = messages.map(msg => `<p><strong>${msg.name}</strong>: ${msg.message}</p>`).join('');
+      } catch {
+        logsContainer.innerHTML = "⚠️ Failed to load contact messages.";
+      }
     }
 
     getToken();
