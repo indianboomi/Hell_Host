@@ -54,6 +54,19 @@
   color: white;
 }
 
+.sidebar-header {
+  text-align: center;
+  padding: 15px;
+  border-bottom: 1px solid #333;
+}
+
+.sidebar-header img {
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  margin-bottom: 10px;
+}
+
 .main {
   padding: 80px 20px 20px 20px;
 }
@@ -85,12 +98,13 @@ button {
     <div id="admin-user">🛠️ Admin Panel</div>
     <div class="menu-icon" onclick="toggleSidebar()">☰</div>
   </div>  <!-- Sidebar -->  <div id="sidebar" class="sidebar">
-    <a href="index.html">🏠 Home</a>
-    <a href="dashboard.html">📊 Dashboard</a>
-    <a href="contact.html">📬 Contact</a>
-    <a href="login.html">🔐 Login</a>
-    <a href="admin.html">🛠️ Admin Panel</a>
-    <a href="owner.html">👑 Owner Panel</a>
+    <div id="sidebar-user" class="sidebar-header hidden"></div>
+    <a href="index.html" onclick="closeSidebar()">🏠 Home</a>
+    <a href="dashboard.html" onclick="closeSidebar()">📊 Dashboard</a>
+    <a href="contact.html" onclick="closeSidebar()">📬 Contact</a>
+    <a href="login.html" onclick="closeSidebar()">🔐 Login</a>
+    <a href="admin.html" onclick="closeSidebar()">🛠️ Admin Panel</a>
+    <a href="owner.html" onclick="closeSidebar()">👑 Owner Panel</a>
   </div>  <div class="main">
     <div id="admin-panel" class="hidden">
       <div class="card">
@@ -125,6 +139,10 @@ button {
       sidebar.style.width = sidebar.style.width === "250px" ? "0" : "250px";
     }
 
+    function closeSidebar() {
+      document.getElementById("sidebar").style.width = "0";
+    }
+
     async function sendBotCommand(cmd) {
       await fetch(webhookUrl, {
         method: "POST",
@@ -154,14 +172,30 @@ button {
       }
     }
 
-    function checkLogin() {
+    async function checkLogin() {
       const token = localStorage.getItem("discord_token");
       const statusBar = document.getElementById("admin-user");
+      const sidebarUser = document.getElementById("sidebar-user");
 
       if (token) {
         statusBar.textContent = "🛠️ Admin Panel - Logged In";
         document.getElementById("admin-panel").classList.remove("hidden");
+        sidebarUser.classList.remove("hidden");
         loadContactMessages();
+
+        try {
+          const res = await fetch("https://discord.com/api/users/@me", {
+            headers: { Authorization: `Bearer ${token}` }
+          });
+          const user = await res.json();
+          const avatar = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+          sidebarUser.innerHTML = `
+            <img src="${avatar}" alt="Avatar" />
+            <div>${user.username}#${user.discriminator}</div>
+          `;
+        } catch (e) {
+          console.error("Error loading user info", e);
+        }
       } else {
         statusBar.textContent = "🛠️ Admin Panel - Not Logged In";
         document.getElementById("not-logged-in").classList.remove("hidden");
