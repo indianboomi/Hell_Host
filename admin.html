@@ -16,34 +16,46 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 1000;
+}
+
+.menu-icon {
+  font-size: 28px;
+  cursor: pointer;
 }
 
 .sidebar {
-  width: 220px;
-  background: #1a1a1a;
+  height: 100%;
+  width: 0;
   position: fixed;
   top: 0;
-  bottom: 0;
-  left: 0;
+  right: 0;
+  background: #1a1a1a;
+  overflow-x: hidden;
+  transition: 0.3s;
   padding-top: 60px;
+  z-index: 999;
 }
 
 .sidebar a {
-  display: block;
-  padding: 15px 20px;
-  color: #ccc;
+  padding: 15px 25px;
   text-decoration: none;
-  border-bottom: 1px solid #333;
+  font-size: 1.2rem;
+  color: #ffbbbb;
+  display: block;
+  transition: 0.2s;
 }
 
 .sidebar a:hover {
-  background: #333;
-  color: #fff;
+  background: #ff3b3b;
+  color: white;
 }
 
 .main {
-  margin-left: 220px;
-  padding: 20px;
+  padding: 80px 20px 20px 20px;
 }
 
 .card {
@@ -70,14 +82,15 @@ button {
 </head>
 <body>
   <div class="top-bar">
-    <div>🛠️ Admin Panel</div>
-    <div id="admin-user">Checking login...</div>
-  </div>  <div class="sidebar">
+    <div id="admin-user">🛠️ Admin Panel</div>
+    <div class="menu-icon" onclick="toggleSidebar()">☰</div>
+  </div>  <!-- Sidebar -->  <div id="sidebar" class="sidebar">
     <a href="index.html">🏠 Home</a>
     <a href="dashboard.html">📊 Dashboard</a>
     <a href="contact.html">📬 Contact</a>
-    <a href="owner.html">👑 Owner Panel</a>
+    <a href="login.html">🔐 Login</a>
     <a href="admin.html">🛠️ Admin Panel</a>
+    <a href="owner.html">👑 Owner Panel</a>
   </div>  <div class="main">
     <div id="admin-panel" class="hidden">
       <div class="card">
@@ -106,6 +119,11 @@ button {
 
   </div>  <script>
     const webhookUrl = "YOUR_DISCORD_WEBHOOK_URL";
+
+    function toggleSidebar() {
+      const sidebar = document.getElementById("sidebar");
+      sidebar.style.width = sidebar.style.width === "250px" ? "0" : "250px";
+    }
 
     async function sendBotCommand(cmd) {
       await fetch(webhookUrl, {
@@ -141,15 +159,15 @@ button {
       const statusBar = document.getElementById("admin-user");
 
       if (token) {
-        statusBar.textContent = "Authenticated Admin";
+        statusBar.textContent = "🛠️ Admin Panel - Logged In";
         document.getElementById("admin-panel").classList.remove("hidden");
         loadContactMessages();
       } else {
-        statusBar.textContent = "Not Logged In";
+        statusBar.textContent = "🛠️ Admin Panel - Not Logged In";
         document.getElementById("not-logged-in").classList.remove("hidden");
       }
     }
 
     checkLogin();
   </script></body>
-            </html>
+</html>
