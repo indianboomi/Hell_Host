@@ -109,10 +109,10 @@ button {
     <a href="index.html" onclick="closeSidebar()">🏠 Home</a>
     <a href="dashboard.html" onclick="closeSidebar()">📊 Dashboard</a>
     <a href="contact.html" onclick="closeSidebar()">📬 Contact</a>
-    <a href="login.html" onclick="closeSidebar()">🔐 Login</a>
+    <a href="login.html" id="auth-link" onclick="closeSidebar()">🔐 Login</a>
     <a href="admin.html" onclick="closeSidebar()">🛠️ Admin Panel</a>
     <a href="owner.html" onclick="closeSidebar()">👑 Owner Panel</a>
-    <button onclick="logout(); closeSidebar();">🚪 Logout</button>
+    <button id="logout-btn" class="hidden" onclick="logout(); closeSidebar();">🚪 Logout</button>
   </div>  <div class="main">
     <div id="admin-panel" class="hidden">
       <div class="card">
@@ -189,11 +189,15 @@ button {
       const token = localStorage.getItem("discord_token");
       const statusBar = document.getElementById("admin-user");
       const sidebarUser = document.getElementById("sidebar-user");
+      const authLink = document.getElementById("auth-link");
+      const logoutBtn = document.getElementById("logout-btn");
 
       if (token) {
         statusBar.textContent = "🛠️ Admin Panel - Logged In";
         document.getElementById("admin-panel").classList.remove("hidden");
         sidebarUser.classList.remove("hidden");
+        authLink.classList.add("hidden");
+        logoutBtn.classList.remove("hidden");
         loadContactMessages();
 
         try {
@@ -212,6 +216,8 @@ button {
       } else {
         statusBar.textContent = "🛠️ Admin Panel - Not Logged In";
         document.getElementById("not-logged-in").classList.remove("hidden");
+        authLink.classList.remove("hidden");
+        logoutBtn.classList.add("hidden");
       }
     }
 
