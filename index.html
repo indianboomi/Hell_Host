@@ -1,8 +1,9 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>🏠 Hell Host - Home</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title> 🔥 Home - Hell Host</title>
   <style>
     body {
       margin: 0;
@@ -10,127 +11,182 @@
       background-size: cover;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: white;
-    }body::before {
-  content: "";
-  position: fixed;
-  top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.8);
-  z-index: -1;
-}
+    }
 
-.top-bar {
-  background: #111;
-  color: #fff;
-  padding: 10px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-}
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0, 0, 0, 0.85);
+      z-index: -1;
+    }
 
-.menu-icon {
-  font-size: 28px;
-  cursor: pointer;
-}
+    .top-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.9);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+    }
 
-.sidebar {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  top: 0;
-  right: 0;
-  background: #1a1a1a;
-  overflow-x: hidden;
-  transition: 0.3s;
-  padding-top: 60px;
-  z-index: 999;
-}
+    .menu-icon {
+      font-size: 28px;
+      cursor: pointer;
+    }
 
-.sidebar a, .sidebar button {
-  padding: 15px 25px;
-  text-decoration: none;
-  font-size: 1.2rem;
-  color: #ffbbbb;
-  display: block;
-  background: none;
-  border: none;
-  text-align: left;
-  width: 100%;
-  cursor: pointer;
-  font-family: inherit;
-}
+    .sidebar {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      top: 0;
+      right: 0;
+      background: #1a1a1a;
+      overflow-x: hidden;
+      transition: 0.3s;
+      padding-top: 60px;
+      z-index: 999;
+    }
 
-.sidebar a:hover, .sidebar button:hover {
-  background: #ff3b3b;
-  color: white;
-}
+    .sidebar a {
+      padding: 15px 25px;
+      text-decoration: none;
+      font-size: 1.2rem;
+      color: #ffbbbb;
+      display: block;
+      transition: 0.2s;
+    }
 
-.sidebar-header {
-  text-align: center;
-  padding: 15px;
-  border-bottom: 1px solid #333;
-}
+    .sidebar a:hover {
+      background: #ff3b3b;
+      color: white;
+    }
 
-.sidebar-header img {
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  margin-bottom: 10px;
-}
+    #user-info-bar img {
+      border-radius: 50%;
+      vertical-align: middle;
+      margin-right: 10px;
+    }
 
-.main {
-  padding: 100px 20px 20px 20px;
-  text-align: center;
-}
+    #user-info-bar button {
+      background: #ff3b3b;
+      color: white;
+      padding: 6px 12px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+      margin-left: 10px;
+    }
 
-h1 {
-  font-size: 3rem;
-  margin-bottom: 20px;
-}
+    .main-content {
+      padding-top: 120px;
+      text-align: center;
+    }
 
-p {
-  font-size: 1.2rem;
-}
-
-.hidden { display: none; }
-
+    .card {
+      background: #2a0000;
+      padding: 30px;
+      margin: 30px auto;
+      max-width: 800px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px red;
+    }
   </style>
 </head>
 <body>
-  <div class="top-bar">
-    <div>🏠 Hell Host</div>
-    <div class="menu-icon" onclick="toggleSidebar()">☰</div>
-  </div>  <div id="sidebar" class="sidebar">
-    <div id="sidebar-user" class="sidebar-header hidden"></div>
-    <a href="index.html" onclick="closeSidebar()">🏠 Home</a>
-    <a href="dashboard.html" onclick="closeSidebar()">📊 Dashboard</a>
-    <a href="contact.html" onclick="closeSidebar()">📬 Contact</a>
-    <a href="login.html" id="auth-link" onclick="closeSidebar()">🔐 Login</a>
-    <a href="admin.html" onclick="closeSidebar()">🛠️ Admin Panel</a>
-    <a href="owner.html" onclick="closeSidebar()">👑 Owner Panel</a>
-    <button id="logout-btn" class="hidden" onclick="logout(); closeSidebar();">🚪 Logout</button>
-  </div>  <div class="main">
-    <h1>🔥 Welcome to Hell Host</h1>
-    <p>Powerful and free Minecraft server hosting with real-time control.</p>
-  </div>  <script>
-    const hash = window.location.hash.substring(1);
-    const params = new URLSearchParams(hash);
-    const token = params.get('access_token');
-    if (token) {
-      localStorage.setItem('discord_token', token);
-      window.history.replaceState({}, document.title, window.location.pathname);
-    }
 
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="menu-icon" onclick="toggleSidebar()">☰</div>
+    <div id="user-info-bar"></div>
+  </div>
+
+  <!-- Sidebar Menu -->
+  <div id="sidebar" class="sidebar">
+    <a href="index.html">🏠 Home</a>
+    <a href="dashboard.html">📊 Dashboard</a>
+    <a href="contact.html">📬 Contact</a>
+    <a href="login.html" id="login-link">🔐 Login</a>
+    <a href="#" id="logout-link" style="display:none" onclick="logout()">🚪 Logout</a>
+    <a href="owner.html">👑 Owner</a>
+    <a href="admin.html">🛠️ Admin</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="card">
+      <h2>Welcome to Hell Host</h2>
+      <p>Manage your Minecraft servers and monitor your resources.</p>
+
+      <h3>Resource Usage</h3>
+      <p><strong>Memory:</strong> 0.50 GiB<br>
+         <strong>CPU cores:</strong> 0.50<br>
+         <strong>Storage:</strong> 1.00 GiB<br>
+         <strong>Server Slots:</strong> 1</p>
+
+      <h3>Dashboard Overview</h3>
+      <p>Real-time server status, resource tracking, and quick actions.</p>
+    </div>
+  </div>
+
+  <!-- Script Section -->
+  <script>
     function toggleSidebar() {
       const sidebar = document.getElementById("sidebar");
       sidebar.style.width = sidebar.style.width === "250px" ? "0" : "250px";
     }
 
-    function closeSidebar() {
-      document.getElementById("sidebar").style.width = "0";
+    function getToken() {
+      const hash = window.location.hash.substring(1);
+      const params = new URLSearchParams(hash);
+      const token = params.get('access_token');
+      if (token) {
+        localStorage.setItem('discord_token', token);
+        window.history.replaceState({}, document.title, window.location.pathname);
+      }
+    }
+
+    async function showUserBar() {
+      const token = localStorage.getItem("discord_token");
+      const container = document.getElementById("user-info-bar");
+      const loginLink = document.getElementById("login-link");
+      const logoutLink = document.getElementById("logout-link");
+
+      if (!token) {
+        container.innerHTML = `<a href="login.html">🔐 Login</a>`;
+        loginLink.style.display = 'block';
+        logoutLink.style.display = 'none';
+        return;
+      }
+
+      try {
+        const res = await fetch("https://discord.com/api/users/@me", {
+          headers: { Authorization: `Bearer ${token}` }
+        });
+
+        if (!res.ok) throw new Error("Invalid token");
+
+        const user = await res.json();
+        const avatar = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
+
+        container.innerHTML = `
+          <img src="${avatar}" width="35" height="35">
+          <strong>${user.username}#${user.discriminator}</strong>
+          <button onclick="logout()">Logout</button>
+        `;
+
+        loginLink.style.display = 'none';
+        logoutLink.style.display = 'block';
+      } catch {
+        localStorage.removeItem("discord_token");
+        container.innerHTML = `<a href="login.html">🔐 Login</a>`;
+        loginLink.style.display = 'block';
+        logoutLink.style.display = 'none';
+      }
     }
 
     function logout() {
@@ -138,37 +194,8 @@ p {
       location.reload();
     }
 
-    async function checkLogin() {
-      const token = localStorage.getItem("discord_token");
-      const sidebarUser = document.getElementById("sidebar-user");
-      const authLink = document.getElementById("auth-link");
-      const logoutBtn = document.getElementById("logout-btn");
-
-      if (token) {
-        sidebarUser.classList.remove("hidden");
-        authLink.classList.add("hidden");
-        logoutBtn.classList.remove("hidden");
-
-        try {
-          const res = await fetch("https://discord.com/api/users/@me", {
-            headers: { Authorization: `Bearer ${token}` }
-          });
-          const user = await res.json();
-          const avatar = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
-          sidebarUser.innerHTML = `
-            <img src="${avatar}" alt="Avatar" />
-            <div>${user.username}#${user.discriminator}</div>
-          `;
-        } catch (e) {
-          console.error("User info error", e);
-        }
-      } else {
-        sidebarUser.classList.add("hidden");
-        authLink.classList.remove("hidden");
-        logoutBtn.classList.add("hidden");
-      }
-    }
-
-    checkLogin();
-  </script></body>
+    getToken();
+    showUserBar();
+  </script>
+</body>
 </html>
