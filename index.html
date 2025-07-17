@@ -116,6 +116,14 @@ p {
     <h1>🔥 Welcome to Hell Host</h1>
     <p>Powerful and free Minecraft server hosting with real-time control.</p>
   </div>  <script>
+    const hash = window.location.hash.substring(1);
+    const params = new URLSearchParams(hash);
+    const token = params.get('access_token');
+    if (token) {
+      localStorage.setItem('discord_token', token);
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
     function toggleSidebar() {
       const sidebar = document.getElementById("sidebar");
       sidebar.style.width = sidebar.style.width === "250px" ? "0" : "250px";
