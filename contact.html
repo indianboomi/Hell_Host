@@ -1,8 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>📬 Contact - Hell Host</title>
   <style>
     body {
@@ -11,158 +10,112 @@
       background-size: cover;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       color: white;
-    }
+    }body::before {
+  content: "";
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: -1;
+}
 
-    body::before {
-      content: "";
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(0, 0, 0, 0.8);
-      z-index: -1;
-    }
+.top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: rgba(0, 0, 0, 0.9);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+}
 
-    .top-bar {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 15px;
-      background: rgba(0, 0, 0, 0.9);
-      position: fixed;
-      width: 100%;
-      top: 0;
-      z-index: 1000;
-    }
+.menu-icon {
+  font-size: 28px;
+  cursor: pointer;
+}
 
-    .menu-icon {
-      font-size: 28px;
-      cursor: pointer;
-    }
+.sidebar {
+  height: 100%;
+  width: 0;
+  position: fixed;
+  top: 0;
+  right: 0;
+  background: #1a1a1a;
+  overflow-x: hidden;
+  transition: 0.3s;
+  padding-top: 60px;
+  z-index: 999;
+}
 
-    .sidebar {
-      height: 100%;
-      width: 0;
-      position: fixed;
-      top: 0;
-      right: 0;
-      background: #1a1a1a;
-      overflow-x: hidden;
-      transition: 0.3s;
-      padding-top: 60px;
-      z-index: 999;
-    }
+.sidebar a {
+  padding: 15px 25px;
+  text-decoration: none;
+  font-size: 1.2rem;
+  color: #ffbbbb;
+  display: block;
+  transition: 0.2s;
+}
 
-    .sidebar a {
-      padding: 15px 25px;
-      text-decoration: none;
-      font-size: 1.2rem;
-      color: #ffbbbb;
-      display: block;
-      transition: 0.2s;
-    }
+.sidebar a:hover {
+  background: #ff3b3b;
+  color: white;
+}
 
-    .sidebar a:hover {
-      background: #ff3b3b;
-      color: white;
-    }
+#user-info-bar img {
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 10px;
+}
 
-    #user-info-bar img {
-      border-radius: 50%;
-      vertical-align: middle;
-      margin-right: 10px;
-    }
+#user-info-bar button {
+  background: #ff3b3b;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-left: 10px;
+}
 
-    #user-info-bar button {
-      background: #ff3b3b;
-      color: white;
-      padding: 6px 12px;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-      margin-left: 10px;
-    }
+.main-content {
+  padding-top: 120px;
+  text-align: center;
+}
 
-    .main-content {
-      padding: 120px 20px 50px;
-      max-width: 800px;
-      margin: 0 auto;
-      text-align: center;
-    }
+.card {
+  background: #2a0000;
+  padding: 30px;
+  margin: 30px auto;
+  max-width: 800px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px red;
+}
 
-    .card {
-      background: #2a0000;
-      padding: 25px;
-      border-radius: 12px;
-      box-shadow: 0 0 10px red;
-      margin-bottom: 30px;
-    }
-
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      margin: 10px 0;
-      border-radius: 8px;
-      border: none;
-      font-size: 1rem;
-    }
-
-    button {
-      background: #ff3b3b;
-      color: white;
-      padding: 12px 25px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      font-size: 1rem;
-      margin-top: 10px;
-    }
-
-    button:hover {
-      background: #cc2a2a;
-    }
   </style>
 </head>
 <body>
-
-  <!-- Top Bar -->
   <div class="top-bar">
     <div class="menu-icon" onclick="toggleSidebar()">☰</div>
     <div id="user-info-bar"></div>
-  </div>
-
-  <!-- Sidebar -->
-  <div id="sidebar" class="sidebar">
+  </div>  <div id="sidebar" class="sidebar">
     <a href="index.html">🏠 Home</a>
     <a href="dashboard.html">📊 Dashboard</a>
     <a href="contact.html">📬 Contact</a>
-    <a href="login.html">🔐 Login</a>
-    <a href="admin.html">🛠️ Admin Panel</a>
-    <a href="owner.html">👑 Owner Panel</a>
-  </div>
-
-  <!-- Main Content -->
-  <div class="main-content">
+    <a href="login.html" id="login-link">🔐 Login</a>
+    <a href="#" id="logout-link" style="display:none" onclick="logout()">🚪 Logout</a>
+    <a href="owner.html">👑 Owner</a>
+    <a href="admin.html">🛠️ Admin</a>
+  </div>  <div class="main-content">
     <div class="card">
-      <h2>📬 Contact Us</h2>
-      <p>Have feedback or issues? Send us a message.</p>
-      <form id="contactForm">
-        <input type="text" id="name" placeholder="Your Name" required />
-        <input type="email" id="email" placeholder="Your Email" required />
-        <textarea id="message" placeholder="Your Message" rows="5" required></textarea>
-        <button type="submit">Send</button>
-      </form>
-      <p id="responseText"></p>
+      <h2>Contact Support</h2>
+      <p>If you need help or have questions, reach out to us:</p>
+      <p><strong>Email:</strong> support@hellhost.com</p>
+      <p><strong>Discord Server:</strong> <a href="#" style="color: #ffbbbb;">Join Here</a></p>
+      <p><strong>Response Time:</strong> Within 24 hours</p>
     </div>
-
-    <div class="card">
-      <h2>💬 About Hell Host</h2>
-      <p>Hell Host is a powerful and free Minecraft server hosting service.</p>
-      <p>We provide easy server management, real-time status monitoring, and full integration with Discord for account control and communication.</p>
-      <p>Created with ❤️ for gamers by <strong>Villan</strong>.</p>
-    </div>
-  </div>
-
-  <script>
+  </div>  <script>
     function toggleSidebar() {
       const sidebar = document.getElementById("sidebar");
       sidebar.style.width = sidebar.style.width === "250px" ? "0" : "250px";
@@ -181,9 +134,13 @@
     async function showUserBar() {
       const token = localStorage.getItem("discord_token");
       const container = document.getElementById("user-info-bar");
+      const loginLink = document.getElementById("login-link");
+      const logoutLink = document.getElementById("logout-link");
 
       if (!token) {
         container.innerHTML = `<a href="login.html">🔐 Login</a>`;
+        loginLink.style.display = 'block';
+        logoutLink.style.display = 'none';
         return;
       }
 
@@ -202,9 +159,14 @@
           <strong>${user.username}#${user.discriminator}</strong>
           <button onclick="logout()">Logout</button>
         `;
+
+        loginLink.style.display = 'none';
+        logoutLink.style.display = 'block';
       } catch {
         localStorage.removeItem("discord_token");
         container.innerHTML = `<a href="login.html">🔐 Login</a>`;
+        loginLink.style.display = 'block';
+        logoutLink.style.display = 'none';
       }
     }
 
@@ -213,37 +175,7 @@
       location.reload();
     }
 
-    // Handle Contact Form submission
-    document.getElementById("contactForm").addEventListener("submit", async (e) => {
-      e.preventDefault();
-      const name = document.getElementById("name").value.trim();
-      const email = document.getElementById("email").value.trim();
-      const message = document.getElementById("message").value.trim();
-      const webhookURL = "https://discord.com/api/webhooks/1393926492265775175/8ZVhfRp_OPAYEVrS2MOpORJx0iNjNIKb5lbFOq33UhLQeT6_TcnWqEJ9sgGCAJnXNjuq"; // Replace with your real webhook
-
-      const payload = {
-        content: `📬 **New Contact Message from Hell Host**\n👤 **Name:** ${name}\n📧 **Email:** ${email}\n💬 **Message:** ${message}`
-      };
-
-      try {
-        const res = await fetch(webhookURL, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        });
-
-        document.getElementById("responseText").textContent = res.ok
-          ? "✅ Message sent successfully!"
-          : "❌ Failed to send message.";
-      } catch {
-        document.getElementById("responseText").textContent = "❌ Error sending message.";
-      }
-
-      document.getElementById("contactForm").reset();
-    });
-
     getToken();
     showUserBar();
-  </script>
-</body>
+  </script></body>
 </html>
