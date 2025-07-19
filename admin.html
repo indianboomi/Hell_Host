@@ -1,226 +1,41 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>🛠️ Admin Panel - Hell Host</title>
+  <title>Admin Panel</title>
   <style>
-    body {
-      margin: 0;
-      background: linear-gradient(to right, #0f0f0f, #1f1f1f);
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      color: white;
-    }.top-bar {
-  background: #111;
-  color: #fff;
-  padding: 10px 20px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-}
-
-.menu-icon {
-  font-size: 28px;
-  cursor: pointer;
-}
-
-.sidebar {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  top: 0;
-  right: 0;
-  background: #1a1a1a;
-  overflow-x: hidden;
-  transition: 0.3s;
-  padding-top: 60px;
-  z-index: 999;
-}
-
-.sidebar a,
-.sidebar button {
-  padding: 15px 25px;
-  text-decoration: none;
-  font-size: 1.2rem;
-  color: #ffbbbb;
-  display: block;
-  background: none;
-  border: none;
-  text-align: left;
-  width: 100%;
-  cursor: pointer;
-  font-family: inherit;
-}
-
-.sidebar a:hover,
-.sidebar button:hover {
-  background: #ff3b3b;
-  color: white;
-}
-
-.sidebar-header {
-  text-align: center;
-  padding: 15px;
-  border-bottom: 1px solid #333;
-}
-
-.sidebar-header img {
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  margin-bottom: 10px;
-}
-
-.main {
-  padding: 80px 20px 20px 20px;
-}
-
-.card {
-  background: #222;
-  padding: 20px;
-  margin-bottom: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(255, 0, 0, 0.3);
-}
-
-button {
-  background: #ff3b3b;
-  border: none;
-  padding: 10px 20px;
-  color: white;
-  border-radius: 5px;
-  cursor: pointer;
-}
-
-.hidden { display: none; }
-.error { color: red; font-weight: bold; padding: 40px; }
-
+    body { font-family: Arial; padding: 20px; }
+    .logout-btn { display: none; padding: 10px 20px; background: red; color: white; border: none; cursor: pointer; }
   </style>
 </head>
 <body>
-  <div class="top-bar">
-    <div id="admin-user">🛠️ Admin Panel</div>
-    <div class="menu-icon" onclick="toggleSidebar()">☰</div>
-  </div>  <!-- Sidebar -->  <div id="sidebar" class="sidebar">
-    <div id="sidebar-user" class="sidebar-header hidden"></div>
-    <a href="index.html" onclick="closeSidebar()">🏠 Home</a>
-    <a href="dashboard.html" onclick="closeSidebar()">📊 Dashboard</a>
-    <a href="contact.html" onclick="closeSidebar()">📬 Contact</a>
-    <a href="login.html" id="auth-link" onclick="closeSidebar()">🔐 Login</a>
-    <a href="admin.html" onclick="closeSidebar()">🛠️ Admin Panel</a>
-    <a href="owner.html" onclick="closeSidebar()">👑 Owner Panel</a>
-    <button id="logout-btn" class="hidden" onclick="logout(); closeSidebar();">🚪 Logout</button>
-  </div>  <div class="main">
-    <div id="admin-panel" class="hidden">
-      <div class="card">
-        <h2>📢 Site Settings</h2>
-        <p>Update site announcement or maintenance mode.</p>
-        <textarea id="site-msg" rows="4" style="width: 100%;"></textarea>
-        <br/><br/>
-        <button onclick="sendSiteMessage()">Update Message</button>
-      </div><div class="card">
-    <h2>🧾 Contact Messages</h2>
-    <div id="contact-logs">Loading...</div>
-  </div>
 
-  <div class="card">
-    <h2>⚙️ Bot Commands</h2>
-    <button onclick="sendBotCommand('start')">Start</button>
-    <button onclick="sendBotCommand('stop')">Stop</button>
-    <button onclick="sendBotCommand('restart')">Restart</button>
-  </div>
-</div>
+  <h1>Admin Panel</h1>
 
-<div id="not-logged-in" class="error hidden">
-  <h3>🚫 Access Denied</h3>
-  <p>Please log in to access the admin panel.</p>
-</div>
+  <!-- Logout Button -->
+  <button id="logoutBtn" class="logout-btn">Logout</button>
 
-  </div>  <script>
-    const webhookUrl = "YOUR_DISCORD_WEBHOOK_URL";
+  <script>
+    // Check if user is logged in
+    const isLoggedIn = localStorage.getItem("isLoggedIn");
 
-    function toggleSidebar() {
-      const sidebar = document.getElementById("sidebar");
-      sidebar.style.width = sidebar.style.width === "250px" ? "0" : "250px";
+    const logoutBtn = document.getElementById("logoutBtn");
+
+    if (isLoggedIn === "true") {
+      // Show logout button
+      logoutBtn.style.display = "inline-block";
+    } else {
+      // Not logged in, redirect to login page
+      window.location.href = "login.html";
     }
 
-    function closeSidebar() {
-      document.getElementById("sidebar").style.width = "0";
-    }
+    // Logout button click
+    logoutBtn.addEventListener("click", () => {
+      localStorage.setItem("isLoggedIn", "false");
+      window.location.href = "login.html";
+    });
+  </script>
 
-    async function sendBotCommand(cmd) {
-      await fetch(webhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content: `!${cmd}` })
-      });
-      alert(`Command '${cmd}' sent!`);
-    }
-
-    async function sendSiteMessage() {
-      const msg = document.getElementById("site-msg").value;
-      await fetch(webhookUrl, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ content: `📢 Site Update: ${msg}` })
-      });
-      alert("Message sent to Discord!");
-    }
-
-    async function loadContactMessages() {
-      try {
-        const res = await fetch("contact_messages.json");
-        const data = await res.json();
-        document.getElementById("contact-logs").innerHTML = data.map(d => `<p><strong>${d.name}</strong>: ${d.message}</p>`).join('');
-      } catch {
-        document.getElementById("contact-logs").textContent = "⚠️ Failed to load messages.";
-      }
-    }
-
-    function logout() {
-      localStorage.removeItem("discord_token");
-      location.reload();
-    }
-
-    async function checkLogin() {
-      const token = localStorage.getItem("discord_token");
-      const statusBar = document.getElementById("admin-user");
-      const sidebarUser = document.getElementById("sidebar-user");
-      const authLink = document.getElementById("auth-link");
-      const logoutBtn = document.getElementById("logout-btn");
-
-      if (token) {
-        statusBar.textContent = "🛠️ Admin Panel - Logged In";
-        document.getElementById("admin-panel").classList.remove("hidden");
-        sidebarUser.classList.remove("hidden");
-        authLink.classList.add("hidden");
-        logoutBtn.classList.remove("hidden");
-        loadContactMessages();
-
-        try {
-          const res = await fetch("https://discord.com/api/users/@me", {
-            headers: { Authorization: `Bearer ${token}` }
-          });
-          const user = await res.json();
-          const avatar = `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png`;
-          sidebarUser.innerHTML = `
-            <img src="${avatar}" alt="Avatar" />
-            <div>${user.username}#${user.discriminator}</div>
-          `;
-        } catch (e) {
-          console.error("Error loading user info", e);
-        }
-      } else {
-        statusBar.textContent = "🛠️ Admin Panel - Not Logged In";
-        document.getElementById("not-logged-in").classList.remove("hidden");
-        authLink.classList.remove("hidden");
-        logoutBtn.classList.add("hidden");
-      }
-    }
-
-    checkLogin();
-  </script></body>
+</body>
 </html>
