@@ -1,91 +1,122 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Admin Panel</title>
   <style>
     body {
+      margin: 0;
       font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
     }
 
-    .topbar {
-      background-color: #333;
-      color: white;
-      padding: 10px 20px;
+    header {
+      background-color: #222;
+      color: #fff;
+      padding: 15px 30px;
       display: flex;
       justify-content: space-between;
       align-items: center;
     }
 
-    .menu-icon {
-      font-size: 25px;
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .menu {
+      position: relative;
+      display: inline-block;
+    }
+
+    .menu-button {
+      background: none;
+      border: none;
+      color: white;
+      font-size: 16px;
       cursor: pointer;
     }
 
-    .dropdown {
-      position: absolute;
-      right: 20px;
-      top: 50px;
-      background-color: #444;
-      border: 1px solid #666;
+    .menu-content {
       display: none;
-      flex-direction: column;
+      position: absolute;
+      right: 0;
+      background-color: white;
+      min-width: 150px;
+      box-shadow: 0px 8px 16px rgba(0,0,0,0.2);
+      z-index: 1;
     }
 
-    .dropdown a {
-      color: white;
-      padding: 10px;
+    .menu-content a {
+      color: black;
+      padding: 12px 16px;
+      display: block;
       text-decoration: none;
+    }
+
+    .menu-content a:hover {
+      background-color: #f1f1f1;
+    }
+
+    .menu:hover .menu-content {
       display: block;
     }
 
-    .dropdown a:hover {
-      background-color: #555;
+    main {
+      padding: 30px;
+    }
+
+    .card {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
     }
   </style>
 </head>
 <body>
-  <div class="topbar">
-    <h2>Admin Panel</h2>
-    <div class="menu-icon" onclick="toggleDropdown()">☰</div>
-    <div class="dropdown" id="menuDropdown">
-      <a href="#" id="loginLogoutBtn"></a>
-    </div>
-  </div>
 
-  <div style="padding: 20px;">
-    <h3>Welcome, Admin!</h3>
-    <p>This is the admin dashboard.</p>
-  </div>
+  <header>
+    <div class="logo">Admin Panel</div>
+    <div class="menu">
+      <button class="menu-button" id="user-button">Menu ▾</button>
+      <div class="menu-content" id="menu-links">
+        <!-- Menu items will be inserted by JavaScript -->
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="card">
+      <h2>Welcome to the Admin Panel</h2>
+      <p>This is your dashboard. Use the top menu to navigate.</p>
+    </div>
+  </main>
 
   <script>
-    const dropdown = document.getElementById("menuDropdown");
-    const loginLogoutBtn = document.getElementById("loginLogoutBtn");
+    // Simulated login state (from localStorage)
+    const isLoggedIn = localStorage.getItem("isLoggedIn") === "true";
+    const menu = document.getElementById("menu-links");
 
-    function toggleDropdown() {
-      dropdown.style.display = dropdown.style.display === "flex" ? "none" : "flex";
+    if (isLoggedIn) {
+      menu.innerHTML = `
+        <a href="#">Dashboard</a>
+        <a href="#">Settings</a>
+        <a href="#" onclick="logout()">Logout</a>
+      `;
+    } else {
+      menu.innerHTML = `
+        <a href="login.html">Login</a>
+      `;
     }
 
-    function updateMenu() {
-      const isLoggedIn = localStorage.getItem("loggedIn") === "true";
-
-      if (isLoggedIn) {
-        loginLogoutBtn.textContent = "Logout";
-        loginLogoutBtn.onclick = () => {
-          localStorage.setItem("loggedIn", "false");
-          alert("Logged out!");
-          location.reload();
-        };
-      } else {
-        loginLogoutBtn.textContent = "Login";
-        loginLogoutBtn.onclick = () => {
-          window.location.href = "login.html";
-        };
-      }
+    function logout() {
+      localStorage.removeItem("isLoggedIn");
+      alert("Logged out!");
+      location.reload(); // Refresh to update menu
     }
-
-    // Run on load
-    updateMenu();
   </script>
+
 </body>
 </html>
