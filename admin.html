@@ -1,41 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
   <title>Admin Panel</title>
   <style>
-    body { font-family: Arial; padding: 20px; }
-    .logout-btn { display: none; padding: 10px 20px; background: red; color: white; border: none; cursor: pointer; }
+    body {
+      font-family: Arial, sans-serif;
+    }
+
+    .topbar {
+      background-color: #333;
+      color: white;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .menu-icon {
+      font-size: 25px;
+      cursor: pointer;
+    }
+
+    .dropdown {
+      position: absolute;
+      right: 20px;
+      top: 50px;
+      background-color: #444;
+      border: 1px solid #666;
+      display: none;
+      flex-direction: column;
+    }
+
+    .dropdown a {
+      color: white;
+      padding: 10px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown a:hover {
+      background-color: #555;
+    }
   </style>
 </head>
 <body>
+  <div class="topbar">
+    <h2>Admin Panel</h2>
+    <div class="menu-icon" onclick="toggleDropdown()">☰</div>
+    <div class="dropdown" id="menuDropdown">
+      <a href="#" id="loginLogoutBtn"></a>
+    </div>
+  </div>
 
-  <h1>Admin Panel</h1>
-
-  <!-- Logout Button -->
-  <button id="logoutBtn" class="logout-btn">Logout</button>
+  <div style="padding: 20px;">
+    <h3>Welcome, Admin!</h3>
+    <p>This is the admin dashboard.</p>
+  </div>
 
   <script>
-    // Check if user is logged in
-    const isLoggedIn = localStorage.getItem("isLoggedIn");
+    const dropdown = document.getElementById("menuDropdown");
+    const loginLogoutBtn = document.getElementById("loginLogoutBtn");
 
-    const logoutBtn = document.getElementById("logoutBtn");
-
-    if (isLoggedIn === "true") {
-      // Show logout button
-      logoutBtn.style.display = "inline-block";
-    } else {
-      // Not logged in, redirect to login page
-      window.location.href = "login.html";
+    function toggleDropdown() {
+      dropdown.style.display = dropdown.style.display === "flex" ? "none" : "flex";
     }
 
-    // Logout button click
-    logoutBtn.addEventListener("click", () => {
-      localStorage.setItem("isLoggedIn", "false");
-      window.location.href = "login.html";
-    });
-  </script>
+    function updateMenu() {
+      const isLoggedIn = localStorage.getItem("loggedIn") === "true";
 
+      if (isLoggedIn) {
+        loginLogoutBtn.textContent = "Logout";
+        loginLogoutBtn.onclick = () => {
+          localStorage.setItem("loggedIn", "false");
+          alert("Logged out!");
+          location.reload();
+        };
+      } else {
+        loginLogoutBtn.textContent = "Login";
+        loginLogoutBtn.onclick = () => {
+          window.location.href = "login.html";
+        };
+      }
+    }
+
+    // Run on load
+    updateMenu();
+  </script>
 </body>
 </html>
