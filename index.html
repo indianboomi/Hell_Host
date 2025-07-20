@@ -2,29 +2,119 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Hell Host 🔥</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Hell Host 🔥 - Hosting Panel with Discord Login</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #ff4444;
+      font-family: 'Courier New', monospace;
+      margin: 0;
+      padding: 0;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    h1 {
+      font-size: 3em;
+      margin-bottom: 10px;
+    }
+    .tagline {
+      font-style: italic;
+      margin-bottom: 40px;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+      max-width: 400px;
+      margin: auto;
+      text-align: left;
+    }
+    li {
+      margin: 10px 0;
+    }
+    a {
+      color: #ff6666;
+      text-decoration: none;
+    }
+    a:hover {
+      color: #ffffff;
+      text-decoration: underline;
+    }
+    button {
+      padding: 12px 25px;
+      background-color: #7289da;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      margin: 20px auto;
+      display: block;
+      font-size: 1em;
+    }
+    button:hover {
+      background-color: #5b6eae;
+    }
+    #userInfo {
+      margin-top: 20px;
+      color: #fff;
+    }
+    #userInfo img {
+      border-radius: 50%;
+      margin-top: 10px;
+    }
+  </style>
 </head>
 <body>
-  <div class="container">
-    <h1>🔥 Hell Host</h1>
-    <p class="tagline">Your Darkest Hosting Panel</p>
+  <h1>🔥 Hell Host</h1>
+  <p class="tagline">Your Darkest Hosting Panel</p>
 
-    <div class="project-list">
-      <h2>Your Projects</h2>
-      <ul id="projectList">
-        <li><a href="https://yourusername.github.io/project1" target="_blank">📁 project1</a></li>
-        <li><a href="https://yourusername.github.io/anime-site" target="_blank">📁 anime-site</a></li>
-      </ul>
-    </div>
+  <ul id="projectList">
+    <li><a href="https://yourusername.github.io/project1" target="_blank">📁 project1</a></li>
+    <li><a href="https://yourusername.github.io/anime-site" target="_blank">📁 anime-site</a></li>
+  </ul>
 
-    <div class="add-project">
-      <input type="text" id="projectName" placeholder="Project Name (e.g. my-site)" />
-      <button onclick="addProject()">➕ Add Project</button>
-    </div>
-  </div>
+  <button id="discordLoginBtn">Login with Discord</button>
 
-  <script src="script.js"></script>
+  <div id="userInfo"></div>
+
+  <script>
+    const clientId = '1384756715760652360'; // Replace with your Discord App Client ID
+    const redirectUri = encodeURIComponent(window.location.origin + window.location.pathname);
+    const scope = encodeURIComponent('identify');
+    const discordLoginUrl = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=${scope}`;
+
+    document.getElementById('discordLoginBtn').onclick = () => {
+      window.location.href = discordLoginUrl;
+    };
+
+    // After redirect, get access token from URL hash
+    window.onload = () => {
+      if (window.location.hash) {
+        const params = new URLSearchParams(window.location.hash.slice(1));
+        const accessToken = params.get('access_token');
+        if (accessToken) {
+          fetch('https://discord.com/api/users/@me', {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          })
+            .then(res => {
+              if (!res.ok) throw new Error('Failed to fetch user info');
+              return res.json();
+            })
+            .then(user => {
+              document.getElementById('userInfo').innerHTML =
+                `<p>Logged in as <strong>${user.username}#${user.discriminator}</strong></p>` +
+                `<img src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png" width="80" alt="Avatar" />`;
+              document.getElementById('discordLoginBtn').style.display = 'none';
+            })
+            .catch(() => {
+              document.getElementById('userInfo').innerText = 'Failed to fetch Discord user info.';
+            });
+        }
+      }
+    };
+  </script>
 </body>
 </html>
