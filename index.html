@@ -3,48 +3,30 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>🔥 Hell Host Panel</title>
+  <title>🔥 Hell Host Minecraft Panel</title>
   <style>
     body {
       background-color: #121212;
       color: #ff4444;
-      font-family: 'Courier New', monospace;
+      font-family: monospace;
       margin: 0;
       padding: 0;
+      text-align: center;
     }
     .container {
       max-width: 800px;
       margin: auto;
       padding: 40px 20px;
-      text-align: center;
-    }
-    h1 {
-      font-size: 3em;
-      margin-bottom: 5px;
-    }
-    .tagline {
-      font-style: italic;
-      margin-bottom: 40px;
-    }
-    #userInfo {
-      margin-bottom: 30px;
-      color: #fff;
-    }
-    #userInfo img {
-      border-radius: 50%;
-      margin-top: 10px;
     }
     button {
-      background-color: #7289da;
-      border: none;
-      border-radius: 5px;
-      color: white;
+      margin: 0 6px;
+      padding: 8px 15px;
       font-weight: bold;
+      border-radius: 6px;
+      border: none;
       cursor: pointer;
-      font-size: 1em;
-      padding: 10px 18px;
-      margin: 5px;
-      transition: background-color 0.3s ease;
+      background-color: #7289da;
+      color: white;
     }
     button:hover {
       background-color: #5b6eae;
@@ -58,73 +40,63 @@
     ul {
       list-style: none;
       padding: 0;
-      text-align: left;
       max-width: 600px;
       margin: 20px auto;
+      text-align: left;
     }
     li {
-      margin: 12px 0;
       background: #1e1e1e;
-      padding: 10px 15px;
+      margin-bottom: 10px;
+      padding: 12px 15px;
       border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
     a {
       color: #ff6666;
       text-decoration: none;
       font-size: 1.1em;
     }
-    a:hover {
-      color: #fff;
-      text-decoration: underline;
-    }
-    input[type="text"] {
-      padding: 10px;
-      width: 60%;
-      border: none;
-      border-radius: 5px;
-      font-size: 1em;
-      margin-right: 10px;
-    }
-    .add-project-container {
-      margin-top: 20px;
-    }
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>🔥 Hell Host</h1>
-    <p class="tagline">Your Darkest Hosting Panel</p>
-
+    <h1>🔥 Hell Host Minecraft Panel</h1>
     <div id="userInfo"></div>
-
     <button id="discordLoginBtn">Login with Discord</button>
 
     <h2>Your Projects</h2>
     <ul id="projectList"></ul>
 
-    <div class="add-project-container" style="display:none;" id="addProjectSection">
+    <div id="addProjectSection" style="display:none; margin-top: 20px;">
       <input type="text" id="projectName" placeholder="New Project Name (e.g. my-site)" />
       <button id="addProjectBtn">➕ Add Project</button>
     </div>
   </div>
 
   <script>
-    const clientId = '1384756715760652360'; // Replace with your real Discord Client ID
-    const ownerId = '886868526734905354';    // Replace with your Discord user ID (owner)
-    const redirectUri = encodeURIComponent(window.location.origin + window.location.pathname);
-    const scope = encodeURIComponent('identify');
-    const discordLoginUrl = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=${scope}`;
+    const CLIENT_ID = '1384756715760652360'; // Discord app client ID
+    const OWNER_ID = '886868526734905354';   // Your Discord user ID
+    const REDIRECT_URI = encodeURIComponent(window.location.origin + window.location.pathname);
+    const SCOPE = encodeURIComponent('identify');
+    const DISCORD_LOGIN_URL = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token&scope=${SCOPE}`;
+
+    const API_URL = 'http://YOUR_VPS_IP_OR_DOMAIN:3000'; // Your backend API URL
+    const API_AUTH_TOKEN = 'supersecrettoken';           // Must match backend AUTH_TOKEN
 
     const loginBtn = document.getElementById('discordLoginBtn');
     const userInfoDiv = document.getElementById('userInfo');
+    const projectList = document.getElementById('projectList');
     const addProjectSection = document.getElementById('addProjectSection');
     const addProjectBtn = document.getElementById('addProjectBtn');
-    const projectList = document.getElementById('projectList');
     const projectNameInput = document.getElementById('projectName');
 
     loginBtn.onclick = () => {
-      window.location.href = discordLoginUrl;
+      window.location.href = DISCORD_LOGIN_URL;
     };
+
+    let projects = [];
 
     function loadProjects() {
       const data = localStorage.getItem('hellhost-projects');
@@ -134,14 +106,53 @@
       ];
     }
 
-    function saveProjects(projects) {
+    function saveProjects() {
       localStorage.setItem('hellhost-projects', JSON.stringify(projects));
     }
 
-    function renderProjects(projects, isOwner) {
+    async function startServer() {
+      try {
+        const res = await fetch(`${API_URL}/start`, {
+          method: 'POST',
+          headers: { Authorization: API_AUTH_TOKEN }
+        });
+        const text = await res.text();
+        alert(text);
+      } catch (err) {
+        alert('Error starting server');
+      }
+    }
+
+    async function stopServer() {
+      try {
+        const res = await fetch(`${API_URL}/stop`, {
+          method: 'POST',
+          headers: { Authorization: API_AUTH_TOKEN }
+        });
+        const text = await res.text();
+        alert(text);
+      } catch (err) {
+        alert('Error stopping server');
+      }
+    }
+
+    async function getStatus() {
+      try {
+        const res = await fetch(`${API_URL}/status`);
+        const json = await res.json();
+        return json.running;
+      } catch {
+        return false;
+      }
+    }
+
+    async function renderProjects(isOwner) {
       projectList.innerHTML = '';
-      projects.forEach(({ name, status = 'stopped' }, i) => {
+      const serverRunning = await getStatus();
+
+      projects.forEach(({ name }, i) => {
         const li = document.createElement('li');
+
         const a = document.createElement('a');
         a.href = `https://yourusername.github.io/${name}`;
         a.target = '_blank';
@@ -149,27 +160,34 @@
         li.appendChild(a);
 
         const statusSpan = document.createElement('span');
-        statusSpan.textContent = status === 'running' ? ' ✅ Running' : ' 🔴 Stopped';
+        statusSpan.style.marginLeft = '10px';
+        statusSpan.textContent = serverRunning ? ' ✅ Running' : ' 🔴 Stopped';
         li.appendChild(statusSpan);
 
         if (isOwner) {
-          const toggleBtn = document.createElement('button');
-          toggleBtn.textContent = status === 'running' ? 'Stop' : 'Start';
-          toggleBtn.className = 'delete-btn';
-          toggleBtn.onclick = () => {
-            projects[i].status = projects[i].status === 'running' ? 'stopped' : 'running';
-            saveProjects(projects);
-            renderProjects(projects, true);
+          const startBtn = document.createElement('button');
+          startBtn.textContent = 'Start Server';
+          startBtn.onclick = async () => {
+            await startServer();
+            renderProjects(true);
           };
-          li.appendChild(toggleBtn);
+          li.appendChild(startBtn);
+
+          const stopBtn = document.createElement('button');
+          stopBtn.textContent = 'Stop Server';
+          stopBtn.onclick = async () => {
+            await stopServer();
+            renderProjects(true);
+          };
+          li.appendChild(stopBtn);
 
           const delBtn = document.createElement('button');
           delBtn.textContent = 'Delete';
           delBtn.className = 'delete-btn';
           delBtn.onclick = () => {
             projects.splice(i, 1);
-            saveProjects(projects);
-            renderProjects(projects, true);
+            saveProjects();
+            renderProjects(true);
           };
           li.appendChild(delBtn);
         }
@@ -179,8 +197,8 @@
     }
 
     window.onload = () => {
-      const projects = loadProjects();
-      renderProjects(projects, false);
+      projects = loadProjects();
+      renderProjects(false);
 
       if (window.location.hash) {
         const params = new URLSearchParams(window.location.hash.substring(1));
@@ -200,10 +218,10 @@
               `;
               loginBtn.style.display = 'none';
 
-              const isOwner = user.id === ownerId;
+              const isOwner = user.id === OWNER_ID;
               if (isOwner) {
                 addProjectSection.style.display = 'block';
-                renderProjects(projects, true);
+                renderProjects(true);
 
                 addProjectBtn.onclick = () => {
                   const name = projectNameInput.value.trim();
@@ -211,9 +229,9 @@
                     alert('Enter project name!');
                     return;
                   }
-                  projects.push({ name, status: 'stopped' });
-                  saveProjects(projects);
-                  renderProjects(projects, true);
+                  projects.push({ name });
+                  saveProjects();
+                  renderProjects(true);
                   projectNameInput.value = '';
                 };
               }
