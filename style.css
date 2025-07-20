@@ -1,56 +1,69 @@
+/* Hell Host Dark Theme */
 body {
+  background-color: #121212;
+  color: #ff4444;
+  font-family: 'Courier New', monospace;
   margin: 0;
   padding: 0;
-  background-color: #111;
-  color: #eee;
-  font-family: 'Segoe UI', sans-serif;
 }
 
 .container {
-  max-width: 700px;
-  margin: 50px auto;
-  padding: 20px;
-  background: #1c1c1c;
-  border-radius: 10px;
-  box-shadow: 0 0 20px red;
-}
-
-h1 {
-  color: #ff3333;
+  max-width: 600px;
+  margin: auto;
+  padding: 40px 20px;
   text-align: center;
 }
 
-.panel {
-  margin-top: 30px;
+h1 {
+  font-size: 3em;
+  margin-bottom: 10px;
+}
+
+.tagline {
+  font-style: italic;
+  margin-bottom: 40px;
+}
+
+.project-list {
+  margin-bottom: 30px;
 }
 
 ul {
-  list-style-type: none;
+  list-style: none;
   padding: 0;
 }
 
-ul li {
+li {
   margin: 10px 0;
-  background: #222;
-  padding: 10px;
-  border-left: 5px solid #ff3333;
 }
 
-ul li a {
-  color: #fff;
+a {
+  color: #ff6666;
   text-decoration: none;
 }
 
-#add-project {
-  margin-top: 20px;
-  padding: 10px 15px;
-  background-color: #ff3333;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  cursor: pointer;
+a:hover {
+  color: #ffffff;
+  text-decoration: underline;
 }
 
-#add-project:hover {
-  background-color: #ff5555;
+input[type="text"] {
+  padding: 10px;
+  width: 70%;
+  border: none;
+  border-radius: 5px;
+}
+
+button {
+  padding: 10px 20px;
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
+button:hover {
+  background-color: #dd2222;
 }
