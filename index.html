@@ -82,8 +82,8 @@
     const SCOPE = encodeURIComponent('identify');
     const DISCORD_LOGIN_URL = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token&scope=${SCOPE}`;
 
-    const API_URL = 'http://YOUR_VPS_IP_OR_DOMAIN:3000'; // Your backend API URL
-    const API_AUTH_TOKEN = 'supersecrettoken';           // Must match backend AUTH_TOKEN
+    const API_URL = 'http://123.45.67.89:3000'; // Your backend API URL
+    const API_AUTH_TOKEN = 'myUltraSecretToken123!';           // Must match backend AUTH_TOKEN
 
     const loginBtn = document.getElementById('discordLoginBtn');
     const userInfoDiv = document.getElementById('userInfo');
