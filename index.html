@@ -3,21 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Hell Host 🔥 - Hosting Panel with Discord Login</title>
+  <title>Hell Host 🔥 - Owner Panel</title>
   <style>
-    /* Reset & base */
     body {
       background-color: #121212;
       color: #ff4444;
       font-family: 'Courier New', monospace;
       margin: 0;
       padding: 0;
+      text-align: center;
     }
     .container {
       max-width: 700px;
       margin: auto;
       padding: 40px 20px;
-      text-align: center;
     }
     h1 {
       font-size: 3em;
@@ -59,6 +58,9 @@
     }
     li {
       margin: 10px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
     a {
       color: #ff6666;
@@ -69,6 +71,9 @@
       color: #fff;
       text-decoration: underline;
     }
+    .add-project-container, #adminSection {
+      margin-top: 20px;
+    }
     input[type="text"] {
       padding: 10px;
       width: 60%;
@@ -76,112 +81,195 @@
       border-radius: 5px;
       font-size: 1em;
     }
-    .add-project-container {
-      margin-top: 20px;
-    }
-    .add-project-container button {
-      margin-left: 10px;
+    .delete-btn {
       background-color: #ff4444;
-      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      color: white;
+      font-weight: bold;
+      cursor: pointer;
+      padding: 5px 10px;
+      margin-left: 10px;
+      font-size: 0.9em;
     }
-    .add-project-container button:hover {
+    .delete-btn:hover {
       background-color: #dd2222;
+    }
+    #logoutBtn {
+      background-color: #ff4444;
+      margin-bottom: 40px;
+    }
+    #logoutBtn:hover {
+      background-color: #dd2222;
+    }
+    #secretArea {
+      background-color: #330000;
+      padding: 15px;
+      border-radius: 8px;
+      color: #ffbbbb;
+      font-style: italic;
+      max-width: 400px;
+      margin: 20px auto;
     }
   </style>
 </head>
 <body>
   <div class="container">
     <h1>🔥 Hell Host</h1>
-    <p class="tagline">Your Darkest Hosting Panel</p>
+    <p class="tagline">Owner/Admin Panel</p>
 
-    <div id="userInfo">
-      <!-- User info will appear here after login -->
-    </div>
-
+    <div id="userInfo"></div>
     <button id="discordLoginBtn">Login with Discord</button>
+    <button id="logoutBtn" style="display:none;">Logout</button>
 
-    <h2>Your Projects</h2>
-    <ul id="projectList">
-      <!-- Existing projects -->
-      <li><a href="https://yourusername.github.io/project1" target="_blank">📁 project1</a></li>
-      <li><a href="https://yourusername.github.io/anime-site" target="_blank">📁 anime-site</a></li>
-    </ul>
+    <div id="adminSection" style="display:none;">
+      <h2>Your Projects</h2>
+      <ul id="projectList"></ul>
 
-    <div class="add-project-container" style="display:none;" id="addProjectSection">
-      <input type="text" id="projectName" placeholder="New Project Name (e.g. my-site)" />
-      <button onclick="addProject()">➕ Add Project</button>
+      <div class="add-project-container">
+        <input type="text" id="projectName" placeholder="New Project Name (e.g. my-site)" />
+        <button id="addProjectBtn">➕ Add Project</button>
+      </div>
+
+      <div id="secretArea" style="display:none;">
+        <h3>🔒 Secret Owner Area</h3>
+        <p>Welcome, mighty owner! This is your secret control panel area.</p>
+        <p>Here you can add any secret admin-only info.</p>
+      </div>
     </div>
   </div>
 
   <script>
-    const clientId = '1384756715760652360'; // Replace with your Discord Application Client ID
-    const redirectUri = encodeURIComponent(window.location.origin + window.location.pathname);
-    const scope = encodeURIComponent('identify');
-    const discordLoginUrl = `https://discord.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${redirectUri}&response_type=token&scope=${scope}`;
+    const CLIENT_ID = '1384756715760652360'; // Discord App client ID
+    const OWNER_ID = '886868526734905354'; // Your Discord User ID as string, e.g. '123456789012345678'
+    const REDIRECT_URI = encodeURIComponent(window.location.origin + window.location.pathname);
+    const SCOPE = encodeURIComponent('identify');
+    const DISCORD_OAUTH_URL = `https://discord.com/api/oauth2/authorize?client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&response_type=token&scope=${SCOPE}`;
 
     const loginBtn = document.getElementById('discordLoginBtn');
+    const logoutBtn = document.getElementById('logoutBtn');
     const userInfoDiv = document.getElementById('userInfo');
-    const addProjectSection = document.getElementById('addProjectSection');
+    const adminSection = document.getElementById('adminSection');
     const projectList = document.getElementById('projectList');
+    const addProjectBtn = document.getElementById('addProjectBtn');
+    const projectNameInput = document.getElementById('projectName');
+    const secretArea = document.getElementById('secretArea');
 
-    loginBtn.onclick = () => {
-      window.location.href = discordLoginUrl;
-    };
-
-    function addProject() {
-      const nameInput = document.getElementById('projectName');
-      const name = nameInput.value.trim();
-      if (!name) {
-        alert('Please enter a project name.');
-        return;
-      }
-
-      // Create new list item with link
-      const li = document.createElement('li');
-      const a = document.createElement('a');
-      a.href = `https://yourusername.github.io/${name}`;
-      a.target = '_blank';
-      a.textContent = `📁 ${name}`;
-      li.appendChild(a);
-      projectList.appendChild(li);
-
-      nameInput.value = '';
+    // Helper: Save projects to localStorage
+    function saveProjects(projects) {
+      localStorage.setItem('hellhost_projects', JSON.stringify(projects));
+    }
+    // Helper: Load projects from localStorage
+    function loadProjects() {
+      const data = localStorage.getItem('hellhost_projects');
+      return data ? JSON.parse(data) : [
+        { name: 'project1' },
+        { name: 'anime-site' }
+      ];
     }
 
-    // On page load, check if token exists in URL hash
+    // Render projects list with delete buttons for admin
+    function renderProjects(projects, isOwner) {
+      projectList.innerHTML = '';
+      projects.forEach(({name}, i) => {
+        const li = document.createElement('li');
+        const a = document.createElement('a');
+        a.href = `https://yourusername.github.io/${name}`;
+        a.target = '_blank';
+        a.textContent = `📁 ${name}`;
+        li.appendChild(a);
+
+        if (isOwner) {
+          const delBtn = document.createElement('button');
+          delBtn.textContent = 'Delete';
+          delBtn.className = 'delete-btn';
+          delBtn.onclick = () => {
+            projects.splice(i, 1);
+            saveProjects(projects);
+            renderProjects(projects, true);
+          };
+          li.appendChild(delBtn);
+        }
+
+        projectList.appendChild(li);
+      });
+    }
+
+    function showOwnerUI(user) {
+      userInfoDiv.innerHTML = `
+        <p>Logged in as <strong>${user.username}#${user.discriminator}</strong></p>
+        <img src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png" width="80" alt="Avatar" />
+      `;
+      loginBtn.style.display = 'none';
+      logoutBtn.style.display = 'inline-block';
+      adminSection.style.display = 'block';
+
+      // Show secret area only to owner
+      if(user.id === OWNER_ID) {
+        secretArea.style.display = 'block';
+        // Load saved projects
+        const projects = loadProjects();
+        renderProjects(projects, true);
+
+        addProjectBtn.onclick = () => {
+          const name = projectNameInput.value.trim();
+          if(!name) {
+            alert('Please enter a project name.');
+            return;
+          }
+          projects.push({name});
+          saveProjects(projects);
+          renderProjects(projects, true);
+          projectNameInput.value = '';
+        };
+      } else {
+        // For non-owners show projects but no admin controls
+        secretArea.style.display = 'none';
+        const projects = loadProjects();
+        renderProjects(projects, false);
+        addProjectBtn.disabled = true;
+        projectNameInput.disabled = true;
+      }
+    }
+
+    function logout() {
+      // Clear localStorage, user info, UI
+      localStorage.removeItem('hellhost_projects');
+      userInfoDiv.innerHTML = '';
+      adminSection.style.display = 'none';
+      loginBtn.style.display = 'inline-block';
+      logoutBtn.style.display = 'none';
+      // Remove token from URL
+      history.replaceState(null, '', window.location.pathname);
+    }
+
+    loginBtn.onclick = () => {
+      window.location.href = DISCORD_OAUTH_URL;
+    };
+    logoutBtn.onclick = logout;
+
+    // On page load, check for access_token in URL hash
     window.onload = () => {
-      if (window.location.hash) {
+      if(window.location.hash) {
         const params = new URLSearchParams(window.location.hash.substring(1));
-        const accessToken = params.get('access_token');
-
-        if (accessToken) {
-          // Fetch user info from Discord API
+        const token = params.get('access_token');
+        if(token) {
           fetch('https://discord.com/api/users/@me', {
-            headers: {
-              Authorization: `Bearer ${accessToken}`,
-            },
+            headers: { Authorization: `Bearer ${token}` }
           })
-            .then(res => {
-              if (!res.ok) throw new Error('Failed to fetch user info');
-              return res.json();
-            })
-            .then(user => {
-              // Show user info
-              userInfoDiv.innerHTML = `
-                <p>Logged in as <strong>${user.username}#${user.discriminator}</strong></p>
-                <img src="https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}.png" width="80" alt="Avatar" />
-              `;
-
-              // Hide login button & show add project UI
-              loginBtn.style.display = 'none';
-              addProjectSection.style.display = 'block';
-
-              // Optionally, clean URL hash to hide token (browser history trick)
-              history.replaceState(null, '', window.location.pathname);
-            })
-            .catch(() => {
-              userInfoDiv.textContent = 'Failed to fetch Discord user info.';
-            });
+          .then(res => {
+            if(!res.ok) throw new Error('Failed to fetch user info');
+            return res.json();
+          })
+          .then(user => {
+            showOwnerUI(user);
+            // Clean URL hash
+            history.replaceState(null, '', window.location.pathname);
+          })
+          .catch(() => {
+            alert('Failed to authenticate with Discord.');
+            logout();
+          });
         }
       }
     };
