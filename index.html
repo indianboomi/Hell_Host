@@ -2,24 +2,26 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>🔥Hell Host Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hell Host 🔥</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <div class="container">
     <h1>🔥 Hell Host</h1>
-    <p>Welcome to your custom hosting panel.</p>
+    <p class="tagline">Your Darkest Hosting Panel</p>
 
-    <div class="panel">
-      <h2>Your Hosted Projects</h2>
-      <ul id="project-list">
-        <li><a href="https://yourusername.github.io/project1" target="_blank">📁 Project 1</a></li>
-        <li><a href="https://yourusername.github.io/anime-site" target="_blank">📁 Anime Site</a></li>
-        <li><a href="https://yourusername.github.io/portfolio" target="_blank">📁 Portfolio</a></li>
+    <div class="project-list">
+      <h2>Your Projects</h2>
+      <ul id="projectList">
+        <li><a href="https://yourusername.github.io/project1" target="_blank">📁 project1</a></li>
+        <li><a href="https://yourusername.github.io/anime-site" target="_blank">📁 anime-site</a></li>
       </ul>
+    </div>
 
-      <button id="add-project">➕ Add Project (UI Only)</button>
+    <div class="add-project">
+      <input type="text" id="projectName" placeholder="Project Name (e.g. my-site)" />
+      <button onclick="addProject()">➕ Add Project</button>
     </div>
   </div>
 
