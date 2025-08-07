@@ -61,3 +61,30 @@ body {
   padding: 40px;
   background-color: #121212;
 }
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.card {
+  background-color: #222;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px #00000033;
+  text-align: left;
+}
+
+.card h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+  color: #aaa;
+}
+
+.card p {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+  color: #fff;
+}
