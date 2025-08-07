@@ -1,31 +1,25 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Minecraft Server Control</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Minecraft Server Panel</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>Spigot Server Control Panel</h1>
-  <button onclick="startServer()">Start Server</button>
-  <button onclick="stopServer()">Stop Server</button>
-  <button onclick="checkStatus()">Check Status</button>
-  <pre id="output"></pre>
+  <div class="container">
+    <h1>Minecraft Server Panel</h1>
+    
+    <div class="buttons">
+      <button onclick="startServer()">Start Server</button>
+      <button onclick="stopServer()">Stop Server</button>
+      <button onclick="checkStatus()">Check Status</button>
+    </div>
 
-  <script>
-    async function startServer() {
-      const res = await fetch('/start', { method: 'POST' });
-      document.getElementById('output').textContent = await res.text();
-    }
+    <div id="status" class="status">Status: Unknown</div>
+    <pre id="log"></pre>
+  </div>
 
-    async function stopServer() {
-      const res = await fetch('/stop', { method: 'POST' });
-      document.getElementById('output').textContent = await res.text();
-    }
-
-    async function checkStatus() {
-      const res = await fetch('/status');
-      const data = await res.json();
-      document.getElementById('output').textContent = data.running ? 'Server is running' : 'Server is stopped';
-    }
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
