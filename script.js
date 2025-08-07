@@ -1,4 +1,4 @@
-const API_BASE = 'https://your-backend-url.com'; // Change to your backend URL
+const API_BASE = 'https://www.hellhostpannel.com'; // Change to your backend URL
 
 async function startServer() {
   updateStatus('Starting server...');
