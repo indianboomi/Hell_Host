@@ -1,47 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Sidebar Menu</title>
-  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hell Host Pannel</title>
+  <link rel="stylesheet" href="style.css" />
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 <body>
+  <div class="sidebar">
 
     <div class="menu">
       <div class="menu-section">
         <ul>
-          <li><i data-lucide="monitor"></i><span>Instances</span></li>
-          <li><i data-lucide="user"></i><span>Account</span></li>
+          <li onclick="menuClick('Instances')"><i data-lucide="monitor"></i><span>Instances</span></li>
+          <li onclick="menuClick('Account')"><i data-lucide="user"></i><span>Account</span></li>
         </ul>
       </div>
 
       <div class="menu-section">
         <p class="section-label">Admin Panel</p>
         <ul>
-          <li><i data-lucide="layout-dashboard"></i><span>Overview</span></li>
-          <li><i data-lucide="settings"></i><span>Settings</span></li>
-          <li><i data-lucide="bar-chart"></i><span>Analytics</span></li>
-          <li><i data-lucide="users"></i><span>Users</span></li>
-          <li><i data-lucide="layers"></i><span>Instances</span></li>
-          <li><i data-lucide="server"></i><span>Nodes</span></li>
-          <li><i data-lucide="image"></i><span>Images</span></li>
-          <li><i data-lucide="key"></i><span>API Keys</span></li>
-          <li><i data-lucide="file-text"></i><span>Audit Logs</span></li>
-          <li><i data-lucide="package"></i><span>Plugins</span></li>
+          <li onclick="menuClick('Overview')"><i data-lucide="layout-dashboard"></i><span>Overview</span></li>
+          <li onclick="menuClick('Settings')"><i data-lucide="settings"></i><span>Settings</span></li>
+          <li onclick="menuClick('Analytics')"><i data-lucide="bar-chart"></i><span>Analytics</span></li>
+          <li onclick="menuClick('Users')"><i data-lucide="users"></i><span>Users</span></li>
+          <li onclick="menuClick('Instances-Admin')"><i data-lucide="layers"></i><span>Instances</span></li>
+          <li onclick="menuClick('Nodes')"><i data-lucide="server"></i><span>Nodes</span></li>
+          <li onclick="menuClick('Images')"><i data-lucide="image"></i><span>Images</span></li>
+          <li onclick="menuClick('API Keys')"><i data-lucide="key"></i><span>API Keys</span></li>
+          <li onclick="menuClick('Audit Logs')"><i data-lucide="file-text"></i><span>Audit Logs</span></li>
+          <li onclick="menuClick('Plugins')"><i data-lucide="package"></i><span>Plugins</span></li>
         </ul>
       </div>
 
       <div class="menu-section bottom">
         <ul>
-          <li><i data-lucide="log-out"></i><span>Sign Out</span></li>
+          <li onclick="menuClick('Sign Out')"><i data-lucide="log-out"></i><span>Sign Out</span></li>
         </ul>
       </div>
     </div>
   </div>
 
+  <div class="main-content">
+    <h1 id="page-title">Welcome</h1>
+    <p>This is your Minecraft server panel.</p>
+  </div>
+
+  <script src="script.js"></script>
   <script>
-    lucide.createIcons(); // load icons
+    lucide.createIcons();
   </script>
 </body>
 </html>
