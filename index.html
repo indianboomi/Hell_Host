@@ -1,50 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Server Panel Sidebar</title>
+  <meta charset="UTF-8">
+  <title>Sidebar Menu</title>
   <link rel="stylesheet" href="style.css">
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 <body>
-  <div class="sidebar">
-    <div class="profile">
-      <div class="avatar">S</div>
-      <div class="username">solo</div>
-    </div>
 
-    <div class="menu-section">
-      <p class="section-title">User</p>
-      <ul>
-        <li><i data-lucide="monitor"></i><span>Instances</span></li>
-        <li><i data-lucide="user"></i><span>Account</span></li>
-      </ul>
-    </div>
+    <div class="menu">
+      <div class="menu-section">
+        <ul>
+          <li><i data-lucide="monitor"></i><span>Instances</span></li>
+          <li><i data-lucide="user"></i><span>Account</span></li>
+        </ul>
+      </div>
 
-    <div class="menu-section">
-      <p class="section-title">Admin Panel</p>
-      <ul>
-        <li><i data-lucide="layout-dashboard"></i><span>Overview</span></li>
-        <li><i data-lucide="settings"></i><span>Settings</span></li>
-        <li><i data-lucide="bar-chart"></i><span>Analytics</span></li>
-        <li><i data-lucide="users"></i><span>Users</span></li>
-        <li><i data-lucide="layers"></i><span>Instances</span></li>
-        <li><i data-lucide="server"></i><span>Nodes</span></li>
-        <li><i data-lucide="image"></i><span>Images</span></li>
-        <li><i data-lucide="key"></i><span>API Keys</span></li>
-        <li><i data-lucide="file-text"></i><span>Audit Logs</span></li>
-        <li><i data-lucide="package"></i><span>Plugins</span></li>
-      </ul>
-    </div>
+      <div class="menu-section">
+        <p class="section-label">Admin Panel</p>
+        <ul>
+          <li><i data-lucide="layout-dashboard"></i><span>Overview</span></li>
+          <li><i data-lucide="settings"></i><span>Settings</span></li>
+          <li><i data-lucide="bar-chart"></i><span>Analytics</span></li>
+          <li><i data-lucide="users"></i><span>Users</span></li>
+          <li><i data-lucide="layers"></i><span>Instances</span></li>
+          <li><i data-lucide="server"></i><span>Nodes</span></li>
+          <li><i data-lucide="image"></i><span>Images</span></li>
+          <li><i data-lucide="key"></i><span>API Keys</span></li>
+          <li><i data-lucide="file-text"></i><span>Audit Logs</span></li>
+          <li><i data-lucide="package"></i><span>Plugins</span></li>
+        </ul>
+      </div>
 
-    <div class="bottom">
-      <li><i data-lucide="log-out"></i><span>Sign Out</span></li>
+      <div class="menu-section bottom">
+        <ul>
+          <li><i data-lucide="log-out"></i><span>Sign Out</span></li>
+        </ul>
+      </div>
     </div>
   </div>
 
   <script>
-    lucide.createIcons();
+    lucide.createIcons(); // load icons
   </script>
 </body>
 </html>
