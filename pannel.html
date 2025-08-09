@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Server Panel</title>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+  <script>
+    // Firebase Config
+    const firebaseConfig = {
+      apiKey: "AIzaSyBhcg2E060bJ9HdVVSmWjV_h7bAe3juqNk",
+      authDomain: "fir-98e22.firebaseapp.com",
+      projectId: "fir-98e22",
+      storageBucket: "fir-98e22.firebasestorage.app",
+      messagingSenderId: "997782000054",
+      appId: "1:997782000054:web:4085c86b38baf26085f117",
+      measurementId: "G-HTGDCKGM4F"
+    };
+
+    // Init Firebase
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+
+    // Check login status
+    auth.onAuthStateChanged((user) => {
+      if (!user) {
+        // Not logged in → redirect to login
+        window.location.href = "login.html";
+      } else {
+        document.getElementById("username").innerText = user.displayName;
+      }
+    });
+
+    // Logout
+    function logout() {
+      auth.signOut().then(() => {
+        window.location.href = "login.html";
+      });
+    }
+  </script>
+</head>
+<body>
+  <h1>Welcome to the Server Panel</h1>
+  <p>Logged in as: <span id="username"></span></p>
+  <button onclick="logout()">Logout</button>
+</body>
+</html>
