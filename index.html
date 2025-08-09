@@ -6,283 +6,78 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Hell Host Panel — Sign In</title>
   <style>
-    :root{
-      --bg:#0b0b0d;
-      --card:#111214;
-      --accent:#ff4d4d;
-      --muted:#9aa0a6;
-      --glass: rgba(255,255,255,0.03);
-      --success: #2ecc71;
-      --shadow: 0 10px 30px rgba(0,0,0,0.6);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    }
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      background: radial-gradient(1200px 400px at 10% 10%, rgba(255,77,77,0.07), transparent),
-                  radial-gradient(800px 300px at 90% 90%, rgba(255,77,77,0.04), transparent),
-                  var(--bg);
-      color:#e6e6e6;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:24px;
-    }.container{
-  width:100%;
-  max-width:980px;
-  display:grid;
-  grid-template-columns: 1fr 420px;
-  gap:28px;
-  align-items:center;
-}
-
-.panel {
-  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  border-radius:16px;
-  padding:36px;
-  box-shadow:var(--shadow);
-  border:1px solid rgba(255,255,255,0.03);
-}
-
-.left {
-  padding:36px;
-  display:flex;
-  flex-direction:column;
-  gap:18px;
-}
-.logo{
-  display:flex;align-items:center;gap:12px;font-weight:700;font-size:20px;
-}
-.logo .symbol{width:46px;height:46px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#ff8a8a);display:flex;align-items:center;justify-content:center;color:#1b1b1b;font-weight:800;box-shadow:0 6px 18px rgba(255,77,77,0.12)}
-
-h1{margin:0;font-size:28px}
-p.lead{margin:0;color:var(--muted)}
-
-.features{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:8px}
-.feature{background:var(--glass);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02);font-size:14px}
-
-/* sign-in card */
-.signin{background:linear-gradient(180deg, rgba(255,255,255,0.015), rgba(255,255,255,0.01));padding:28px;border-radius:14px}
-form{display:flex;flex-direction:column;gap:12px}
-
-label{font-size:13px;color:var(--muted);display:block;margin-bottom:6px}
-.input{
-  display:flex;align-items:center;background:rgba(0,0,0,0.25);padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)
-}
-input[type="text"], input[type="password"], input[type="email"]{
-  background:transparent;border:0;color:inherit;outline:none;font-size:15px;width:100%
-}
-.row{display:flex;gap:12px}
-.checkbox{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:14px}
-
-.actions{display:flex;align-items:center;justify-content:space-between;margin-top:8px}
-.btn{
-  background:var(--accent);color:#1b1b1b;padding:10px 14px;border-radius:10px;border:0;font-weight:700;cursor:pointer;box-shadow:0 8px 20px rgba(255,77,77,0.12)
-}
-.btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.04);color:var(--muted);box-shadow:none}
-
-.helper{font-size:13px;color:var(--muted)}
-.error{color:#ff6b6b;font-size:13px}
-.success{color:var(--success);font-weight:700}
-
-.password-toggle{background:transparent;border:0;color:var(--muted);cursor:pointer;padding:6px}
-
-/* small screens */
-@media (max-width:880px){
-  .container{grid-template-columns:1fr;}
-  .left{order:2}
-}
-
-/* subtle focus styles */
-input:focus{box-shadow:0 6px 18px rgba(255,77,77,0.06);border-color:rgba(255,77,77,0.2)}
-
-footer{font-size:12px;color:var(--muted);text-align:center;margin-top:14px}
-
-/* success screen */
-.success-box{display:none;flex-direction:column;gap:12px;align-items:center}
-.success-box.show{display:flex}
-
+    body { font-family: Arial, sans-serif; background: #0b0b0d; color: white; display: flex; align-items: center; justify-content: center; height: 100vh; }
+    .card { background: #111214; padding: 20px; border-radius: 10px; width: 300px; }
+    input { width: 100%; padding: 8px; margin: 5px 0; border-radius: 5px; border: none; }
+    button { width: 100%; padding: 10px; background: #ff4d4d; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
+    .error { color: red; font-size: 14px; }
+    .success { color: lightgreen; font-size: 14px; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="panel left">
-      <div class="logo"><div class="symbol">H</div>Hell Host Panel</div>
-      <h1>Welcome back, Outworlder</h1>
-      <p class="lead">Sign in to manage hosts, torments and infernal tasks. This is a demo UI — replace client-side auth with a secure server endpoint for production.</p><div class="features">
-    <div class="feature">Secure (demo)</div>
-    <div class="feature">Remember me option</div>
-    <div class="feature">Accessible labels</div>
-    <div class="feature">Responsive layout</div>
-  </div>
-
-  <footer>Not your realm? <a href="#" style="color:var(--accent);text-decoration:none">Request access</a></footer>
-</div>
-
-<div class="panel signin" aria-labelledby="signInHeading">
-  <h2 id="signInHeading" style="margin-top:0">Sign in</h2>
-
-  <form id="signinForm" novalidate>
-    <div>
-      <label for="username">Username or Email</label>
-      <div class="input">
-        <input id="username" name="username" type="text" inputmode="text" autocomplete="username" placeholder="e.g. admin@hell.local" required aria-required="true">
-      </div>
-      <div id="uError" class="error" role="alert" aria-live="polite"></div>
+  <div class="card" id="authCard">
+    <h2 id="formTitle">Sign In</h2>
+    <div id="authForm">
+      <input type="text" id="username" placeholder="Username" />
+      <input type="password" id="password" placeholder="Password" />
+      <div class="error" id="errorMsg"></div>
+      <button id="signInBtn">Sign In</button>
     </div>
-
-    <div>
-      <label for="password">Password</label>
-      <div class="input" style="justify-content:space-between">
-        <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Your infernal password" required aria-required="true">
-        <button type="button" class="password-toggle" id="togglePassword" aria-pressed="false" aria-label="Show password">👁️</button>
-      </div>
-      <div id="pError" class="error" role="alert" aria-live="polite"></div>
+    <div id="welcomeMsg" style="display:none;">
+      <p class="success">Welcome back, <span id="userDisplay"></span>!</p>
+      <button id="signOutBtn">Sign Out</button>
     </div>
-
-    <div class="row" style="align-items:center;justify-content:space-between">
-      <label class="checkbox"><input id="remember" type="checkbox"> Remember me</label>
-      <a href="#" class="helper">Forgot password?</a>
-    </div>
-
-    <div class="actions">
-      <div style="display:flex;gap:8px;align-items:center">
-        <button type="submit" class="btn">Sign in</button>
-        <button type="button" id="demoBtn" class="btn secondary">Demo creds</button>
-      </div>
-      <div class="helper">Or continue with SSO (coming soon)</div>
-    </div>
-
-    <div id="status" aria-live="polite"></div>
-  </form>
-
-  <div class="success-box" id="successBox" role="status">
-    <div style="font-size:48px">🔥</div>
-    <div class="success">Welcome. Authentication complete.</div>
-    <div class="helper">You are being redirected to the Hell Host Dashboard — (demo)</div>
-  </div>
-</div>
-
   </div>  <script>
-    // ======= Demo client-side auth =======
-    // WARNING: This is a demo-only approach. Replace with secure server-side authentication.
+    const DEMO = { user: 'admin@hell.local', pass: 'Pa$$w0rd' };
 
-    const form = document.getElementById('signinForm');
-    const username = document.getElementById('username');
-    const password = document.getElementById('password');
-    const uError = document.getElementById('uError');
-    const pError = document.getElementById('pError');
-    const status = document.getElementById('status');
-    const successBox = document.getElementById('successBox');
-    const toggle = document.getElementById('togglePassword');
-    const remember = document.getElementById('remember');
-    const demoBtn = document.getElementById('demoBtn');
+    const usernameEl = document.getElementById('username');
+    const passwordEl = document.getElementById('password');
+    const errorMsg = document.getElementById('errorMsg');
+    const signInBtn = document.getElementById('signInBtn');
+    const signOutBtn = document.getElementById('signOutBtn');
+    const welcomeMsg = document.getElementById('welcomeMsg');
+    const authForm = document.getElementById('authForm');
+    const userDisplay = document.getElementById('userDisplay');
 
-    // Demo credentials (change if desired)
-    const DEMO = {user: 'admin@hell.local', pass: 'Pa$$w0rd'};
-
-    // Restore remembered user
-    window.addEventListener('DOMContentLoaded', ()=>{
-      try{
-        const saved = localStorage.getItem('hhp_remember');
-        if(saved){
-          const d = JSON.parse(saved);
-          if(d.user) username.value = d.user;
-          if(d.remember) remember.checked = true;
-        }
-      }catch(e){/* ignore */}
-    });
-
-    // toggle password visibility
-    toggle.addEventListener('click', ()=>{
-      const isHidden = password.type === 'password';
-      password.type = isHidden ? 'text' : 'password';
-      toggle.setAttribute('aria-pressed', String(isHidden));
-      toggle.textContent = isHidden ? '🙈' : '👁️';
-    });
-
-    // quick demo fill
-    demoBtn.addEventListener('click', ()=>{
-      username.value = DEMO.user;
-      password.value = DEMO.pass;
-      status.textContent = '';
-      uError.textContent = '';
-      pError.textContent = '';
-    });
-
-    function validate(){
-      let ok = true;
-      uError.textContent = '';
-      pError.textContent = '';
-
-      if(!username.value.trim()){
-        uError.textContent = 'Enter your username or email.'; ok = false;
-      }
-      if(!password.value){
-        pError.textContent = 'Enter your password.'; ok = false;
-      } else if(password.value.length < 6){
-        pError.textContent = 'Password must be at least 6 characters.'; ok = false;
-      }
-      return ok;
+    function showWelcome(user) {
+      authForm.style.display = 'none';
+      welcomeMsg.style.display = 'block';
+      userDisplay.textContent = user;
     }
 
-    function fakeAuth(user, pass){
-      // This simulates network latency and authentication.
-      return new Promise((resolve)=>{
-        setTimeout(()=>{
-          const ok = (user.toLowerCase() === DEMO.user.toLowerCase() && pass === DEMO.pass);
-          resolve(ok);
-        }, 700);
-      });
+    function showSignIn() {
+      authForm.style.display = 'block';
+      welcomeMsg.style.display = 'none';
+      usernameEl.value = '';
+      passwordEl.value = '';
     }
 
-    form.addEventListener('submit', async (e)=>{
-      e.preventDefault();
-      status.textContent = '';
-      successBox.classList.remove('show');
+    // Check if already logged in
+    const savedUser = localStorage.getItem('hellHostUser');
+    if (savedUser) {
+      showWelcome(savedUser);
+    }
 
-      const ok = validate();
-      if(!ok) return;
+    signInBtn.addEventListener('click', () => {
+      const username = usernameEl.value.trim();
+      const password = passwordEl.value;
 
-      // show loading
-      status.innerHTML = '<span class="helper">Authenticating…</span>';
+      if (!username || !password) {
+        errorMsg.textContent = 'Please enter both fields.';
+        return;
+      }
 
-      try{
-        const result = await fakeAuth(username.value.trim(), password.value);
-        if(!result){
-          status.innerHTML = '<div class="error">Invalid username or password.</div>';
-          return;
-        }
-
-        // on success — store remember info locally (demo)
-        if(remember.checked){
-          localStorage.setItem('hhp_remember', JSON.stringify({user: username.value.trim(), remember:true}));
-        } else {
-          localStorage.removeItem('hhp_remember');
-        }
-
-        // show success UI
-        successBox.classList.add('show');
-        status.innerHTML = '<div class="success">Signed in.</div>';
-
-        // In a real app: receive JWT or session cookie from server and redirect.
-        // For demo, simulate redirect after a short delay
-        setTimeout(()=>{
-          // Demo redirect: you could window.location = '/dashboard.html';
-          status.innerHTML = '<div class="helper">(Demo) Ready to open the Hell Host Dashboard.</div>';
-        },900);
-
-      }catch(err){
-        status.innerHTML = '<div class="error">An error occurred. Try again.</div>';
+      if (username.toLowerCase() === DEMO.user.toLowerCase() && password === DEMO.pass) {
+        localStorage.setItem('hellHostUser', username);
+        showWelcome(username);
+      } else {
+        errorMsg.textContent = 'Invalid username or password.';
       }
     });
 
-    // Accessibility: submit on Enter from password field
-    password.addEventListener('keydown',(e)=>{
-      if(e.key === 'Enter'){
-        form.dispatchEvent(new Event('submit', {cancelable:true}));
-      }
+    signOutBtn.addEventListener('click', () => {
+      localStorage.removeItem('hellHostUser');
+      showSignIn();
     });
   </script></body>
 </html>
