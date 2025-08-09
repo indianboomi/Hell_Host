@@ -3,54 +3,42 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Server Panel Sidebar</title>
+  <title>Login | Server Panel</title>
   <link rel="stylesheet" href="style.css" />
-  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 </head>
 <body>
-  <div class="sidebar">
-    <div class="menu">
-      <div class="menu-section">
-        <ul>
-          <li onclick="menuClick('Instances')"><i data-lucide="monitor"></i><span>Instances</span></li>
-          <li onclick="menuClick('Account')"><i data-lucide="user"></i><span>Account</span></li>
-        </ul>
+  <div class="auth-container">
+    <div class="auth-box">
+      <h2>Welcome to Server Panel</h2>
+      <div class="tabs">
+        <button id="login-tab" class="active" onclick="showForm('login')">Login</button>
+        <button id="signup-tab" onclick="showForm('signup')">Sign Up</button>
       </div>
 
-      <div class="menu-section">
-        <p class="section-label">Admin Panel</p>
-        <ul>
-          <li onclick="menuClick('Overview')"><i data-lucide="layout-dashboard"></i><span>Overview</span></li>
-          <li onclick="menuClick('Settings')"><i data-lucide="settings"></i><span>Settings</span></li>
-          <li onclick="menuClick('Analytics')"><i data-lucide="bar-chart"></i><span>Analytics</span></li>
-          <li onclick="menuClick('Users')"><i data-lucide="users"></i><span>Users</span></li>
-          <li onclick="menuClick('Instances-Admin')"><i data-lucide="layers"></i><span>Instances</span></li>
-          <li onclick="menuClick('Nodes')"><i data-lucide="server"></i><span>Nodes</span></li>
-          <li onclick="menuClick('Images')"><i data-lucide="image"></i><span>Images</span></li>
-          <li onclick="menuClick('API Keys')"><i data-lucide="key"></i><span>API Keys</span></li>
-          <li onclick="menuClick('Audit Logs')"><i data-lucide="file-text"></i><span>Audit Logs</span></li>
-          <li onclick="menuClick('Plugins')"><i data-lucide="package"></i><span>Plugins</span></li>
-        </ul>
-      </div>
+      <!-- Login Form -->
+      <form id="login-form" class="form">
+        <input type="email" placeholder="Email" required />
+        <input type="password" placeholder="Password" required />
+        <button type="submit">Login</button>
+      </form>
 
-      <div class="menu-section bottom">
-        <ul>
-          <li onclick="menuClick('Sign Out')"><i data-lucide="log-out"></i><span>Sign Out</span></li>
-        </ul>
-      </div>
-    </div>
-  </div>
+      <!-- Signup Form -->
+      <form id="signup-form" class="form hidden">
+        <input type="text" placeholder="Username" required />
+        <input type="email" placeholder="Email" required />
+        <input type="password" placeholder="Password" required />
+        <button type="submit">Sign Up</button>
+      </form>
 
-  <div class="main-content">
-    <h1 id="page-title">Welcome</h1>
-    <div id="content">
-      <p>This is your Minecraft server panel.</p>
+      <div class="divider">or</div>
+
+      <div class="oauth-buttons">
+        <button class="oauth discord" onclick="loginWithDiscord()">Login with Discord</button>
+        <button class="oauth google" onclick="loginWithGoogle()">Login with Google</button>
+      </div>
     </div>
   </div>
 
   <script src="script.js"></script>
-  <script>
-    lucide.createIcons();
-  </script>
 </body>
 </html>
