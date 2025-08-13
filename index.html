@@ -1,83 +1,41 @@
-<!doctype html>
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Hell Host Panel — Sign In</title>
-  <style>
-    body { font-family: Arial, sans-serif; background: #0b0b0d; color: white; display: flex; align-items: center; justify-content: center; height: 100vh; }
-    .card { background: #111214; padding: 20px; border-radius: 10px; width: 300px; }
-    input { width: 100%; padding: 8px; margin: 5px 0; border-radius: 5px; border: none; }
-    button { width: 100%; padding: 10px; background: #ff4d4d; border: none; border-radius: 5px; font-weight: bold; cursor: pointer; }
-    .error { color: red; font-size: 14px; }
-    .success { color: lightgreen; font-size: 14px; }
-  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HELL HOST </title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="favicon.ico">
 </head>
 <body>
-  <div class="card" id="authCard">
-    <h2 id="formTitle">Sign In</h2>
-    <div id="authForm">
-      <input type="text" id="username" placeholder="Username" />
-      <input type="password" id="password" placeholder="Password" />
-      <div class="error" id="errorMsg"></div>
-      <button id="signInBtn">Sign In</button>
+  <header class="site-header">
+    <div class="brand">
+      <!-- Simple square-knot logo made with CSS; replace with <img> if you have one -->
+      <span class="logo" aria-hidden="true"></span>
+      <span class="brand-text">HELL HOST</span>
     </div>
-    <div id="welcomeMsg" style="display:none;">
-      <p class="success">Welcome back, <span id="userDisplay"></span>!</p>
-      <button id="signOutBtn">Sign Out</button>
-    </div>
-  </div>  <script>
-    const DEMO = { user: 'admin@hell.local', pass: 'Pa$$w0rd' };
 
-    const usernameEl = document.getElementById('username');
-    const passwordEl = document.getElementById('password');
-    const errorMsg = document.getElementById('errorMsg');
-    const signInBtn = document.getElementById('signInBtn');
-    const signOutBtn = document.getElementById('signOutBtn');
-    const welcomeMsg = document.getElementById('welcomeMsg');
-    const authForm = document.getElementById('authForm');
-    const userDisplay = document.getElementById('userDisplay');
+    <button class="lang-btn" aria-label="Change language" title="Change language">
+      <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true">
+        <path d="M12 2a10 10 0 1 0 .001 20.001A10 10 0 0 0 12 2Zm7.93 9h-3.08a16.9 16.9 0 0 0-1.11-5.03A8.03 8.03 0 0 1 19.93 11ZM12 4.06c.92 1.2 1.72 3.07 2.14 4.94H9.86C10.28 7.13 11.08 5.26 12 4.06ZM8.26 5.97A16.9 16.9 0 0 0 7.15 11H4.07a8.03 8.03 0 0 1 4.19-5.03ZM4.07 13h3.08c.17 1.8.61 3.53 1.11 5.03A8.03 8.03 0 0 1 4.07 13Zm7.93 6.94c-.92-1.2-1.72-3.07-2.14-4.94h4.28c-.42 1.87-1.22 3.74-2.14 4.94Zm3.74-1.91c.5-1.5.94-3.23 1.11-5.03h3.08a8.03 8.03 0 0 1-4.19 5.03ZM9.6 13c.17 1.22.5 2.53.95 3.75.12.33.25.64.39.95.14-.31.27-.62.39-.95.45-1.22.78-2.53.95-3.75H9.6Zm4.8-2c-.17-1.22-.5-2.53-.95-3.75a18.8 18.8 0 0 0-.39-.95c-.14.31-.27.62-.39.95-.45 1.22-.78 2.53-.95 3.75h3.68Z"/>
+      </svg>
+    </button>
+  </header>
 
-    function showWelcome(user) {
-      authForm.style.display = 'none';
-      welcomeMsg.style.display = 'block';
-      userDisplay.textContent = user;
-    }
+  <main class="hero">
+    <h1>
+      <span>Minecraft servers.</span>
+      <span class="em">Paid.</span>
+      <span>Forever.</span>
+    </h1>
 
-    function showSignIn() {
-      authForm.style.display = 'block';
-      welcomeMsg.style.display = 'none';
-      usernameEl.value = '';
-      passwordEl.value = '';
-    }
+    <a class="play-btn" href="#" id="playBtn" role="button" aria-label="Play on Hell Host">
+      <span class="pad">🎮</span> Play
+    </a>
 
-    // Check if already logged in
-    const savedUser = localStorage.getItem('hellHostUser');
-    if (savedUser) {
-      showWelcome(savedUser);
-    }
+    <p class="note" id="status" aria-live="polite"></p>
+  </main>
 
-    signInBtn.addEventListener('click', () => {
-      const username = usernameEl.value.trim();
-      const password = passwordEl.value;
-
-      if (!username || !password) {
-        errorMsg.textContent = 'Please enter both fields.';
-        return;
-      }
-
-      if (username.toLowerCase() === DEMO.user.toLowerCase() && password === DEMO.pass) {
-        localStorage.setItem('hellHostUser', username);
-        showWelcome(username);
-      } else {
-        errorMsg.textContent = 'Invalid username or password.';
-      }
-    });
-
-    signOutBtn.addEventListener('click', () => {
-      localStorage.removeItem('hellHostUser');
-      showSignIn();
-    });
-  </script></body>
+  <script src="script.js"></script>
+</body>
 </html>
