@@ -4,40 +4,22 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Select Language</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 50px;
-            background-color: #f5f5f5;
-        }
-        h1 {
-            color: red;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+    <div class="header">
+        <div class="logo-section">
+            <img src="https://i.ibb.co/FzQqC6j/devil-logo.png" alt="Hell Host Logo">
+            <span class="title">HELL HOST</span>
+            <span class="badge">But Paid</span>
+        </div>
+    </div>
 
     <h1>🌐 Select Your Language</h1>
     <div id="google_translate_element"></div>
 
-    <script function googleTranslateElementInit() {
-    new google.translate.TranslateElement({
-        pageLanguage: 'en'
-    }, 'google_translate_element');
-}
-
-document.addEventListener("change", function (event) {
-    if (event.target.classList.contains("goog-te-combo")) {
-        let selectedLang = event.target.value;
-        if (selectedLang) {
-            localStorage.setItem("selectedLang", selectedLang);
-            window.location.href = "index.html";
-        }
-    }
-});
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
+    <script src="language.js"></script>
+    <script src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
 </body>
 </html>
