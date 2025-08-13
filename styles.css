@@ -1,7 +1,7 @@
 :root{
   --bg:#f3f5f8;
-  --ink:#3478c1;         /* brand blue */
-  --ink-dark:#2b68a6;
+  --ink:#d62828;         /* main red */
+  --ink-dark:#a31212;    /* darker red */
   --text:#243447;
   --white:#ffffff;
 }
@@ -17,7 +17,6 @@ body{
   flex-direction:column;
 }
 
-/* Header / Brand */
 .site-header{
   display:flex;
   align-items:center;
@@ -33,18 +32,12 @@ body{
   letter-spacing:.5px;
 }
 
-.logo{
-  width:34px; height:34px; position:relative;
-  border:3px solid var(--ink); border-radius:6px;
-  display:inline-block;
+.logo-img{
+  width:40px;
+  height:40px;
+  object-fit:contain;
 }
-.logo::before, .logo::after{
-  content:""; position:absolute; inset:6px;
-  border:3px solid var(--ink); border-radius:4px;
-}
-.logo::after{
-  inset:12px;
-}
+
 .brand-text{
   color:var(--ink);
   font-size:1.35rem;
@@ -59,7 +52,6 @@ body{
   font-weight:700;
 }
 
-/* Language button */
 .lang-btn{
   appearance:none; border:0; background:transparent; cursor:pointer;
   width:40px; height:40px; border-radius:50%;
@@ -67,7 +59,6 @@ body{
 }
 .lang-btn:hover{ background:rgba(0,0,0,.05) }
 
-/* Hero */
 .hero{
   flex:1;
   display:grid;
@@ -88,29 +79,21 @@ body{
   color:var(--ink-dark);
 }
 
-/* Play button */
 .play-btn{
   display:inline-flex;
   align-items:center;
-  gap:10px;
   background:var(--ink);
   color:var(--white);
   text-decoration:none;
   font-weight:800;
   padding:14px 22px;
   border-radius:14px;
-  box-shadow:0 8px 20px rgba(52,120,193,.25);
+  box-shadow:0 8px 20px rgba(214,40,40,.25);
   transition:transform .06s ease, box-shadow .15s ease, background .15s ease;
 }
 .play-btn:active{ transform:translateY(1px) }
 .play-btn:hover{ background:var(--ink-dark) }
-.play-btn .pad{
-  display:inline-grid; place-items:center;
-  width:28px; height:28px; border-radius:8px;
-  background:rgba(255,255,255,.18);
-}
 
-/* Status note */
 .note{
   margin:0;
   font-size:.95rem;
