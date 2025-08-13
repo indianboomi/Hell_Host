@@ -1,17 +1,16 @@
-const status = document.getElementById("status");
+function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+        pageLanguage: 'en'
+    }, 'google_translate_element');
 
-document.querySelector(".lang-btn").addEventListener("click", () => {
-  status.textContent = "Language selector coming soon…";
-  clearAfterDelay();
-});
-
-document.getElementById("playBtn").addEventListener("click", (e) => {
-  e.preventDefault();
-  status.textContent = "Launching Hell Host panel… (stub)";
-  clearAfterDelay();
-});
-
-function clearAfterDelay() {
-  window.clearTimeout(window.__hhTimer);
-  window.__hhTimer = setTimeout(() => (status.textContent = ""), 2500);
+    let lang = localStorage.getItem("selectedLang");
+    if (lang) {
+        setTimeout(() => {
+            let select = document.querySelector(".goog-te-combo");
+            if (select) {
+                select.value = lang;
+                select.dispatchEvent(new Event("change"));
+            }
+        }, 1000);
+    }
 }
