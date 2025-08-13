@@ -1,4 +1,3 @@
-// Demo interactions for the language button and Play CTA.
 const status = document.getElementById("status");
 
 document.querySelector(".lang-btn").addEventListener("click", () => {
