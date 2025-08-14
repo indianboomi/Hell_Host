@@ -12,24 +12,36 @@
             text-align: center;
             padding-top: 50px;
         }
-        a {
+        button {
             display: block;
-            margin: 10px;
-            color: #00ff88;
-            text-decoration: none;
+            margin: 15px auto;
+            padding: 10px 20px;
+            font-size: 18px;
+            background: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
         }
-        a:hover {
-            color: #fff;
+        button:hover {
+            background: darkred;
         }
     </style>
 </head>
 <body>
     <h1>Select Your Language</h1>
-    <a href="#">English</a>
-    <a href="#">Hindi</a>
-    <a href="#">Spanish</a>
-    <a href="#">French</a>
-    <a href="#">Tamil</a>
-    <a href="#">Japanese</a>
+    <button onclick="selectLanguage('English')">English</button>
+    <button onclick="selectLanguage('Hindi')">Hindi</button>
+    <button onclick="selectLanguage('Spanish')">Spanish</button>
+    <button onclick="selectLanguage('French')">French</button>
+    <button onclick="selectLanguage('Tamil')">Tamil</button>
+    <button onclick="selectLanguage('Japanese')">Japanese</button>
+
+    <script>
+        function selectLanguage(lang) {
+            localStorage.setItem("selectedLanguage", lang);
+            window.location.href = "index.html";
+        }
+    </script>
 </body>
 </html>
