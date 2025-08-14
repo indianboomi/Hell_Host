@@ -14,7 +14,7 @@ header {
     justify-content: space-between;
     align-items: center;
     padding: 15px 30px;
-    background: rgba(0, 0, 0, 0.5);
+    background: red; /* red top bar */
 }
 
 .logo {
@@ -27,10 +27,15 @@ header {
     margin-right: 10px;
 }
 
+.logo span {
+    font-weight: bold;
+    font-size: 18px;
+}
+
 .language a {
     color: white;
+    font-size: 24px;
     text-decoration: none;
-    font-size: 16px;
 }
 
 /* Main Content Center */
