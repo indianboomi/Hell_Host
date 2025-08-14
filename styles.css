@@ -1,45 +1,58 @@
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: url('https://wallpapercave.com/wp/wp7481825.jpg') no-repeat center center/cover;
-    background-size: cover;
-    color: white;
+    background: #f4f4f4;
+    color: #c00;
     height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-/* Top Red Bar */
+/* Top Bar */
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 15px 30px;
-    background: red;
+    padding: 10px 15px;
+    background: white;
 }
 
-header .logo {
+.left-section {
     display: flex;
     align-items: center;
 }
 
-header .logo img {
+.logo {
     height: 40px;
-    margin-right: 10px;
+    margin-right: 8px;
 }
 
-header .logo span {
+.site-name {
     font-weight: bold;
     font-size: 20px;
+    color: red;
+    margin-right: 8px;
 }
 
-header .language a {
+.badge {
+    background: red;
     color: white;
-    font-size: 24px;
-    text-decoration: none;
+    font-size: 12px;
+    padding: 3px 8px;
+    border-radius: 12px;
 }
 
-/* Center Title and Subtitle */
+.language .lang-btn {
+    background: white;
+    border-radius: 50%;
+    padding: 8px 10px;
+    font-size: 18px;
+    color: black;
+    text-decoration: none;
+    border: 1px solid #ccc;
+}
+
+/* Center Titles */
 .center-content {
     flex: 1;
     display: flex;
@@ -50,29 +63,35 @@ header .language a {
 }
 
 .center-content h1 {
-    font-size: 3em;
-    margin-bottom: 10px;
+    font-size: 24px;
+    font-weight: bold;
+    color: red;
+    margin: 5px 0;
 }
 
 .center-content p {
-    font-size: 1.5em;
+    font-size: 22px;
+    font-weight: bold;
+    color: red;
+    margin: 5px 0;
 }
 
-/* Bottom Play Button */
+/* Play Button */
 .play-container {
     text-align: center;
-    padding: 30px 0;
+    padding: 20px;
 }
 
 #playBtn {
-    font-size: 2em;
-    padding: 15px 50px;
+    font-size: 16px;
+    padding: 10px 20px;
     background: red;
     border: none;
-    border-radius: 10px;
+    border-radius: 15px;
     cursor: pointer;
     color: white;
-    transition: 0.3s;
+    font-weight: bold;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
 }
 
 #playBtn:hover {
