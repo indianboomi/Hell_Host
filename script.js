@@ -1,26 +1,26 @@
 // Translations for all languages
 const translations = {
-    English: {
+    "English": {
         title: "Minecraft Hosting Server",
         subtitle: "Paid But Login = 1 Month Free"
     },
-    Hindi: {
+    "Hindi": {
         title: "माइनक्राफ्ट होस्टिंग सर्वर",
         subtitle: "पेड लेकिन लॉगिन करें = 1 महीना फ्री"
     },
-    Spanish: {
+    "Spanish": {
         title: "Servidor de Hosting de Minecraft",
         subtitle: "Pagado pero iniciar sesión = 1 mes gratis"
     },
-    French: {
+    "French": {
         title: "Serveur d'Hébergement Minecraft",
         subtitle: "Payé mais connexion = 1 mois gratuit"
     },
-    Tamil: {
+    "Tamil": {
         title: "மைன்கிராஃப்ட் ஹோஸ்டிங் சர்வர்",
         subtitle: "பணம் கொடுத்து உள்நுழைவு = 1 மாதம் இலவசம்"
     },
-    Japanese: {
+    "Japanese": {
         title: "マインクラフトホスティングサーバー",
         subtitle: "有料ですがログインで1か月無料"
     }
@@ -29,13 +29,19 @@ const translations = {
 // Load selected language from localStorage
 window.addEventListener("DOMContentLoaded", () => {
     const lang = localStorage.getItem("selectedLanguage") || "English";
-    if(translations[lang]) {
-        document.getElementById("mainTitle").textContent = translations[lang].title;
-        document.getElementById("mainSubtitle").textContent = translations[lang].subtitle;
+    const mainTitle = document.getElementById("mainTitle");
+    const mainSubtitle = document.getElementById("mainSubtitle");
+
+    if (translations[lang]) {
+        mainTitle.textContent = translations[lang].title;
+        mainSubtitle.textContent = translations[lang].subtitle;
+    } else {
+        mainTitle.textContent = translations["English"].title;
+        mainSubtitle.textContent = translations["English"].subtitle;
     }
 });
 
-// Play button
+// Play button action
 document.getElementById('playBtn').addEventListener('click', () => {
     alert("Starting Minecraft server...");
 });
