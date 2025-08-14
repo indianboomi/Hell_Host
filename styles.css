@@ -8,13 +8,13 @@ body {
     flex-direction: column;
 }
 
-/* Top Navbar */
+/* Top Bar */
 header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 15px 30px;
-    background: red; /* red top bar */
+    background: red;
 }
 
 .logo {
@@ -38,7 +38,7 @@ header {
     text-decoration: none;
 }
 
-/* Main Content Center */
+/* Main Center Content */
 main {
     flex: 1;
     display: flex;
@@ -55,13 +55,18 @@ main h1 {
 
 main p {
     font-size: 1.2em;
-    margin-bottom: 20px;
+}
+
+/* Play Button at Bottom */
+.play-container {
+    text-align: center;
+    padding: 20px;
 }
 
 #playBtn {
     font-size: 1.5em;
     padding: 15px 30px;
-    background: #28a745;
+    background: red;
     border: none;
     border-radius: 8px;
     cursor: pointer;
@@ -70,5 +75,5 @@ main p {
 }
 
 #playBtn:hover {
-    background: #218838;
+    background: darkred;
 }
