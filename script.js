@@ -1,4 +1,4 @@
-// Language translations
+// Translations for all languages
 const translations = {
     English: {
         title: "Minecraft Hosting Server",
@@ -26,14 +26,16 @@ const translations = {
     }
 };
 
+// Load selected language from localStorage
 window.addEventListener("DOMContentLoaded", () => {
-    let lang = localStorage.getItem("selectedLanguage") || "English";
-    if (translations[lang]) {
+    const lang = localStorage.getItem("selectedLanguage") || "English";
+    if(translations[lang]) {
         document.getElementById("mainTitle").textContent = translations[lang].title;
         document.getElementById("mainSubtitle").textContent = translations[lang].subtitle;
     }
 });
 
-document.getElementById('playBtn').addEventListener('click', function() {
+// Play button
+document.getElementById('playBtn').addEventListener('click', () => {
     alert("Starting Minecraft server...");
 });
