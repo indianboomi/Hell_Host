@@ -97,3 +97,22 @@ header {
 #playBtn:hover {
     background: darkred;
 }
+
+.about {
+    max-width: 800px;
+    margin: 0 auto 40px auto;
+    padding: 20px;
+    text-align: center;
+    color: green;
+}
+
+.about h2 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.about p {
+    font-size: 16px;
+    line-height: 1.5;
+}
