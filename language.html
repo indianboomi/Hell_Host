@@ -1,48 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Select Language</title>
-<style>
-    body {
-        font-family: Arial, sans-serif;
-        background: #111;
-        color: white;
-        text-align: center;
-        padding-top: 50px;
-    }
-    button {
-        display: block;
-        margin: 15px auto;
-        padding: 12px 25px;
-        font-size: 20px;
-        background: red;
-        color: white;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        transition: 0.3s;
-    }
-    button:hover {
-        background: darkred;
-    }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Select Language</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js" defer></script>
 </head>
 <body>
-<h1>Select Your Language</h1>
-<button onclick="selectLanguage('English')">English</button>
-<button onclick="selectLanguage('Hindi')">Hindi</button>
-<button onclick="selectLanguage('Spanish')">Spanish</button>
-<button onclick="selectLanguage('French')">French</button>
-<button onclick="selectLanguage('Tamil')">Tamil</button>
-<button onclick="selectLanguage('Japanese')">Japanese</button>
-
-<script>
-function selectLanguage(lang) {
-    localStorage.setItem("selectedLanguage", lang);
-    window.location.href = "index.html";
-}
-</script>
+    <header>
+        <h1>Select Language</h1>
+    </header>
+    <main class="language-selection">
+        <button onclick="changeLanguage('en')">English</button>
+        <button onclick="changeLanguage('hi')">हिन्दी</button>
+        <button onclick="changeLanguage('es')">Español</button>
+        <button onclick="changeLanguage('fr')">Français</button>
+        <button onclick="changeLanguage('ta')">தமிழ்</button>
+        <button onclick="changeLanguage('ja')">日本語</button>
+    </main>
 </body>
 </html>
