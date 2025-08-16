@@ -1,3 +1,4 @@
+// Language Data
 const translations = {
     en: {
         mainTitle: "Minecraft Hosting Server",
@@ -43,7 +44,9 @@ const translations = {
     }
 };
 
+// Apply language to homepage
 function setLanguage(lang) {
+    if (!translations[lang]) return;
     document.getElementById("mainTitle").innerText = translations[lang].mainTitle;
     document.getElementById("subTitle").innerText = translations[lang].subTitle;
     document.getElementById("playBtn").innerText = translations[lang].play;
@@ -51,14 +54,14 @@ function setLanguage(lang) {
     document.getElementById("aboutDesc").innerHTML = translations[lang].aboutDesc;
 }
 
-function changeLanguage(lang) {
+// Save language choice
+function chooseLanguage(lang) {
     localStorage.setItem("lang", lang);
     window.location.href = "index.html";
 }
 
+// Load language on homepage
 document.addEventListener("DOMContentLoaded", () => {
     const lang = localStorage.getItem("lang") || "en";
-    if (document.getElementById("mainTitle")) {
-        setLanguage(lang);
-    }
+    setLanguage(lang);
 });
