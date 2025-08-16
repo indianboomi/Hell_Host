@@ -1,23 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Select Language</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="script.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Select Language</title>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
 </head>
 <body>
-    <header>
-        <h1>Select Language</h1>
-    </header>
-    <main class="language-selection">
-        <button onclick="changeLanguage('en')">English</button>
-        <button onclick="changeLanguage('hi')">हिन्दी</button>
-        <button onclick="changeLanguage('es')">Español</button>
-        <button onclick="changeLanguage('fr')">Français</button>
-        <button onclick="changeLanguage('ta')">தமிழ்</button>
-        <button onclick="changeLanguage('ja')">日本語</button>
-    </main>
+  <div class="language-page">
+    <h1>Select Your Language</h1>
+    <ul>
+      <li><a href="#" onclick="chooseLanguage('en')">English</a></li>
+      <li><a href="#" onclick="chooseLanguage('hi')">हिन्दी (Hindi)</a></li>
+      <li><a href="#" onclick="chooseLanguage('es')">Español (Spanish)</a></li>
+      <li><a href="#" onclick="chooseLanguage('fr')">Français (French)</a></li>
+      <li><a href="#" onclick="chooseLanguage('ta')">தமிழ் (Tamil)</a></li>
+      <li><a href="#" onclick="chooseLanguage('ja')">日本語 (Japanese)</a></li>
+    </ul>
+  </div>
 </body>
 </html>
