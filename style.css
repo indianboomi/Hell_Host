@@ -1,67 +1,102 @@
+/* General Reset */
 body {
-    font-family: Arial, sans-serif;
-    background-color: #f8f8f8;
     margin: 0;
-    padding: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f5f5f5;
     text-align: center;
+    color: #b30000;
 }
 
-header {
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: red;
+    padding: 10px 20px;
+    color: white;
+}
+
+.navbar .logo {
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    background-color: white;
-    padding: 10px 20px;
-    border-bottom: 1px solid #ddd;
 }
 
-.logo {
+.navbar .logo img {
     height: 40px;
+    margin-right: 10px;
 }
 
-.badge {
-    background-color: red;
-    color: white;
-    padding: 3px 8px;
-    border-radius: 5px;
-    font-size: 0.8em;
+.navbar .language img {
+    height: 30px;
+    cursor: pointer;
 }
 
-.lang-btn {
-    font-size: 1.5em;
-    text-decoration: none;
-}
-
+/* Main Section */
 main {
-    padding: 20px;
+    margin-top: 80px;
 }
 
-.play-btn {
-    background-color: red;
-    color: white;
-    padding: 10px 20px;
-    border: none;
+#mainTitle {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+#subTitle {
     font-size: 1.2em;
-    border-radius: 8px;
-    cursor: pointer;
-    margin: 20px 0;
+    margin-bottom: 20px;
 }
 
-.about {
-    background-color: green;
-    padding: 20px;
-    margin-top: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.1);
-}
-
-.language-selection button {
-    margin: 10px;
+#playBtn {
     padding: 10px 20px;
-    font-size: 1em;
+    font-size: 1.2em;
     border: none;
-    background-color: red;
-    color: white;
     border-radius: 8px;
+    background: linear-gradient(to bottom, #ff4d4d, #b30000);
+    color: white;
     cursor: pointer;
+    box-shadow: 0px 4px 6px rgba(0,0,0,0.2);
+}
+
+/* About Section */
+.about {
+    margin-top: 50px;
+    padding: 20px;
+    background: #fff;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 800px;
+    margin-left: auto;
+    margin-right: auto;
+    color: #333;
+}
+
+.about h2 {
+    color: #b30000;
+    margin-bottom: 10px;
+}
+
+/* Language Page */
+.language-page {
+    margin-top: 100px;
+}
+
+.language-page h1 {
+    color: #b30000;
+    margin-bottom: 20px;
+}
+
+.language-page ul {
+    list-style: none;
+    padding: 0;
+}
+
+.language-page ul li {
+    margin: 10px 0;
+}
+
+.language-page ul li a {
+    text-decoration: none;
+    color: #b30000;
+    font-size: 1.2em;
 }
