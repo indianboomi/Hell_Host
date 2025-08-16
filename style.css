@@ -1,118 +1,67 @@
 body {
-    margin: 0;
     font-family: Arial, sans-serif;
-    background: #f4f4f4;
-    color: #c00;
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
+    background-color: #f8f8f8;
+    margin: 0;
+    padding: 0;
+    text-align: center;
 }
 
-/* Top Bar */
 header {
     display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: center;
-    padding: 10px 15px;
-    background: white;
-}
-
-.left-section {
-    display: flex;
-    align-items: center;
+    background-color: white;
+    padding: 10px 20px;
+    border-bottom: 1px solid #ddd;
 }
 
 .logo {
     height: 40px;
-    margin-right: 8px;
-}
-
-.site-name {
-    font-weight: bold;
-    font-size: 20px;
-    color: red;
-    margin-right: 8px;
 }
 
 .badge {
-    background: red;
+    background-color: red;
     color: white;
-    font-size: 12px;
     padding: 3px 8px;
-    border-radius: 12px;
+    border-radius: 5px;
+    font-size: 0.8em;
 }
 
-.language .lang-btn {
-    background: white;
-    border-radius: 50%;
-    padding: 8px 10px;
-    font-size: 18px;
-    color: black;
+.lang-btn {
+    font-size: 1.5em;
     text-decoration: none;
-    border: 1px solid #ccc;
 }
 
-/* Center Titles */
-.center-content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-.center-content h1 {
-    font-size: 24px;
-    font-weight: bold;
-    color: red;
-    margin: 5px 0;
-}
-
-.center-content p {
-    font-size: 22px;
-    font-weight: bold;
-    color: red;
-    margin: 5px 0;
-}
-
-/* Play Button */
-.play-container {
-    text-align: center;
+main {
     padding: 20px;
 }
 
-#playBtn {
-    font-size: 16px;
-    padding: 10px 20px;
-    background: red;
-    border: none;
-    border-radius: 15px;
-    cursor: pointer;
+.play-btn {
+    background-color: red;
     color: white;
-    font-weight: bold;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
-}
-
-#playBtn:hover {
-    background: darkred;
+    padding: 10px 20px;
+    border: none;
+    font-size: 1.2em;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 20px 0;
 }
 
 .about {
-    max-width: 800px;
-    margin: 0 auto 40px auto;
+    background-color: green;
     padding: 20px;
-    text-align: center;
-    color: green;
+    margin-top: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-.about h2 {
-    font-size: 22px;
-    font-weight: bold;
-    margin-bottom: 10px;
-}
-
-.about p {
-    font-size: 16px;
-    line-height: 1.5;
+.language-selection button {
+    margin: 10px;
+    padding: 10px 20px;
+    font-size: 1em;
+    border: none;
+    background-color: red;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
 }
