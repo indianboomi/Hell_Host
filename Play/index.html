@@ -15,10 +15,14 @@
         header {
             display: flex;
             align-items: center;
+            justify-content: space-between;
             padding: 10px 20px;
             background: white;
+        }
+        .left-header {
+            display: flex;
+            align-items: center;
             gap: 10px;
-            justify-content: center;
         }
         .logo {
             width: 40px;
@@ -36,6 +40,11 @@
             border-radius: 12px;
             font-size: 12px;
             font-weight: bold;
+        }
+        .language-icon {
+            width: 30px;
+            height: 30px;
+            cursor: pointer;
         }
         main {
             margin-top: 60px;
@@ -63,9 +72,12 @@
 </head>
 <body>
     <header>
-        <img src="logo.png" alt="Logo" class="logo" />
-        <h1>HELL HOST</h1>
-        <span class="badge">But Paid</span>
+        <div class="left-header">
+            <img src="https://upload.wikimedia.org/wikipedia/en/thumb/4/46/Minecraft_logo_2021.svg/1200px-Minecraft_logo_2021.svg.png" alt="Logo" class="logo" />
+            <h1>HELL HOST</h1>
+            <span class="badge">But Paid</span>
+        </div>
+        <img src="https://cdn-icons-png.flaticon.com/512/38/38402.png" alt="Language" class="language-icon" />
     </header>
     <main>
         <h2>Minecraft Hosting Server<br/>Paid But Login = 1 Month Free</h2>
