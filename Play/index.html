@@ -4,7 +4,62 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>HELL HOST</title>
-    <link rel="stylesheet" href="styles.css" />
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f7f7f8;
+            color: #c43939;
+            text-align: center;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            background: white;
+            gap: 10px;
+            justify-content: center;
+        }
+        .logo {
+            width: 40px;
+            height: 40px;
+        }
+        h1 {
+            font-weight: bold;
+            color: #c43939;
+            margin: 0;
+        }
+        .badge {
+            background: #c43939;
+            color: white;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        main {
+            margin-top: 60px;
+        }
+        h2 {
+            font-weight: bold;
+            color: #c43939;
+        }
+        #playButton {
+            margin-top: 20px;
+            background: #c43939;
+            border: none;
+            padding: 12px 30px;
+            color: white;
+            font-size: 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            box-shadow: 0 6px 12px rgba(196,57,57,0.5);
+        }
+        #playButton:active {
+            box-shadow: none;
+            transform: translateY(2px);
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -16,6 +71,10 @@
         <h2>Minecraft Hosting Server<br/>Paid But Login = 1 Month Free</h2>
         <button id="playButton">Play</button>
     </main>
-    <script src="scripts.js"></script>
+    <script>
+        document.getElementById('playButton').addEventListener('click', () => {
+            alert('Play button clicked! Implement your login or play logic here.');
+        });
+    </script>
 </body>
 </html>
