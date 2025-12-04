@@ -1,20 +1,26 @@
-<!-- index.html -->
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>HELL HOST</title>
-  <style>
-    body { background-color: black; color: red; text-align: center; font-family: sans-serif; }
-    .logo { font-size: 48px; margin-top: 50px; }
-    .badge { background-color: red; color: white; padding: 5px 10px; border-radius: 5px; display: inline-block; margin: 10px; }
-    .message { font-size: 24px; margin: 20px; }
-    .play-button { background-color: red; color: white; padding: 10px 20px; font-size: 20px; border: none; cursor: pointer; }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="logo">😈 HELL HOST</div>
-  <div class="badge">But Paid</div>
-  <div class="message">Minecraft Hosting Server Paid But Login = 1 Month Free</div>
-  <button class="play-button">Play</button>
+  <header>
+    <img src="assets/logo.png" alt="Logo" class="logo">
+    <img src="assets/lang-icon.png" alt="Language" class="lang-icon" onclick="handleLanguageClick()">
+  </header>
+
+  <main>
+    <h1> HELL HOST <span class="badge">But Paid</span></h1>
+    <p class="message">Minecraft Hosting Server Paid But Login = 1 Month Free</p>
+    <button class="play-button">Play</button>
+  </main>
+
+  <script>
+    function handleLanguageClick() {
+      alert("Language options coming soon!");
+    }
+  </script>
 </body>
 </html>
