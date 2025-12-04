@@ -1,3 +1,3 @@
 function handleLanguageClick() {
-  alert("🌐 Language options coming soon!");
+  alert("Language options coming soon!");
 }
