@@ -1,119 +1,98 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Hell Host - Web Hosting</title>
-  <style>
-    body { font-family: Arial, sans-serif; margin:0; padding:0; }
-    header { background:#111; color:#fff; padding:20px; text-align:center; }
-    nav a { color:#fff; margin:0 15px; text-decoration:none; }
-    nav a:hover { color:#e63946; }
-    .hero { background:#e63946; color:#fff; padding:60px; text-align:center; }
-    .hero h2 { font-size:2.5em; margin-bottom:10px; }
-    .hero button { background:#111; color:#fff; padding:10px 20px; border:none; cursor:pointer; }
-    .hero button:hover { background:#333; }
-    .plans { display:flex; justify-content:center; flex-wrap:wrap; margin:40px; }
-    .plan { border:1px solid #ccc; padding:20px; margin:10px; width:220px; text-align:center; border-radius:8px; }
-    .plan h3 { margin-bottom:10px; }
-    .plan button { background:#e63946; color:#fff; border:none; padding:10px; cursor:pointer; }
-    .plan button:hover { background:#c53030; }
-    .toggle { text-align:center; margin:20px; }
-    footer { background:#111; color:#fff; text-align:center; padding:20px; }
-    .testimonial { display:none; text-align:center; margin:20px; font-style:italic; }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hell Host - Multi Style Homepage</title>
+<style>
+  body { margin:0; font-family:Arial; }
+  header { background:#111; color:#fff; padding:20px; text-align:center; }
+  nav a { color:#fff; margin:0 15px; text-decoration:none; }
+
+  /* Common section styling */
+  .section { display:none; padding:60px; text-align:center; min-height:400px; }
+
+  /* Dark Gamer Style */
+  #gamer { background:#0d0d0d; color:#fff; }
+  #gamer h1 { text-shadow:0 0 10px #ff0000; }
+  #gamer button { background:#ff0000; border:none; padding:15px 30px; color:#fff; cursor:pointer; }
+
+  /* Clean Corporate Style */
+  #corporate { background:#f9f9f9; color:#333; }
+  #corporate h1 { color:#004080; }
+  #corporate button { background:#004080; color:#fff; border:none; padding:10px 20px; cursor:pointer; }
+
+  /* Festive Style */
+  #festive { background:linear-gradient(135deg,#ff6f61,#ffcc00); color:#111; }
+  #festive h1 { font-size:2.5em; }
+  #festive button { background:#111; color:#fff; border:none; padding:10px 20px; cursor:pointer; }
+
+  /* Style Switcher */
+  .switcher { text-align:center; margin:20px; }
+  .switcher button { margin:5px; padding:10px 20px; cursor:pointer; }
+</style>
 </head>
 <body>
-  <header>
-    <h1>🔥 Hell Host</h1>
-    <nav>
-      <a href="#hero">Home</a>
-      <a href="#plans">Plans</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-      <a href="#">Login</a>
-    </nav>
-  </header>
+<header>
+  <h2>🔥 Hell Host</h2>
+  <nav>
+    <a href="#">Home</a><a href="#">Plans</a><a href="#">About</a><a href="#">Contact</a>
+  </nav>
+</header>
 
-  <section class="hero" id="hero">
-    <h2 id="heroTitle"></h2>
-    <p>Affordable plans, 24/7 support, and lightning‑fast servers.</p>
-    <button>Start Hosting Today</button>
-  </section>
+<div class="switcher">
+  <button onclick="showSection('gamer')">🎮 Gamer Style</button>
+  <button onclick="showSection('corporate')">🏢 Corporate Style</button>
+  <button onclick="showSection('festive')">🎉 Festive Style</button>
+</div>
 
-  <div class="toggle">
-    <label>
-      <input type="checkbox" id="priceToggle"> Yearly Billing
-    </label>
-  </div>
+<!-- Gamer Section -->
+<section id="gamer" class="section">
+  <h1>Blazing Fast Hosting for Gamers</h1>
+  <p>Fast • Secure • Affordable Hosting</p>
+  <button>Explore Plans</button>
+</section>
 
-  <section class="plans" id="plans">
-    <div class="plan">
-      <h3>Basic</h3>
-      <p class="plan-price" data-monthly="$5/month" data-yearly="$50/year">$5/month</p>
-      <p>10GB Storage, 100GB Bandwidth</p>
-      <button>Choose Plan</button>
-    </div>
-    <div class="plan">
-      <h3>Pro</h3>
-      <p class="plan-price" data-monthly="$10/month" data-yearly="$100/year">$10/month</p>
-      <p>50GB Storage, Unlimited Bandwidth</p>
-      <button>Choose Plan</button>
-    </div>
-    <div class="plan">
-      <h3>Business</h3>
-      <p class="plan-price" data-monthly="$20/month" data-yearly="$200/year">$20/month</p>
-      <p>200GB Storage, Unlimited Bandwidth</p>
-      <button>Choose Plan</button>
-    </div>
-  </section>
+<!-- Corporate Section -->
+<section id="corporate" class="section">
+  <h1>Reliable Hosting for Businesses</h1>
+  <p>99.95% uptime • 24/7 support • Secure servers</p>
+  <button>Get Started</button>
+</section>
 
-  <section id="testimonials">
-    <div class="testimonial">"Hell Host gave my website blazing speed!" – Alex</div>
-    <div class="testimonial">"Amazing support team, always available." – Priya</div>
-    <div class="testimonial">"Affordable and reliable hosting service." – John</div>
-  </section>
+<!-- Festive Section -->
+<section id="festive" class="section">
+  <h1>🎉 Special New Year Offer 🎉</h1>
+  <p>Get 25% off all hosting plans!</p>
+  <div id="countdown"></div>
+  <button>View Deals</button>
+</section>
 
-  <footer>
-    <p>© 2026 Hell Host. All rights reserved.</p>
-  </footer>
+<script>
+  // Default section
+  showSection('gamer');
 
-  <script>
-    // Typewriter effect for hero title
-    const text = "Blazing Fast & Reliable Hosting";
-    let i = 0;
-    function typeWriter() {
-      if (i < text.length) {
-        document.getElementById("heroTitle").textContent += text.charAt(i);
-        i++;
-        setTimeout(typeWriter, 100);
-      }
+  function showSection(id){
+    document.querySelectorAll('.section').forEach(sec=>sec.style.display='none');
+    document.getElementById(id).style.display='block';
+  }
+
+  // Countdown for festive section
+  const endDate=new Date("Feb 15, 2026 23:59:59").getTime();
+  const timer=setInterval(()=>{
+    const now=new Date().getTime();
+    const distance=endDate-now;
+    if(distance<0){
+      document.getElementById("countdown").textContent="Offer Ended";
+      clearInterval(timer);
+    } else {
+      const days=Math.floor(distance/(1000*60*60*24));
+      const hours=Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+      const minutes=Math.floor((distance%(1000*60*60))/(1000*60));
+      const seconds=Math.floor((distance%(1000*60))/1000);
+      document.getElementById("countdown").textContent=`Ends in: ${days}d ${hours}h ${minutes}m ${seconds}s`;
     }
-    window.onload = typeWriter;
-
-    // Pricing toggle
-    const toggle = document.getElementById('priceToggle');
-    const prices = document.querySelectorAll('.plan-price');
-    toggle.addEventListener('change', () => {
-      prices.forEach(price => {
-        if(toggle.checked){
-          price.textContent = price.dataset.yearly;
-        } else {
-          price.textContent = price.dataset.monthly;
-        }
-      });
-    });
-
-    // Testimonials slider
-    let index = 0;
-    const testimonials = document.querySelectorAll('.testimonial');
-    function showTestimonial() {
-      testimonials.forEach(t => t.style.display = 'none');
-      testimonials[index].style.display = 'block';
-      index = (index + 1) % testimonials.length;
-    }
-    setInterval(showTestimonial, 3000);
-    showTestimonial();
-  </script>
+  },1000);
+</script>
 </body>
 </html>
