@@ -1,202 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Hell Host | Web Hosting</title>
-
-<style>
-/* ===== GLOBAL ===== */
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background: #0b0b0b;
-    color: white;
-}
-
-/* ===== HEADER ===== */
-header {
-    background: #111;
-    padding: 20px;
-    text-align: center;
-    font-size: 32px;
-    color: red;
-    font-weight: bold;
-}
-
-/* ===== NAVBAR ===== */
-nav {
-    background: #1a1a1a;
-    padding: 12px;
-    text-align: center;
-}
-
-nav a {
-    color: white;
-    margin: 15px;
-    text-decoration: none;
-    font-size: 16px;
-}
-
-nav a:hover {
-    color: red;
-}
-
-/* ===== HERO ===== */
-.hero {
-    padding: 70px 20px;
-    text-align: center;
-    background: linear-gradient(black, darkred);
-}
-
-.hero h1 {
-    font-size: 42px;
-    color: red;
-}
-
-.hero p {
-    font-size: 18px;
-}
-
-.hero button {
-    padding: 14px 30px;
-    font-size: 16px;
-    background: red;
-    color: white;
-    border: none;
-    cursor: pointer;
-    margin-top: 20px;
-}
-
-.hero button:hover {
-    background: darkred;
-}
-
-/* ===== PLANS ===== */
-.plans {
-    padding: 40px;
-    text-align: center;
-}
-
-.plan-box {
-    background: #1a1a1a;
-    display: inline-block;
-    margin: 15px;
-    padding: 25px;
-    width: 250px;
-    border-radius: 8px;
-}
-
-.plan-box h3 {
-    color: red;
-}
-
-.plan-box button {
-    background: red;
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-}
-
-.plan-box button:hover {
-    background: darkred;
-}
-
-/* ===== FEATURES ===== */
-.features {
-    padding: 40px;
-    background: #111;
-    text-align: center;
-}
-
-.features div {
-    margin: 10px;
-}
-
-/* ===== FOOTER ===== */
-footer {
-    background: #000;
-    padding: 15px;
-    text-align: center;
-    font-size: 14px;
-    color: gray;
-}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hell Host - Web Hosting</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin:0; padding:0; }
+    header { background:#111; color:#fff; padding:20px; text-align:center; }
+    nav a { color:#fff; margin:0 15px; text-decoration:none; }
+    nav a:hover { color:#e63946; }
+    .hero { background:#e63946; color:#fff; padding:60px; text-align:center; }
+    .hero h2 { font-size:2.5em; margin-bottom:10px; }
+    .hero button { background:#111; color:#fff; padding:10px 20px; border:none; cursor:pointer; }
+    .hero button:hover { background:#333; }
+    .plans { display:flex; justify-content:center; flex-wrap:wrap; margin:40px; }
+    .plan { border:1px solid #ccc; padding:20px; margin:10px; width:220px; text-align:center; border-radius:8px; }
+    .plan h3 { margin-bottom:10px; }
+    .plan button { background:#e63946; color:#fff; border:none; padding:10px; cursor:pointer; }
+    .plan button:hover { background:#c53030; }
+    .toggle { text-align:center; margin:20px; }
+    footer { background:#111; color:#fff; text-align:center; padding:20px; }
+    .testimonial { display:none; text-align:center; margin:20px; font-style:italic; }
+  </style>
 </head>
-
 <body>
+  <header>
+    <h1>🔥 Hell Host</h1>
+    <nav>
+      <a href="#hero">Home</a>
+      <a href="#plans">Plans</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a href="#">Login</a>
+    </nav>
+  </header>
 
-<header>🔥 HELL HOST 🔥</header>
+  <section class="hero" id="hero">
+    <h2 id="heroTitle"></h2>
+    <p>Affordable plans, 24/7 support, and lightning‑fast servers.</p>
+    <button>Start Hosting Today</button>
+  </section>
 
-<nav>
-    <a href="#">Home</a>
-    <a href="#">Plans</a>
-    <a href="#">Features</a>
-    <a href="#">Contact</a>
-</nav>
+  <div class="toggle">
+    <label>
+      <input type="checkbox" id="priceToggle"> Yearly Billing
+    </label>
+  </div>
 
-<div class="hero">
-    <h1>Powerful & Secure Web Hosting</h1>
-    <p>Fast Servers • 99.9% Uptime • 24/7 Support</p>
-    <button onclick="getStarted()">Get Started</button>
-</div>
-
-<div class="plans">
-    <h2>🔥 Hosting Plans</h2>
-
-    <div class="plan-box">
-        <h3>Shared Hosting</h3>
-        <p>₹199 / month</p>
-        <p>Best for beginners</p>
-        <button onclick="buyPlan('Shared Hosting',199)">Buy Now</button>
+  <section class="plans" id="plans">
+    <div class="plan">
+      <h3>Basic</h3>
+      <p class="plan-price" data-monthly="$5/month" data-yearly="$50/year">$5/month</p>
+      <p>10GB Storage, 100GB Bandwidth</p>
+      <button>Choose Plan</button>
     </div>
-
-    <div class="plan-box">
-        <h3>VPS Hosting</h3>
-        <p>₹999 / month</p>
-        <p>High performance</p>
-        <button onclick="buyPlan('VPS Hosting',999)">Buy Now</button>
+    <div class="plan">
+      <h3>Pro</h3>
+      <p class="plan-price" data-monthly="$10/month" data-yearly="$100/year">$10/month</p>
+      <p>50GB Storage, Unlimited Bandwidth</p>
+      <button>Choose Plan</button>
     </div>
-
-    <div class="plan-box">
-        <h3>Dedicated Server</h3>
-        <p>₹4999 / month</p>
-        <p>Maximum power</p>
-        <button onclick="buyPlan('Dedicated Server',4999)">Buy Now</button>
+    <div class="plan">
+      <h3>Business</h3>
+      <p class="plan-price" data-monthly="$20/month" data-yearly="$200/year">$20/month</p>
+      <p>200GB Storage, Unlimited Bandwidth</p>
+      <button>Choose Plan</button>
     </div>
-</div>
+  </section>
 
-<div class="features">
-    <h2>⚡ Features</h2>
-    <div>✔ 99.9% Uptime</div>
-    <div>✔ Free SSL Certificate</div>
-    <div>✔ SSD Storage</div>
-    <div>✔ 24/7 Hell Support 😈</div>
-    <br>
-    <button onclick="hellMode()">Activate Hell Mode</button>
-</div>
+  <section id="testimonials">
+    <div class="testimonial">"Hell Host gave my website blazing speed!" – Alex</div>
+    <div class="testimonial">"Amazing support team, always available." – Priya</div>
+    <div class="testimonial">"Affordable and reliable hosting service." – John</div>
+  </section>
 
-<footer>
-    © 2026 Hell Host | All Rights Reserved
-</footer>
+  <footer>
+    <p>© 2026 Hell Host. All rights reserved.</p>
+  </footer>
 
-<script>
-/* ===== JAVASCRIPT ===== */
+  <script>
+    // Typewriter effect for hero title
+    const text = "Blazing Fast & Reliable Hosting";
+    let i = 0;
+    function typeWriter() {
+      if (i < text.length) {
+        document.getElementById("heroTitle").textContent += text.charAt(i);
+        i++;
+        setTimeout(typeWriter, 100);
+      }
+    }
+    window.onload = typeWriter;
 
-function getStarted() {
-    alert("Welcome to Hell Host 😈🔥");
-}
+    // Pricing toggle
+    const toggle = document.getElementById('priceToggle');
+    const prices = document.querySelectorAll('.plan-price');
+    toggle.addEventListener('change', () => {
+      prices.forEach(price => {
+        if(toggle.checked){
+          price.textContent = price.dataset.yearly;
+        } else {
+          price.textContent = price.dataset.monthly;
+        }
+      });
+    });
 
-function buyPlan(plan, price) {
-    alert("You selected " + plan + "\nPrice: ₹" + price + "/month");
-}
-
-function hellMode() {
-    document.body.style.backgroundColor = "black";
-    document.body.style.color = "red";
-    alert("HELL MODE ACTIVATED 🔥😈");
-}
-</script>
-
+    // Testimonials slider
+    let index = 0;
+    const testimonials = document.querySelectorAll('.testimonial');
+    function showTestimonial() {
+      testimonials.forEach(t => t.style.display = 'none');
+      testimonials[index].style.display = 'block';
+      index = (index + 1) % testimonials.length;
+    }
+    setInterval(showTestimonial, 3000);
+    showTestimonial();
+  </script>
 </body>
 </html>
